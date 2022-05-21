@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Passport;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Patient;
+import ru.smirnygatotoshka.caseapp.DataRepresentation.Police;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Reference;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
 
@@ -125,6 +126,43 @@ public class Database {
                 System.out.println("Cannot close patients stmt, because " + e.getMessage());
             }
             return passports;
+        }
+    }
+
+    /**
+     * TODO not prepared statement. Not use for user searching query!
+     * */
+    public static ObservableList<Police> getPolices(String query){
+        ObservableList<Police> polices = FXCollections.observableArrayList();
+        Statement stmt = null;
+        ResultSet rs = null;
+        try{
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(query);
+
+            while (rs.next()){
+                String number = rs.getString("Number");
+                String org = rs.getString("Organization");
+                Police police = new Police(number,org);
+                polices.add(police);
+            }
+        }
+        catch (SQLException se){
+            GlobalResources.alert(Alert.AlertType.ERROR,"Не могу получить данные о пасспортах из БД, потому что " + se.getMessage() );
+        }
+        finally {
+            try{
+                if (stmt != null){
+                    stmt.close();
+                }
+                if (rs != null){
+                    rs.close();
+                }
+            }
+            catch(SQLException e){
+                System.out.println("Cannot close patients stmt, because " + e.getMessage());
+            }
+            return polices;
         }
     }
 

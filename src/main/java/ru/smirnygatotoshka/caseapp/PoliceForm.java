@@ -3,27 +3,27 @@ package ru.smirnygatotoshka.caseapp;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import ru.smirnygatotoshka.caseapp.DataRepresentation.Patient;
+import ru.smirnygatotoshka.caseapp.Controllers.PassportFormController;
 import ru.smirnygatotoshka.caseapp.Controllers.PatientFormController;
+import ru.smirnygatotoshka.caseapp.Controllers.PoliceFormController;
 
 import java.util.Optional;
 
-public class PatientForm extends Stage {
-
-    public PatientForm(Patient patient) {
+public class PoliceForm extends Stage {
+    private PatientFormController patientFormController;
+    public PoliceForm(PatientFormController patientFormController) {
         super();
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(PatientForm.class.getResource("add_patient.fxml"));
-
+            FXMLLoader fxmlLoader = new FXMLLoader(PoliceForm.class.getResource("add_police.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             setTitle("Большой Шлёпа АРМ!");
             setScene(scene);
-            PatientFormController controller = fxmlLoader.getController();
-            controller.setPatient(patient);
+            PoliceFormController controller = fxmlLoader.getController();
+            this.patientFormController = patientFormController;
+            controller.setPatientFormController(patientFormController);
             scene.getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST,this::onClose);
             show();
         }
@@ -33,27 +33,15 @@ public class PatientForm extends Stage {
         }
     }
 
-
-
     private void onClose(WindowEvent event){
         Optional<ButtonType> answer = GlobalResources.alert(Alert.AlertType.CONFIRMATION,"Продолжить без сохранения?");
         if (answer.get() == ButtonType.OK){
-
-            Stage pol = GlobalResources.openedStages.get("PoliceForm");
-            Stage pass = GlobalResources.openedStages.get("PassportForm");
-            if (pass != null && pass.isShowing()) {
-                pass.close();
-            }
-            if (pol != null && pol.isShowing()) {
-                pol.close();
-            }
-            GlobalResources.openedStages.remove("PatientForm",GlobalResources.openedStages.get("PatientForm"));
-            GlobalResources.openedStages.remove("PassportForm",GlobalResources.openedStages.get("PassportForm"));
+            //GlobalResources.openedStages.get("PatientForm").close();
             GlobalResources.openedStages.remove("PoliceForm",GlobalResources.openedStages.get("PoliceForm"));
+            patientFormController.getAdd_police().setDisable(false);
         }
         else {
             event.consume();
         }
     }
 }
-

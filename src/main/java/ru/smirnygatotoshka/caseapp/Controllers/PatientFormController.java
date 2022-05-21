@@ -6,11 +6,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.util.Callback;
 import javafx.util.converter.DefaultStringConverter;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Passport;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Patient;
+import ru.smirnygatotoshka.caseapp.DataRepresentation.Police;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Reference;
 import ru.smirnygatotoshka.caseapp.Database.Database;
 import ru.smirnygatotoshka.caseapp.Formatters.PassportNumberFormatter;
@@ -19,6 +21,7 @@ import ru.smirnygatotoshka.caseapp.PassportForm;
 import ru.smirnygatotoshka.caseapp.Formatters.NamesFormatter;
 import ru.smirnygatotoshka.caseapp.Formatters.PhoneNumberFilter;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
+import ru.smirnygatotoshka.caseapp.PoliceForm;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -73,14 +76,29 @@ public class PatientFormController implements Initializable {
                 GlobalResources.alert(Alert.AlertType.WARNING,"В БД несколько одинаковых паспортов! Проверьте БД!");
             }
 
+            String query1 = "SELECT Number,spr_SMO.NAME as Organization FROM tbl_Polices " +
+                    "INNER JOIN spr_SMO ON spr_SMO.ID = tbl_Polices.Organization " +
+                    "WHERE Number = " + patient.getPolice() + ";";
+            ObservableList<Police> polices = Database.getPolices(query1);
+            if (polices.size() == 1){
+                police = polices.get(0);
+                add_police.setText(police.getNumber());
+            }
+            else if (polices.size() > 1){
+                GlobalResources.alert(Alert.AlertType.WARNING,"В БД несколько одинаковых полисов! Проверьте БД!");
+            }
+
         }
         else {
             this.patient = new Patient();
+            this.passport = new Passport();
+            this.police = new Police();
         }
     }
 
     protected Patient patient = null;
     protected Passport passport = null;
+    protected Police police = null;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -154,5 +172,16 @@ public class PatientFormController implements Initializable {
         PassportForm passForm = new PassportForm(this);
         add_passport.setDisable(true);
         GlobalResources.openedStages.put("PassportForm", passForm);
+    }
+
+    @FXML
+    protected void onAddPolice(ActionEvent event){
+        PoliceForm polForm = new PoliceForm(this);
+        add_police.setDisable(true);
+        GlobalResources.openedStages.put("PoliceForm", polForm);
+    }
+
+    public Button getAdd_police() {
+        return add_police;
     }
 }

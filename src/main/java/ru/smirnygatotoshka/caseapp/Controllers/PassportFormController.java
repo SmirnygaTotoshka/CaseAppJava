@@ -35,13 +35,18 @@ public class PassportFormController implements Initializable {
 
     public void setPatientFormController(PatientFormController patientFormController) {
         this.patientFormController = patientFormController;
-        if (patientFormController.passport.getNumber().matches("\\d{10}")){
-            patientFormController.getAdd_passport().setText(PassportNumberFormatter.formatNumber(patientFormController.passport.getNumber()));
-            passport_number.setText(patientFormController.passport.getNumber());
-            passport_address.setText(patientFormController.passport.getAddress());
-        }
-        else {
+        if (patientFormController.passport == null){
             patientFormController.passport = new Passport();
+        }
+        else{
+            if (patientFormController.passport.getNumber().matches("\\d{10}")){
+                patientFormController.getAdd_passport().setText(PassportNumberFormatter.formatNumber(patientFormController.passport.getNumber()));
+                passport_number.setText(patientFormController.passport.getNumber());
+                passport_address.setText(patientFormController.passport.getAddress());
+            }
+            /*else{
+                GlobalResources.alert(Alert.AlertType.WARNING,"Некорректное заполнение БД, проверьте серии и номера паспортов.");
+            }*/
         }
     }
 
@@ -74,8 +79,10 @@ public class PassportFormController implements Initializable {
         switch (status){
             case OK:
                 patientFormController.getAdd_passport().setText(passport_number.getText());
+                patientFormController.getAdd_passport().setDisable(false);
                 patientFormController.passport = new Passport(PassportNumberFormatter.removeSpecial(passport_number.getText()),passport_address.getText());
                 GlobalResources.openedStages.get("PassportForm").close();
+                GlobalResources.openedStages.remove("PassportForm",GlobalResources.openedStages.get("PassportForm"));
                 return;
             case INVALID_NUMBER:
                 passport_number.requestFocus();

@@ -12,7 +12,8 @@ public class Passport {
     }
 
     public Passport() {
-
+        number = new SimpleStringProperty("0");
+        address = new SimpleStringProperty("0");
     }
 
     public String getNumber() {

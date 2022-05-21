@@ -5,16 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane
-        maxHeight="-Infinity"
-        maxWidth="-Infinity"
-        minHeight="-Infinity"
-        minWidth="-Infinity"
-        prefHeight="619.0"
-        prefWidth="706.0"
-        xmlns="http://javafx.com/javafx/11.0.2"
-        xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="ru.smirnygatotoshka.caseapp.Controllers.PatientFormController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="706.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.smirnygatotoshka.caseapp.Controllers.PatientFormController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="347.0" minWidth="10.0" prefWidth="285.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="421.0" minWidth="10.0" prefWidth="421.0" />
@@ -205,7 +196,7 @@
          <font>
             <Font size="18.0" />
          </font></TextField>
-      <Button fx:id="add_police" mnemonicParsing="false" prefHeight="26.0" prefWidth="220.0" text="Добавить" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="10">
+      <Button fx:id="add_police" mnemonicParsing="false" onAction="#onAddPolice" prefHeight="26.0" prefWidth="220.0" text="Добавить" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="10">
          <GridPane.margin>
             <Insets right="15.0" />
          </GridPane.margin>
