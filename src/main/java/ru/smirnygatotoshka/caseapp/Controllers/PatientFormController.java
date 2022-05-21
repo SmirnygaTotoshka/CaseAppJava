@@ -13,6 +13,7 @@ import ru.smirnygatotoshka.caseapp.DataRepresentation.Passport;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Patient;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Reference;
 import ru.smirnygatotoshka.caseapp.Database.Database;
+import ru.smirnygatotoshka.caseapp.Formatters.PassportNumberFormatter;
 import ru.smirnygatotoshka.caseapp.Formatters.SNILSFormatter;
 import ru.smirnygatotoshka.caseapp.PassportForm;
 import ru.smirnygatotoshka.caseapp.Formatters.NamesFormatter;
@@ -31,8 +32,15 @@ public class PatientFormController implements Initializable {
     @FXML
     private ComboBox<Reference> sex, priviledge, employment, family_status;
 
+    public Button getAdd_passport() {
+        return add_passport;
+    }
+
     @FXML
-    private Button add_passport,add_police,save;
+    private Button add_passport,add_police;
+
+    @FXML
+    private Button save;
 
     @FXML
     private DatePicker dob;
@@ -55,18 +63,24 @@ public class PatientFormController implements Initializable {
             priviledge.setValue(GlobalResources.findItemFromReference(domen_priviledge, patient.getPriviledge()));
             employment.setValue(GlobalResources.findItemFromReference(domen_employment, patient.getEmployment()));
             family_status.setValue(GlobalResources.findItemFromReference(domen_family_status, patient.getFamilyStatus()));
+            String query = "SELECT Number,Address FROM tbl_Passports WHERE Number = " + patient.getPassport() + ";";
+            ObservableList<Passport> passports = Database.getPassports(query);
+            if (passports.size() == 1){
+                passport = passports.get(0);
+                add_passport.setText(PassportNumberFormatter.formatNumber(passport.getNumber()));
+            }
+            else if (passports.size() > 1){
+                GlobalResources.alert(Alert.AlertType.WARNING,"В БД несколько одинаковых паспортов! Проверьте БД!");
+            }
+
         }
         else {
             this.patient = new Patient();
         }
     }
 
-    private Patient patient = null;
-    private Passport passport = null;
-
-    public void setPassport(Passport passport) {
-        this.passport = passport;
-    }
+    protected Patient patient = null;
+    protected Passport passport = null;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -137,8 +151,8 @@ public class PatientFormController implements Initializable {
 
     @FXML
     protected void onAddPassport(ActionEvent event){
-        PassportForm passForm = new PassportForm(patient,add_passport);
-        add_passport.setDisable(false);
+        PassportForm passForm = new PassportForm(this);
+        add_passport.setDisable(true);
         GlobalResources.openedStages.put("PassportForm", passForm);
     }
 }

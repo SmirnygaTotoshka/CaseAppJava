@@ -2,36 +2,54 @@ package ru.smirnygatotoshka.caseapp.Controllers;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.util.converter.DefaultStringConverter;
-import ru.smirnygatotoshka.caseapp.DataRepresentation.Patient;
+import ru.smirnygatotoshka.caseapp.DataRepresentation.Passport;
 import ru.smirnygatotoshka.caseapp.Formatters.PassportNumberFormatter;
-import ru.smirnygatotoshka.caseapp.Formatters.PhoneNumberFilter;
+import ru.smirnygatotoshka.caseapp.GlobalResources;
+import ru.smirnygatotoshka.caseapp.PassportForm;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PassportFormController implements Initializable {
-    public void setPatient(Patient patient) {
-        this.patient = patient;
+
+    private enum Status{
+        OK("OK"),
+        INVALID_NUMBER("Введите правильную серию/номер паспорта."),
+        NO_ADDRESS("Введите адрес регистрации по паспорту.");
+        public String message;
+        Status(String msg){this.message = msg;}
     }
 
-    private Patient patient;
-    private Button source;
+    private PatientFormController patientFormController;
 
-    public void setSource(Button source) {
-        this.source = source;
+    public void setPatientFormController(PatientFormController patientFormController) {
+        this.patientFormController = patientFormController;
+        if (patientFormController.passport.getNumber().matches("\\d{10}")){
+            patientFormController.getAdd_passport().setText(PassportNumberFormatter.formatNumber(patientFormController.passport.getNumber()));
+            passport_number.setText(patientFormController.passport.getNumber());
+            passport_address.setText(patientFormController.passport.getAddress());
+        }
+        else {
+            patientFormController.passport = new Passport();
+        }
     }
 
     @FXML
     private TextField passport_number,passport_address;
 
-    @FXML
-    private Button passport_save;
+    /*@FXML
+    private Button passport_save;*/
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -41,9 +59,40 @@ public class PassportFormController implements Initializable {
                 if (newVal.length() > 500){
                     passport_address.setText(oldVal);
                 }
+                if (!newVal.matches("[^a-zA-Z]*")){
+                    passport_address.setText(oldVal);
+                }
             }
         });
-        TextFormatter<String> textFormatter = new TextFormatter(new DefaultStringConverter(), "", new PassportNumberFormatter());
-        passport_number.setTextFormatter(textFormatter);
+        TextFormatter<String> formatter = new TextFormatter(new DefaultStringConverter(), "", new PassportNumberFormatter());
+        passport_number.setTextFormatter(formatter);
+    }
+
+    @FXML
+    protected void onSavePassport(ActionEvent event){
+        Status status = check();
+        switch (status){
+            case OK:
+                patientFormController.getAdd_passport().setText(passport_number.getText());
+                patientFormController.passport = new Passport(PassportNumberFormatter.removeSpecial(passport_number.getText()),passport_address.getText());
+                GlobalResources.openedStages.get("PassportForm").close();
+                return;
+            case INVALID_NUMBER:
+                passport_number.requestFocus();
+                break;
+            case NO_ADDRESS:
+                passport_address.requestFocus();
+                break;
+        }
+        GlobalResources.alert(Alert.AlertType.WARNING,status.message);
+    }
+
+    private Status check() {
+        if (passport_number.getText().length() != 11)
+            return Status.INVALID_NUMBER;
+        if (passport_address.getText().isEmpty() || passport_address.getText().isBlank())
+            return Status.NO_ADDRESS;
+
+        return Status.OK;
     }
 }

@@ -11,6 +11,10 @@ public class Passport {
         this.address = new SimpleStringProperty(address);
     }
 
+    public Passport() {
+
+    }
+
     public String getNumber() {
         return number.get();
     }
