@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane
+        maxHeight="-Infinity"
+        maxWidth="-Infinity"
+        minHeight="-Infinity"
+        minWidth="-Infinity"
+        prefHeight="619.0"
+        prefWidth="706.0"
+        xmlns="http://javafx.com/javafx/11.0.2"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="ru.smirnygatotoshka.caseapp.Controllers.PatientFormController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="347.0" minWidth="10.0" prefWidth="285.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="421.0" minWidth="10.0" prefWidth="421.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Label text="Фамилия" wrapText="true">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <GridPane.margin>
+            <Insets left="15.0" />
+         </GridPane.margin>
+      </Label>
+      <Label text="Имя" wrapText="true" GridPane.rowIndex="1">
+       <font>
+           <Font size="18.0" />
+       </font>
+       <GridPane.margin>
+           <Insets left="15.0" />
+       </GridPane.margin>
+      </Label>
+       <Label text="Отчество (при наличии)" wrapText="true" GridPane.rowIndex="2">
+           <font>
+               <Font size="18.0" />
+           </font>
+           <GridPane.margin>
+               <Insets left="15.0" />
+           </GridPane.margin>
+       </Label>
+       <Label text="Пол" wrapText="true" GridPane.rowIndex="3">
+           <font>
+               <Font size="18.0" />
+           </font>
+           <GridPane.margin>
+               <Insets left="15.0" />
+           </GridPane.margin>
+       </Label>
+       <Label text="Дата рождения" wrapText="true" GridPane.rowIndex="4">
+           <font>
+               <Font size="18.0" />
+           </font>
+           <GridPane.margin>
+               <Insets left="15.0" />
+           </GridPane.margin>
+       </Label>
+       <Label text="Льготы" wrapText="true" GridPane.rowIndex="5">
+           <font>
+               <Font size="18.0" />
+           </font>
+           <GridPane.margin>
+               <Insets left="15.0" />
+           </GridPane.margin>
+       </Label>
+       <Label text="Занятость" wrapText="true" GridPane.rowIndex="6">
+           <font>
+               <Font size="18.0" />
+           </font>
+           <GridPane.margin>
+               <Insets left="15.0" />
+           </GridPane.margin>
+       </Label>
+       <Label text="Место работы" wrapText="true" GridPane.rowIndex="7">
+           <font>
+               <Font size="18.0" />
+           </font>
+           <GridPane.margin>
+               <Insets left="15.0" />
+           </GridPane.margin>
+       </Label>
+       <Label text="Паспорт" wrapText="true" GridPane.rowIndex="8">
+       <font>
+           <Font size="18.0" />
+       </font>
+       <GridPane.margin>
+           <Insets left="15.0" />
+       </GridPane.margin>
+           </Label>
+       <Label text="СНИЛС" wrapText="true" GridPane.rowIndex="9">
+           <font>
+               <Font size="18.0" />
+           </font>
+           <GridPane.margin>
+               <Insets left="15.0" />
+           </GridPane.margin>
+       </Label>
+       <Label text="Полис " wrapText="true" GridPane.rowIndex="10">
+           <font>
+               <Font size="18.0" />
+           </font>
+           <GridPane.margin>
+               <Insets left="15.0" />
+           </GridPane.margin>
+       </Label>
+       <Label text="Семейное положение" wrapText="true" GridPane.rowIndex="11">
+           <font>
+               <Font size="18.0" />
+           </font>
+           <GridPane.margin>
+               <Insets left="15.0" />
+           </GridPane.margin>
+       </Label>
+       <Label text="Телефон" wrapText="true" GridPane.rowIndex="12">
+           <font>
+               <Font size="18.0" />
+           </font>
+           <GridPane.margin>
+               <Insets left="15.0" />
+           </GridPane.margin>
+       </Label>
+      <TextField fx:id="sirname" alignment="CENTER_RIGHT" promptText="Иванов" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+         <GridPane.margin>
+            <Insets right="15.0" />
+         </GridPane.margin>
+         <font>
+            <Font size="18.0" />
+         </font></TextField>
+      <TextField fx:id="name" alignment="CENTER_RIGHT" promptText="Иван" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets right="15.0" />
+         </GridPane.margin>
+         <font>
+            <Font size="18.0" />
+         </font></TextField>
+      <TextField fx:id="second_name" alignment="CENTER_RIGHT" promptText="Иванович" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets right="15.0" />
+         </GridPane.margin>
+         <font>
+            <Font size="18.0" />
+         </font></TextField>
+      <ComboBox fx:id="sex" prefHeight="26.0" prefWidth="411.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets right="15.0" />
+         </GridPane.margin></ComboBox>
+      <DatePicker fx:id="dob" prefHeight="26.0" prefWidth="233.0" promptText="дд.мм.гггг" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets right="15.0" />
+         </GridPane.margin></DatePicker>
+      <ComboBox fx:id="priviledge" prefHeight="26.0" prefWidth="428.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+         <GridPane.margin>
+            <Insets right="15.0" />
+         </GridPane.margin></ComboBox>
+      <TextField fx:id="workplace" alignment="CENTER_RIGHT" promptText="ООО &quot;Вискас&quot;" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
+         <GridPane.margin>
+            <Insets right="15.0" />
+         </GridPane.margin>
+         <font>
+            <Font size="18.0" />
+         </font></TextField>
+      <ComboBox fx:id="employment" prefHeight="26.0" prefWidth="423.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
+         <GridPane.margin>
+            <Insets right="15.0" />
+         </GridPane.margin></ComboBox>
+      <Button fx:id="add_passport" mnemonicParsing="false" onAction="#onAddPassport" prefHeight="26.0" prefWidth="220.0" text="Добавить" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8">
+         <GridPane.margin>
+            <Insets right="15.0" />
+         </GridPane.margin>
+         <font>
+            <Font size="18.0" />
+         </font></Button>
+      <TextField fx:id="snils" alignment="CENTER_RIGHT" promptText="98765432112" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="9">
+         <GridPane.margin>
+            <Insets right="15.0" />
+         </GridPane.margin>
+         <font>
+            <Font size="18.0" />
+         </font></TextField>
+      <TextField fx:id="telephone" alignment="CENTER_RIGHT" promptText="+79109654587" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="12">
+         <GridPane.margin>
+            <Insets right="15.0" />
+         </GridPane.margin>
+         <font>
+            <Font size="18.0" />
+         </font></TextField>
+      <Button fx:id="add_police" mnemonicParsing="false" prefHeight="26.0" prefWidth="220.0" text="Добавить" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="10">
+         <GridPane.margin>
+            <Insets right="15.0" />
+         </GridPane.margin>
+         <font>
+            <Font size="18.0" />
+         </font></Button>
+      <ComboBox fx:id="family_status" prefHeight="26.0" prefWidth="415.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="11">
+         <GridPane.margin>
+            <Insets right="15.0" />
+         </GridPane.margin></ComboBox>
+      <Button fx:id="patient_save" mnemonicParsing="false" prefHeight="26.0" prefWidth="225.0" text="Сохранить" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="13">
+         <GridPane.margin>
+            <Insets right="15.0" />
+         </GridPane.margin>
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+   </children>
+</GridPane>
