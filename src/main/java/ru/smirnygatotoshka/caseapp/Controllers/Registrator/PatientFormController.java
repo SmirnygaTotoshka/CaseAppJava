@@ -1,4 +1,4 @@
-package ru.smirnygatotoshka.caseapp.Controllers;
+package ru.smirnygatotoshka.caseapp.Controllers.Registrator;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -6,7 +6,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.util.Callback;
 import javafx.util.converter.DefaultStringConverter;
@@ -17,11 +16,11 @@ import ru.smirnygatotoshka.caseapp.DataRepresentation.Reference;
 import ru.smirnygatotoshka.caseapp.Database.Database;
 import ru.smirnygatotoshka.caseapp.Formatters.PassportNumberFormatter;
 import ru.smirnygatotoshka.caseapp.Formatters.SNILSFormatter;
-import ru.smirnygatotoshka.caseapp.PassportForm;
+import ru.smirnygatotoshka.caseapp.Registrator.PassportForm;
 import ru.smirnygatotoshka.caseapp.Formatters.NamesFormatter;
 import ru.smirnygatotoshka.caseapp.Formatters.PhoneNumberFilter;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
-import ru.smirnygatotoshka.caseapp.PoliceForm;
+import ru.smirnygatotoshka.caseapp.Registrator.PoliceForm;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -61,7 +60,7 @@ public class PatientFormController implements Initializable {
             snils.setText(patient.getSnils());
             System.out.println(LocalDate.parse(patient.getDob().toString()));
             dob.setValue(LocalDate.parse(patient.getDob().toString()));
-            telephone.setText(patient.getTelephone());
+            telephone.setText(patient.getTelephone().substring(1));
             sex.setValue(GlobalResources.findItemFromReference(domen_sex, patient.getSex()));
             priviledge.setValue(GlobalResources.findItemFromReference(domen_priviledge, patient.getPriviledge()));
             employment.setValue(GlobalResources.findItemFromReference(domen_employment, patient.getEmployment()));

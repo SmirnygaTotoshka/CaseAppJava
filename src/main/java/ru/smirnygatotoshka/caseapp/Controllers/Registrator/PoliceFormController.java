@@ -1,4 +1,4 @@
-package ru.smirnygatotoshka.caseapp.Controllers;
+package ru.smirnygatotoshka.caseapp.Controllers.Registrator;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

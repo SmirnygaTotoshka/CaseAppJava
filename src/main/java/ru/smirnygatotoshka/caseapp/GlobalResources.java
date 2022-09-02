@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Control;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Reference;
 
@@ -16,6 +17,8 @@ import java.util.Optional;
 
 public class GlobalResources {
     public static SimpleMapProperty<String, Stage> openedStages = new SimpleMapProperty<>(FXCollections.observableHashMap());
+
+    public static final Font usualFont = new Font("Arial", 18);
 
     public static Optional<ButtonType> alert(Alert.AlertType type, String message){
         Alert alert  = new Alert(type);

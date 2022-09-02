@@ -1,0 +1,5 @@
+.default_item_style{
+    -fx-font: 10 "Arial";
+    -fx-background-color: #CCCCFF;
+    -fx-border-color: #000000;
+}

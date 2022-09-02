@@ -34,8 +34,14 @@ public class PhoneNumberFilter implements UnaryOperator<TextFormatter.Change> {
             }
         }
     }
+    public static String removeSpecial(String input){
+        input = input.replaceAll("[^\\d]", "");
+        StringBuilder builder = new StringBuilder(input);
+        builder.insert(0,"7");
+        return builder.toString();
+    }
 
-    private String formatNumber(String numbers) {
+    public static String formatNumber(String numbers) {
         numbers = numbers.replaceAll("[^\\d]", "");
         numbers = numbers.substring(0, Math.min(10, numbers.length()));
         if (numbers.length() == 0) {

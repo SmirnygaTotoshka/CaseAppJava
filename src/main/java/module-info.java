@@ -15,4 +15,8 @@ module ru.smirnygatotoshka.caseapp {
     opens ru.smirnygatotoshka.caseapp.DataRepresentation to javafx.base;
     exports ru.smirnygatotoshka.caseapp.Controllers;
     opens ru.smirnygatotoshka.caseapp.Controllers to javafx.fxml;
+    exports ru.smirnygatotoshka.caseapp.Controllers.Registrator;
+    opens ru.smirnygatotoshka.caseapp.Controllers.Registrator to javafx.fxml;
+    exports ru.smirnygatotoshka.caseapp.Registrator;
+    opens ru.smirnygatotoshka.caseapp.Registrator to javafx.fxml;
 }

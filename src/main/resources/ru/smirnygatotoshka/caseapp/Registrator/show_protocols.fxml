@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+
+<BorderPane prefHeight="578.0" prefWidth="886.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.smirnygatotoshka.caseapp.Controllers.Registrator.RegistratorARMController">
+   <top>
+      <Label text="Назначения" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="36.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets bottom="10.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
+   <bottom>
+      <Button mnemonicParsing="false" prefHeight="46.0" prefWidth="261.0" text="Печать" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+   </bottom>
+   <center>
+      <ListView prefHeight="536.0" prefWidth="517.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" />
+         </BorderPane.margin>
+      </ListView>
+   </center>
+   <left>
+      <VBox prefHeight="488.0" prefWidth="274.0" BorderPane.alignment="CENTER">
+         <children>
+            <DatePicker prefHeight="44.0" prefWidth="293.0" />
+            <ListView prefHeight="448.0" prefWidth="274.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </ListView>
+         </children>
+      </VBox>
+   </left>
+</BorderPane>

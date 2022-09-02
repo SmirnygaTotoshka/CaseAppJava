@@ -1,4 +1,4 @@
-package ru.smirnygatotoshka.caseapp;
+package ru.smirnygatotoshka.caseapp.Registrator;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -6,9 +6,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import ru.smirnygatotoshka.caseapp.Controllers.PassportFormController;
-import ru.smirnygatotoshka.caseapp.Controllers.PatientFormController;
-import ru.smirnygatotoshka.caseapp.Controllers.PoliceFormController;
+import ru.smirnygatotoshka.caseapp.Controllers.Registrator.PatientFormController;
+import ru.smirnygatotoshka.caseapp.Controllers.Registrator.PoliceFormController;
+import ru.smirnygatotoshka.caseapp.GlobalResources;
 
 import java.util.Optional;
 
