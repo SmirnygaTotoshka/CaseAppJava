@@ -34,7 +34,7 @@ public class PoliceFormController implements Initializable {
     private ComboBox<Reference> police_organization;
 
     public void setPatientFormController(PatientFormController patientFormController) {
-        this.patientFormController = patientFormController;
+        /*this.patientFormController = patientFormController;
         if (patientFormController.police == null){
             patientFormController.police = new Police();
         }
@@ -47,7 +47,7 @@ public class PoliceFormController implements Initializable {
             /*else{
                 GlobalResources.alert(Alert.AlertType.WARNING,"Некорректное заполнение БД, проверьте омера полисов.");
             }*/
-        }
+       // }
     }
 
 
@@ -77,11 +77,11 @@ public class PoliceFormController implements Initializable {
         Status status = check();
         switch (status){
             case OK:
-                patientFormController.getAdd_police().setText(police_number.getText());
+                /*patientFormController.getAdd_police().setText(police_number.getText());
                 patientFormController.police = new Police(police_number.getText(),police_organization.getValue().toString());
                 GlobalResources.openedStages.get("PoliceForm").close();
                 GlobalResources.openedStages.remove("PoliceForm",GlobalResources.openedStages.get("PoliceForm"));
-                patientFormController.getAdd_police().setDisable(false);
+                patientFormController.getAdd_police().setDisable(false);*/
                 return;
             case INVALID_NUMBER:
                 police_number.requestFocus();

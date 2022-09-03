@@ -13,17 +13,14 @@ import ru.smirnygatotoshka.caseapp.GlobalResources;
 import java.util.Optional;
 
 public class PoliceForm extends Stage {
-    private PatientFormController patientFormController;
-    public PoliceForm(PatientFormController patientFormController) {
+    public PoliceForm() {
         super();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(PoliceForm.class.getResource("add_police.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             setTitle("Большой Шлёпа АРМ!");
             setScene(scene);
-            PoliceFormController controller = fxmlLoader.getController();
-            this.patientFormController = patientFormController;
-            controller.setPatientFormController(patientFormController);
+
             scene.getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST,this::onClose);
             show();
         }
@@ -38,7 +35,6 @@ public class PoliceForm extends Stage {
         if (answer.get() == ButtonType.OK){
             //GlobalResources.openedStages.get("PatientForm").close();
             GlobalResources.openedStages.remove("PoliceForm",GlobalResources.openedStages.get("PoliceForm"));
-            patientFormController.getAdd_police().setDisable(false);
         }
         else {
             event.consume();

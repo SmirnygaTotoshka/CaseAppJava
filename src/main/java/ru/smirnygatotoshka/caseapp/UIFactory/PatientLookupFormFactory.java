@@ -2,6 +2,7 @@ package ru.smirnygatotoshka.caseapp.UIFactory;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
+import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
@@ -11,9 +12,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Patient;
 import ru.smirnygatotoshka.caseapp.Database.Database;
+import ru.smirnygatotoshka.caseapp.GlobalResources;
+import ru.smirnygatotoshka.caseapp.Registrator.PatientForm;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,6 +26,7 @@ import java.util.Date;
 public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
 
     private FilteredList<Patient> patients;
+    private TableView<Patient> tablePatients;
 
     private static final ObservableList<String> LOOKUP_HEADERS = FXCollections.observableArrayList("Фамилия","Имя","Отчество",
             "Пол","Дата рождения","Льгота","Соц.статус","Место работы","Паспорт","СНИЛС","Полис","Семейное положение","Телефон");
@@ -48,12 +53,25 @@ public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
     public Parent create() {
         GridPane parent = (GridPane) super.create();
 
-        TableView<Patient> tablePatients = (TableView<Patient>) get("lookupTable");
+        tablePatients = (TableView<Patient>) get("lookupTable");
         TextField seeking_query = (TextField) get("lookup");
         ChoiceBox<String> select_seek = (ChoiceBox<String>) get("lookupChoices");
 
+
+        Button add = (Button) get("Add");
         Button edit = (Button) get("Edit");
         Button delete = (Button) get("Delete");
+
+        GlobalResources.openedStages.addListener((MapChangeListener<String, Stage>) change -> {
+            if (change.getKey().contentEquals("PatientForm")){
+                System.out.println(change.wasRemoved());
+                add.setDisable(!change.wasRemoved());
+                edit.setDisable(!change.wasRemoved());
+                delete.setDisable(!change.wasRemoved());
+
+            }
+        });
+
 
         for (int i = 0; i < tablePatients.getColumns().size(); i++) {
             if (tablePatients.getColumns().get(i).getText().contentEquals("")){
@@ -188,6 +206,31 @@ public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
         }
         else
             return null;
+
+    }
+
+    @Override
+    protected void addAction(ActionEvent event) {
+        PatientForm form = new PatientForm(null);
+        //form.setPatient(null);
+        GlobalResources.openedStages.put("PatientForm", form);
+    }
+
+    @Override
+    protected void editAction(ActionEvent event) {
+        Patient selectedPatient = tablePatients.getSelectionModel().getSelectedItem();
+        if (selectedPatient == null){
+            GlobalResources.alert(Alert.AlertType.INFORMATION,"Выберите пациента.");
+        }
+        else {
+            PatientForm form = new PatientForm(selectedPatient);
+            //form.setPatient(selectedPatient);
+            GlobalResources.openedStages.put("PatientForm", form);
+        }
+    }
+
+    @Override
+    protected void deleteAction(ActionEvent event) {
 
     }
 }

@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 import javafx.util.converter.DefaultStringConverter;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Passport;
@@ -21,6 +22,8 @@ import ru.smirnygatotoshka.caseapp.Formatters.NamesFormatter;
 import ru.smirnygatotoshka.caseapp.Formatters.PhoneNumberFilter;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
 import ru.smirnygatotoshka.caseapp.Registrator.PoliceForm;
+import ru.smirnygatotoshka.caseapp.UIFactory.PatientEditFactory;
+import ru.smirnygatotoshka.caseapp.UIFactory.PatientLookupFormFactory;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -29,6 +32,25 @@ import java.util.ResourceBundle;
 public class PatientFormController implements Initializable {
 
     @FXML
+    private GridPane patients_edit_container;
+
+    public static void setPatient(Patient patient) {
+        PatientFormController.patient = patient;
+    }
+
+    private static Patient patient;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        PatientEditFactory patientFactory = new PatientEditFactory("PatientForm", patient);
+        GridPane patientEditLayout = (GridPane) patientFactory.create();
+
+        //HBox.setHgrow(patients_lookup_container, Priority.ALWAYS);
+        patients_edit_container.add(patientEditLayout,0 ,0);
+    }
+
+    /*@FXML
     private TextField sirname,name,second_name,workplace,snils,telephone;
 
     @FXML
@@ -144,14 +166,14 @@ public class PatientFormController implements Initializable {
         });
         TextFormatter<String> snils_formatter = new TextFormatter<>(new DefaultStringConverter(), "", new SNILSFormatter());
         snils.setTextFormatter(snils_formatter);
-       /* snils.textProperty().addListener(new ChangeListener<String>() {
+       *//* snils.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldVal, String newVal) {
                 if (!newVal.matches("\\d*") || newVal.length() > 11){
                     snils.setText(oldVal);
                 }
             }
-        });*/
+        });*//*
 
         workplace.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -168,19 +190,19 @@ public class PatientFormController implements Initializable {
 
     @FXML
     protected void onAddPassport(ActionEvent event){
-        PassportForm passForm = new PassportForm(this);
+        PassportForm passForm = new PassportForm();
         add_passport.setDisable(true);
         GlobalResources.openedStages.put("PassportForm", passForm);
     }
 
     @FXML
     protected void onAddPolice(ActionEvent event){
-        PoliceForm polForm = new PoliceForm(this);
+        PoliceForm polForm = new PoliceForm();
         add_police.setDisable(true);
         GlobalResources.openedStages.put("PoliceForm", polForm);
     }
 
     public Button getAdd_police() {
         return add_police;
-    }
+    }*/
 }

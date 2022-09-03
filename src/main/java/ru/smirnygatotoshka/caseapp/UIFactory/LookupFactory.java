@@ -1,6 +1,7 @@
 package ru.smirnygatotoshka.caseapp.UIFactory;
 
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -26,6 +27,7 @@ public abstract class LookupFactory<I, L> extends UIFactory {
     @Override
     public Parent create() {
         GridPane parent = new GridPane();
+        parent.setStyle("-fx-background-color: #FFCCCC;");
 
         ColumnConstraints column = new ColumnConstraints();
         column.setHgrow(Priority.ALWAYS);
@@ -122,7 +124,7 @@ public abstract class LookupFactory<I, L> extends UIFactory {
 
         ChoiceBox<I> lookupChoices = new ChoiceBox<>(lookup_items);
         lookupChoices.setValue(lookup_items.get(0));
-        lookupChoices.setStyle("-fx-font: Arial;" +
+        lookupChoices.setStyle("-fx-font: Serif;" +
                 "-fx-font-size: 18px;" +
                 "-fx-background-color: #CCCCFF;" +
                 "-fx-border-color: #000000;");
@@ -147,8 +149,8 @@ public abstract class LookupFactory<I, L> extends UIFactory {
             lookupTable.getColumns().add(column);
         }
 
+        lookupTable.setStyle("-fx-background-color: #FFFF99;");
 
-        addVBoxSettings(lookupTable);
         put(lookupTable, "lookupTable");
 
         return lookupTable;
@@ -194,30 +196,38 @@ public abstract class LookupFactory<I, L> extends UIFactory {
 
         Button add = new Button("Добавить");
         add.setFont(GlobalResources.usualFont);
-        add.setStyle("-fx-font: Arial;" +
+        add.setStyle("-fx-font: Serif;" +
                 "-fx-font-size: 18px;" +
                 "-fx-background-color: #CCCCFF;" +
                 "-fx-border-color: #000000;");
+        add.setOnAction(event -> {
+            addAction(event);
+        });
         add.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         controlRow.add(add,0,0);
         put(add, "Add");
 
 
         Button edit = new Button("Редактировать");
-        edit.setStyle("-fx-font: Arial;" +
+        edit.setStyle("-fx-font: Serif;" +
                 "-fx-font-size: 18px;" +
                 "-fx-background-color: #CCCCFF;" +
                 "-fx-border-color: #000000;");
         edit.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-
+        edit.setOnAction(event -> {
+            editAction(event);
+        });
         controlRow.add(edit,1,0);
         put(edit, "Edit");
 
         Button delete = new Button("Удалить");
-        delete.setStyle("-fx-font: Arial;" +
+        delete.setStyle("-fx-font: Serif;" +
                 "-fx-font-size: 18px;" +
                 "-fx-background-color: #CCCCFF;" +
                 "-fx-border-color: #000000;");
+        delete.setOnAction(event -> {
+            deleteAction(event);
+        });
         delete.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
         controlRow.add(delete,2,0);
@@ -239,13 +249,9 @@ public abstract class LookupFactory<I, L> extends UIFactory {
         return controlRow;
     }
 
-    private void addHBoxSettings(Node node){
-        HBox.setHgrow(node, Priority.ALWAYS);
-        HBox.setMargin(node, new Insets(10));
-    }
+    protected abstract void addAction(ActionEvent event);
 
-    private void addVBoxSettings(Node node){
-        VBox.setVgrow(node, Priority.ALWAYS);
-        VBox.setMargin(node, new Insets(10));
-    }
+    protected abstract void editAction(ActionEvent event);
+
+    protected abstract void deleteAction(ActionEvent event);
 }

@@ -15,16 +15,14 @@ import java.util.Optional;
 public class PassportForm extends Stage {
 
     private PatientFormController patientFormController;
-    public PassportForm(PatientFormController patientFormController) {
+    public PassportForm() {
         super();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(PassportForm.class.getResource("add_passport.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             setTitle("Большой Шлёпа АРМ!");
             setScene(scene);
-            PassportFormController controller = fxmlLoader.getController();
-            this.patientFormController = patientFormController;
-            controller.setPatientFormController(patientFormController);
+
             scene.getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST,this::onClose);
             show();
         }
@@ -39,7 +37,7 @@ public class PassportForm extends Stage {
         if (answer.get() == ButtonType.OK){
             //GlobalResources.openedStages.get("PatientForm").close();
             GlobalResources.openedStages.remove("PassportForm",GlobalResources.openedStages.get("PassportForm"));
-            patientFormController.getAdd_passport().setDisable(false);
+            //patientFormController.getAdd_passport().setDisable(false);
         }
         else {
             event.consume();

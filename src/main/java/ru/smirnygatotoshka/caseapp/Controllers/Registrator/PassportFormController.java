@@ -29,7 +29,7 @@ public class PassportFormController implements Initializable {
     private PatientFormController patientFormController;
 
     public void setPatientFormController(PatientFormController patientFormController) {
-        this.patientFormController = patientFormController;
+        /*this.patientFormController = patientFormController;
         if (patientFormController.passport == null){
             patientFormController.passport = new Passport();
         }
@@ -42,7 +42,7 @@ public class PassportFormController implements Initializable {
             /*else{
                 GlobalResources.alert(Alert.AlertType.WARNING,"Некорректное заполнение БД, проверьте серии и номера паспортов.");
             }*/
-        }
+        //}
     }
 
     @FXML
@@ -73,9 +73,9 @@ public class PassportFormController implements Initializable {
         Status status = check();
         switch (status){
             case OK:
-                patientFormController.getAdd_passport().setText(passport_number.getText());
-                patientFormController.getAdd_passport().setDisable(false);
-                patientFormController.passport = new Passport(PassportNumberFormatter.removeSpecial(passport_number.getText()),passport_address.getText());
+                //patientFormController.getAdd_passport().setText(passport_number.getText());
+               // patientFormController.getAdd_passport().setDisable(false);
+                //patientFormController.passport = new Passport(PassportNumberFormatter.removeSpecial(passport_number.getText()),passport_address.getText());
                 GlobalResources.openedStages.get("PassportForm").close();
                 GlobalResources.openedStages.remove("PassportForm",GlobalResources.openedStages.get("PassportForm"));
                 return;

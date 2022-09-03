@@ -9,6 +9,7 @@ import javafx.stage.WindowEvent;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Patient;
 import ru.smirnygatotoshka.caseapp.Controllers.Registrator.PatientFormController;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
+import ru.smirnygatotoshka.caseapp.UIFactory.PatientEditFactory;
 
 import java.util.Optional;
 
@@ -17,13 +18,15 @@ public class PatientForm extends Stage {
     public PatientForm(Patient patient) {
         super();
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(PatientForm.class.getResource("add_patient.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(PatientForm.class.getResource("add_patient_new.fxml"));
 
-            Scene scene = new Scene(fxmlLoader.load());
+            //Scene scene = new Scene(fxmlLoader.load());
+            //PatientFormController.setPatient(patient);
+            PatientEditFactory patientEditFactory = new PatientEditFactory("PatientForm", patient);
+
+            Scene scene = new Scene(patientEditFactory.create());
             setTitle("Большой Шлёпа АРМ!");
             setScene(scene);
-            PatientFormController controller = fxmlLoader.getController();
-            controller.setPatient(patient);
             scene.getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST,this::onClose);
             show();
         }
