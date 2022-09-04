@@ -19,8 +19,11 @@ public abstract class DatabaseEditFactory extends UIFactory{
 
     protected ObservableList<String> labels;
 
-    public DatabaseEditFactory(String id_prefix) {
+    protected int row_percent;
+
+    public DatabaseEditFactory(String id_prefix, int row_percent) {
         super(id_prefix);
+        this.row_percent = row_percent;
     }
 
     @Override
@@ -58,7 +61,7 @@ public abstract class DatabaseEditFactory extends UIFactory{
             RowConstraints row = new RowConstraints();
             row.setVgrow(Priority.ALWAYS);
             row.setValignment(VPos.CENTER);
-            row.setPercentHeight(15);
+            row.setPercentHeight(row_percent);
             grid.getRowConstraints().add(row);
 
             Label label = new Label(labels.get(i));

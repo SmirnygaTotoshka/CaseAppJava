@@ -26,14 +26,14 @@ public class PoliceFormController implements Initializable {
         Status(String msg){this.message = msg;}
     }
 
-    private PatientFormController patientFormController;
+    //private PatientFormController patientFormController;
     @FXML
     private TextField police_number;
 
     @FXML
     private ComboBox<Reference> police_organization;
 
-    public void setPatientFormController(PatientFormController patientFormController) {
+   // public void setPatientFormController(PatientFormController patientFormController) {
         /*this.patientFormController = patientFormController;
         if (patientFormController.police == null){
             patientFormController.police = new Police();
@@ -48,7 +48,7 @@ public class PoliceFormController implements Initializable {
                 GlobalResources.alert(Alert.AlertType.WARNING,"Некорректное заполнение БД, проверьте омера полисов.");
             }*/
        // }
-    }
+   // }
 
 
 

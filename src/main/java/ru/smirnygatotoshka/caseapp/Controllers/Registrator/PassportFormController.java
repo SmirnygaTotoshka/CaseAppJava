@@ -26,9 +26,9 @@ public class PassportFormController implements Initializable {
         Status(String msg){this.message = msg;}
     }
 
-    private PatientFormController patientFormController;
+    //private PatientFormController patientFormController;
 
-    public void setPatientFormController(PatientFormController patientFormController) {
+   // public void setPatientFormController(PatientFormController patientFormController) {
         /*this.patientFormController = patientFormController;
         if (patientFormController.passport == null){
             patientFormController.passport = new Passport();
@@ -43,7 +43,7 @@ public class PassportFormController implements Initializable {
                 GlobalResources.alert(Alert.AlertType.WARNING,"Некорректное заполнение БД, проверьте серии и номера паспортов.");
             }*/
         //}
-    }
+   // }
 
     @FXML
     private TextField passport_number,passport_address;

@@ -25,8 +25,8 @@ public class PatientEditFactory extends DatabaseEditFactory{
 
     private Patient patient;
 
-    public PatientEditFactory(String id_prefix, Patient patient) {
-        super(id_prefix);
+    public PatientEditFactory(String id_prefix, Patient patient, int row_percent) {
+        super(id_prefix, row_percent);
         this.patient = patient;
         labels = FXCollections.observableArrayList("Фамилия","Имя","Отчество",
                 "Пол","Дата рождения","Льгота","Соц.статус","Место работы","Паспорт","СНИЛС","Полис","Семейное положение","Телефон");
@@ -84,7 +84,7 @@ public class PatientEditFactory extends DatabaseEditFactory{
                 "-fx-background-color: #CCCCFF;\n" +
                 "-fx-border-color: #000000;");
         passport.setOnAction(event -> {
-            PassportForm passForm = new PassportForm();
+            PassportForm passForm = new PassportForm(patient);
             passport.setDisable(true);
             GlobalResources.openedStages.put("PassportForm", passForm);
         });

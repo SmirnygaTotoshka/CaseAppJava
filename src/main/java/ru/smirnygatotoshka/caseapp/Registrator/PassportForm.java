@@ -6,20 +6,23 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import ru.smirnygatotoshka.caseapp.Controllers.Registrator.PatientFormController;
-import ru.smirnygatotoshka.caseapp.Controllers.Registrator.PassportFormController;
+import ru.smirnygatotoshka.caseapp.DataRepresentation.Passport;
+import ru.smirnygatotoshka.caseapp.DataRepresentation.Patient;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
+import ru.smirnygatotoshka.caseapp.UIFactory.PassportEditFactory;
+import ru.smirnygatotoshka.caseapp.UIFactory.PatientEditFactory;
 
 import java.util.Optional;
 
 public class PassportForm extends Stage {
 
-    private PatientFormController patientFormController;
-    public PassportForm() {
+    public PassportForm(Patient patient) {
         super();
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(PassportForm.class.getResource("add_passport.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
+            //FXMLLoader fxmlLoader = new FXMLLoader(PassportForm.class.getResource("add_passport.fxml"));
+            //Scene scene = new Scene(fxmlLoader.load());
+            PassportEditFactory passportEditFactory = new PassportEditFactory("PassportForm", patient, 40);
+            Scene scene = new Scene(passportEditFactory.create());
             setTitle("Большой Шлёпа АРМ!");
             setScene(scene);
 
