@@ -68,7 +68,7 @@ public abstract class DatabaseEditFactory extends UIFactory{
             label.setFont(GlobalResources.usualFont);
             label.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
             grid.add(label, 0, i);
-            put(label, label + "_label");
+            put(label, label.getText() + "_label");
 
 
         }

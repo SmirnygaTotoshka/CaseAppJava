@@ -13,10 +13,16 @@ import java.util.Optional;
 
 public class PatientForm extends Stage {
 
+    public PatientEditFactory getPatientEditFactory() {
+        return patientEditFactory;
+    }
+
+    private PatientEditFactory patientEditFactory;
+
     public PatientForm(Patient patient) {
         super();
         try {
-            PatientEditFactory patientEditFactory = new PatientEditFactory("PatientForm", patient, 15);
+            patientEditFactory = new PatientEditFactory("PatientForm", patient, 15);
             Scene scene = new Scene(patientEditFactory.create());
             setTitle("Большой Шлёпа АРМ!");
             setScene(scene);

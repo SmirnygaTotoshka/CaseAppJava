@@ -42,4 +42,9 @@ public class GlobalResources {
             ctrl.disableProperty().set(enable);
         }
     }
+
+    public static void closeStage(String name){
+        openedStages.get(name).close();
+        openedStages.remove(name,openedStages.get(name));
+    }
 }

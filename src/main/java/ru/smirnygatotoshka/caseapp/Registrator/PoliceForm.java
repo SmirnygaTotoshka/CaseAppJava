@@ -19,7 +19,7 @@ public class PoliceForm extends Stage {
             //FXMLLoader fxmlLoader = new FXMLLoader(PoliceForm.class.getResource("add_police.fxml"));
             //Scene scene = new Scene(fxmlLoader.load());
 
-            PoliceEditFactory passportEditFactory = new PoliceEditFactory("PassportForm", patient, 40);
+            PoliceEditFactory passportEditFactory = new PoliceEditFactory("PoliceForm", patient, 40);
             Scene scene = new Scene(passportEditFactory.create());
             setTitle("Большой Шлёпа АРМ!");
             setScene(scene);
