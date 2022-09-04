@@ -95,7 +95,7 @@ public class PatientEditFactory extends DatabaseEditFactory{
                 "-fx-background-color: #CCCCFF;\n" +
                 "-fx-border-color: #000000;");
         police.setOnAction(event -> {
-            PoliceForm polForm = new PoliceForm();
+            PoliceForm polForm = new PoliceForm(patient);
             police.setDisable(true);
             GlobalResources.openedStages.put("PoliceForm", polForm);
         });

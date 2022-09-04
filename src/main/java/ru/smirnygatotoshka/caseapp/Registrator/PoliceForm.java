@@ -6,16 +6,21 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import ru.smirnygatotoshka.caseapp.DataRepresentation.Patient;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
+import ru.smirnygatotoshka.caseapp.UIFactory.PoliceEditFactory;
 
 import java.util.Optional;
 
 public class PoliceForm extends Stage {
-    public PoliceForm() {
+    public PoliceForm(Patient patient) {
         super();
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(PoliceForm.class.getResource("add_police.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
+            //FXMLLoader fxmlLoader = new FXMLLoader(PoliceForm.class.getResource("add_police.fxml"));
+            //Scene scene = new Scene(fxmlLoader.load());
+
+            PoliceEditFactory passportEditFactory = new PoliceEditFactory("PassportForm", patient, 40);
+            Scene scene = new Scene(passportEditFactory.create());
             setTitle("Большой Шлёпа АРМ!");
             setScene(scene);
 
