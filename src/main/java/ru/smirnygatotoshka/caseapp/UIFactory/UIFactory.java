@@ -16,7 +16,7 @@ public abstract class UIFactory {
 
     public abstract Parent create();
 
-    protected abstract String getColumnNameFromDB(String item);
+
 
     public Parent getElement(String id){
         return elements.get(id);

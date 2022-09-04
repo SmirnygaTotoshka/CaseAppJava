@@ -92,6 +92,7 @@ public class PassportEditFactory extends DatabaseEditFactory {
         return scrollPane;
     }
 
+
     @Override
     protected void saveRecord(ActionEvent event) {
         Status status = check();
@@ -117,10 +118,6 @@ public class PassportEditFactory extends DatabaseEditFactory {
 
     }
 
-    @Override
-    protected String getColumnNameFromDB(String item) {
-        return null;
-    }
 
     private Status check() {
         if (number.getText().length() != 11)

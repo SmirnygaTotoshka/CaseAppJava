@@ -7,18 +7,35 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.stage.WindowEvent;
 import javafx.util.converter.DefaultStringConverter;
+import ru.smirnygatotoshka.caseapp.Controllers.Registrator.PoliceFormController;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Passport;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Patient;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Police;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Reference;
 import ru.smirnygatotoshka.caseapp.Database.Database;
+import ru.smirnygatotoshka.caseapp.Database.PatientsActions;
 import ru.smirnygatotoshka.caseapp.Formatters.PassportNumberFormatter;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
+import ru.smirnygatotoshka.caseapp.Registrator.PatientForm;
+
+import java.util.Optional;
 
 public class PoliceEditFactory extends DatabaseEditFactory{
 
+    private enum Status{
+        OK("OK"),
+        INVALID_NUMBER("Введите правильный номер полиса."),
+        NO_COMPANY("Выберите страховую компанию.");
+        public String message;
+        Status(String msg){this.message = msg;}
+    }
+
     private Police police;
+    private TextField number;
+    private ChoiceBox<Reference> smo;
+    private Button police_button;
 
     public PoliceEditFactory(String id_prefix, Patient patient, int row_percent) {
         super(id_prefix,row_percent);
@@ -38,6 +55,7 @@ public class PoliceEditFactory extends DatabaseEditFactory{
                 GlobalResources.alert(Alert.AlertType.WARNING,"В БД несколько одинаковых полисов! Проверьте БД!");
             }
         }
+        police_button = (Button) ((PatientForm) GlobalResources.openedStages.get("PatientForm")).getPatientEditFactory().get("Police");
     }
 
     @Override
@@ -45,7 +63,7 @@ public class PoliceEditFactory extends DatabaseEditFactory{
         ScrollPane scrollPane = (ScrollPane) super.create();
         scrollPane.setPrefSize(700,300);
 
-        TextField number = new TextField();
+        number = new TextField();
         number.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         number.setFont(GlobalResources.usualFont);
         number.setPromptText("1234567890123456");
@@ -65,7 +83,7 @@ public class PoliceEditFactory extends DatabaseEditFactory{
 
         ObservableList<Reference> domen_smo = Database.getReference("spr_SMO");
 
-        ChoiceBox<Reference> smo = new ChoiceBox<>(domen_smo);
+        smo = new ChoiceBox<>(domen_smo);
         smo.setValue(police == null ? smo.getItems().get(0) : GlobalResources.findItemFromReference(domen_smo, police.getOrganization()));
         smo.setStyle("-fx-font: Serif;" +
                 "-fx-font-size: 18px;" +
@@ -80,13 +98,52 @@ public class PoliceEditFactory extends DatabaseEditFactory{
         return scrollPane;
     }
 
+
     @Override
     protected void saveRecord(ActionEvent event) {
-
+        Status status = check();
+        switch (status){
+            case OK:
+                /*patientFormController.getAdd_police().setText(police_number.getText());
+                patientFormController.police = new Police(police_number.getText(),police_organization.getValue().toString());
+                GlobalResources.openedStages.get("PoliceForm").close();
+                GlobalResources.openedStages.remove("PoliceForm",GlobalResources.openedStages.get("PoliceForm"));
+                patientFormController.getAdd_police().setDisable(false);*/
+                police = new Police(number.getText(),smo.getValue().toString());
+                PatientsActions.setPolice(police);
+                police_button.setDisable(false);
+                police_button.setText(police.getNumber());
+                GlobalResources.closeStage("PoliceForm");
+                return;
+            case INVALID_NUMBER:
+                number.requestFocus();
+                break;
+            case NO_COMPANY:
+                smo.requestFocus();
+                break;
+        }
+        GlobalResources.alert(Alert.AlertType.WARNING,status.message);
     }
 
-    @Override
-    protected String getColumnNameFromDB(String item) {
-        return null;
+    private Status check() {
+        if (number.getText().length() != 16)
+            return Status.INVALID_NUMBER;
+        if (smo.getValue().toString().isEmpty() || smo.getValue().toString().isBlank())
+            return Status.NO_COMPANY;
+
+        return Status.OK;
     }
+
+    public void onClose(WindowEvent event){
+        Optional<ButtonType> answer = GlobalResources.alert(Alert.AlertType.CONFIRMATION,"Продолжить без сохранения?");
+        if (answer.get() == ButtonType.OK){
+            GlobalResources.closeStage("PoliceForm");
+            police_button.setDisable(false);
+        }
+        else {
+            event.consume();
+        }
+    }
+
+
 }

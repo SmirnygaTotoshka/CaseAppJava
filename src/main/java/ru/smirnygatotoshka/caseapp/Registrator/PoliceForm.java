@@ -19,12 +19,12 @@ public class PoliceForm extends Stage {
             //FXMLLoader fxmlLoader = new FXMLLoader(PoliceForm.class.getResource("add_police.fxml"));
             //Scene scene = new Scene(fxmlLoader.load());
 
-            PoliceEditFactory passportEditFactory = new PoliceEditFactory("PoliceForm", patient, 40);
-            Scene scene = new Scene(passportEditFactory.create());
+            PoliceEditFactory policeEditFactory = new PoliceEditFactory("PoliceForm", patient, 40);
+            Scene scene = new Scene(policeEditFactory.create());
             setTitle("Большой Шлёпа АРМ!");
             setScene(scene);
 
-            scene.getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST,this::onClose);
+            scene.getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST,policeEditFactory::onClose);
             show();
         }
         catch(Exception e){
@@ -33,14 +33,4 @@ public class PoliceForm extends Stage {
         }
     }
 
-    private void onClose(WindowEvent event){
-        Optional<ButtonType> answer = GlobalResources.alert(Alert.AlertType.CONFIRMATION,"Продолжить без сохранения?");
-        if (answer.get() == ButtonType.OK){
-            //GlobalResources.openedStages.get("PatientForm").close();
-            GlobalResources.openedStages.remove("PoliceForm",GlobalResources.openedStages.get("PoliceForm"));
-        }
-        else {
-            event.consume();
-        }
-    }
 }

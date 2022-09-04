@@ -24,6 +24,8 @@ public abstract class LookupFactory<I, L> extends UIFactory {
         this.lookup_items = lookup_items;
     }
 
+    protected abstract String getColumnNameFromDB(String item);
+
     @Override
     public Parent create() {
         GridPane parent = new GridPane();

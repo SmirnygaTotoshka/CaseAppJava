@@ -191,8 +191,5 @@ public class PatientEditFactory extends DatabaseEditFactory{
     }
 
 
-    @Override
-    protected String getColumnNameFromDB(String item) {
-        return null;
-    }
+
 }
