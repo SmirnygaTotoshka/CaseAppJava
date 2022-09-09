@@ -8,15 +8,11 @@ import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.stage.WindowEvent;
-import javafx.util.converter.DefaultStringConverter;
-import ru.smirnygatotoshka.caseapp.Controllers.Registrator.PoliceFormController;
-import ru.smirnygatotoshka.caseapp.DataRepresentation.Passport;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Patient;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Police;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Reference;
 import ru.smirnygatotoshka.caseapp.Database.Database;
 import ru.smirnygatotoshka.caseapp.Database.PatientsActions;
-import ru.smirnygatotoshka.caseapp.Formatters.PassportNumberFormatter;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
 import ru.smirnygatotoshka.caseapp.Registrator.PatientForm;
 

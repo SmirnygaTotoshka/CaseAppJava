@@ -3,6 +3,7 @@ package ru.smirnygatotoshka.caseapp.DataRepresentation;
 import javafx.beans.property.*;
 
 import java.sql.Date;
+import java.util.Objects;
 
 public class Patient {
     private SimpleStringProperty sirname,name,secondName;
@@ -193,5 +194,18 @@ public class Patient {
 
     public SimpleObjectProperty<Date> dobProperty(){
         return dob;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Patient patient = (Patient) o;
+        return sirname.equals(patient.sirname) && name.equals(patient.name) && secondName.equals(patient.secondName) && sex.equals(patient.sex) && dob.equals(patient.dob) && priviledge.equals(patient.priviledge) && employment.equals(patient.employment) && workplace.equals(patient.workplace) && passport.equals(patient.passport) && police.equals(patient.police) && snils.equals(patient.snils) && familyStatus.equals(patient.familyStatus) && telephone.equals(patient.telephone);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(sirname, name, secondName, sex, dob, priviledge, employment, workplace, passport, police, snils, familyStatus, telephone);
     }
 }

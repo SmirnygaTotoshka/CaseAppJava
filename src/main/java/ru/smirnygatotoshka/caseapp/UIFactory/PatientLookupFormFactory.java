@@ -6,21 +6,20 @@ import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Patient;
 import ru.smirnygatotoshka.caseapp.Database.Database;
+import ru.smirnygatotoshka.caseapp.Database.PatientsActions;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
 import ru.smirnygatotoshka.caseapp.Registrator.PatientForm;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 //TODO
 public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
@@ -212,7 +211,6 @@ public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
     @Override
     protected void addAction(ActionEvent event) {
         PatientForm form = new PatientForm(null);
-        //form.setPatient(null);
         GlobalResources.openedStages.put("PatientForm", form);
     }
 
@@ -224,13 +222,19 @@ public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
         }
         else {
             PatientForm form = new PatientForm(selectedPatient);
-            //form.setPatient(selectedPatient);
             GlobalResources.openedStages.put("PatientForm", form);
         }
     }
 
     @Override
     protected void deleteAction(ActionEvent event) {
-
+        Patient selectedPatient = tablePatients.getSelectionModel().getSelectedItem();
+        Optional<ButtonType> answer = GlobalResources.alert(Alert.AlertType.CONFIRMATION,"Удалить пациента?");
+        if (answer.get() == ButtonType.OK){
+            PatientsActions.delete(selectedPatient);
+        }
+        else {
+            event.consume();
+        }
     }
 }

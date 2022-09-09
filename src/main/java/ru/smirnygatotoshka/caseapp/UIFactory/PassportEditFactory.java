@@ -98,9 +98,6 @@ public class PassportEditFactory extends DatabaseEditFactory {
         Status status = check();
         switch (status){
             case OK:
-                //patientFormController.getAdd_passport().setText(passport_number.getText());
-                // patientFormController.getAdd_passport().setDisable(false);
-                //patientFormController.passport = new Passport(PassportNumberFormatter.removeSpecial(passport_number.getText()),passport_address.getText());
                 passport = new Passport(PassportNumberFormatter.removeSpecial(number.getText()),address.getText());
                 PatientsActions.setPassport(passport);
                 pass_button.setDisable(false);

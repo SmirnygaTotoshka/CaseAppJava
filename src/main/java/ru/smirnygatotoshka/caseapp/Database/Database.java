@@ -201,7 +201,7 @@ public class Database {
         }
     }
 
-    public static void addPatient(Patient patient,Passport passport, Police police){
+  /*  public static void addPatient(Patient patient,Passport passport, Police police){
         try {//TODO
             con.setAutoCommit(false);
             if (isAbsencePatient(patient,passport,police)){
@@ -228,9 +228,9 @@ public class Database {
                 e.printStackTrace();
             }
         }
-    }
-    private static boolean isAbsencePatient(Patient patient,Passport passport, Police police) throws SQLException {
-        String query = "SELECT Count(Sirname) FROM tbl_Patient WHERE (Sirname = ? AND Name= ? AND SecondName = ?) OR Snils = ?;";
+    }*/
+    static boolean isAbsencePatient(Patient patient,Passport passport, Police police) throws SQLException {
+        String query = "SELECT Count(Sirname) FROM tbl_Patient WHERE (Sirname = ? AND Name= ? AND SecondName = ?) AND Snils = ?;";
         PreparedStatement statement = con.prepareStatement(query);
         statement.setString(1, patient.getSirname());
         statement.setString(2, patient.getName());
@@ -240,7 +240,8 @@ public class Database {
         return rs.getInt(1) == 0 & isAbsencePolice(police) & isAbsencePassport(passport);
 
     }
-    private static boolean isAbsencePassport(Passport passport) throws SQLException {
+
+    static boolean isAbsencePassport(Passport passport) throws SQLException {
         String query = "SELECT Count(Number) FROM tbl_Passports WHERE Number = ?;";
         PreparedStatement statement = con.prepareStatement(query);
         statement.setString(1, passport.getNumber());
@@ -249,7 +250,7 @@ public class Database {
 
     }
 
-    private static boolean isAbsencePolice(Police police) throws SQLException {
+    static boolean isAbsencePolice(Police police) throws SQLException {
         String query = "SELECT Count(Number) FROM tbl_Polices WHERE Number = ?;";
         PreparedStatement statement = con.prepareStatement(query);
         statement.setString(1, police.getNumber());

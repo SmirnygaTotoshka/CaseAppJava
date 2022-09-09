@@ -46,7 +46,7 @@ public class PassportNumberFormatter  implements UnaryOperator<TextFormatter.Cha
 
     public static String removeSpecial(String input){
         StringBuilder builder = new StringBuilder(input);
-        builder.delete(4,5);
+        builder.deleteCharAt(4);
         return builder.toString();
     }
 }
