@@ -8,9 +8,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import ru.smirnygatotoshka.caseapp.Database.Database;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Optional;
 
 public class RegistratorARM extends Stage {
@@ -40,6 +42,12 @@ public class RegistratorARM extends Stage {
             /*for (String key: GlobalResources.openedStages.keySet()) {
                 GlobalResources.openedStages.get(key).close();
             }*/
+            try {
+                Database.getConnection().close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
             Platform.exit();
         }
         else {

@@ -277,6 +277,7 @@ public class PatientEditFactory extends DatabaseEditFactory{
         }
         GlobalResources.closeStage("PatientForm");
         GlobalResources.openedStages.remove("PatientForm",GlobalResources.openedStages.get("PatientForm"));
+
     }
 
     private Status check(){
@@ -288,7 +289,7 @@ public class PatientEditFactory extends DatabaseEditFactory{
             return Status.EMPTY_WORKPLACE;
         if (snils.getText().length() != 14)
             return Status.INVALID_SNILS;
-        if (telephone.getText().length() != 13)
+        if (telephone.getText().length() != 14)
             return Status.INVALID_TELEPHONE;
         if (passport.getText().contentEquals("Добавить"))
             return Status.NO_PASSPORT;

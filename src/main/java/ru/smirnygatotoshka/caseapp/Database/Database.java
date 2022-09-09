@@ -10,10 +10,6 @@ import ru.smirnygatotoshka.caseapp.DataRepresentation.Reference;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
 
 import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
-
-import static java.sql.DriverManager.*;
 
 /**
  * TODO connections pooling
@@ -26,7 +22,7 @@ public class Database {
     // JDBC variables for opening and managing connection
     private static Connection con;
 
-    public static Connection getConnection() {
+    public synchronized static Connection getConnection() {
         return con;
     }
 
@@ -201,6 +197,24 @@ public class Database {
         }
     }
 
+    static int getPrimaryKeyByValue(String spr_name, String value){
+        String query = "SELECT ID, NAME FROM " + spr_name + " WHERE NAME = ?;";
+        try {
+            PreparedStatement statement = con.prepareStatement(query);
+            statement.setString(1, value);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()){
+                return rs.getInt(1);
+            }
+            else{
+                throw new SQLException("Value " + value + " doesn`t exist in " + spr_name);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
   /*  public static void addPatient(Patient patient,Passport passport, Police police){
         try {//TODO
             con.setAutoCommit(false);
@@ -229,35 +243,6 @@ public class Database {
             }
         }
     }*/
-    static boolean isAbsencePatient(Patient patient,Passport passport, Police police) throws SQLException {
-        String query = "SELECT Count(Sirname) FROM tbl_Patient WHERE (Sirname = ? AND Name= ? AND SecondName = ?) AND Snils = ?;";
-        PreparedStatement statement = con.prepareStatement(query);
-        statement.setString(1, patient.getSirname());
-        statement.setString(2, patient.getName());
-        statement.setString(3, patient.getSecondName());
-        statement.setString(4, patient.getSnils());
-        ResultSet rs = statement.executeQuery();
-        return rs.getInt(1) == 0 & isAbsencePolice(police) & isAbsencePassport(passport);
-
-    }
-
-    static boolean isAbsencePassport(Passport passport) throws SQLException {
-        String query = "SELECT Count(Number) FROM tbl_Passports WHERE Number = ?;";
-        PreparedStatement statement = con.prepareStatement(query);
-        statement.setString(1, passport.getNumber());
-        ResultSet rs = statement.executeQuery();
-        return rs.getInt(1) == 0;
-
-    }
-
-    static boolean isAbsencePolice(Police police) throws SQLException {
-        String query = "SELECT Count(Number) FROM tbl_Polices WHERE Number = ?;";
-        PreparedStatement statement = con.prepareStatement(query);
-        statement.setString(1, police.getNumber());
-        ResultSet rs = statement.executeQuery();
-        return rs.getInt(1) == 0;
-
-    }
 
 
     /*public ResultSet execute(String query, Object[] params)throws SQLException{
