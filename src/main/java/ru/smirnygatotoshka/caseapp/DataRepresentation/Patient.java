@@ -201,11 +201,16 @@ public class Patient {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Patient patient = (Patient) o;
-        return sirname.equals(patient.sirname) && name.equals(patient.name) && secondName.equals(patient.secondName) && sex.equals(patient.sex) && dob.equals(patient.dob) && priviledge.equals(patient.priviledge) && employment.equals(patient.employment) && workplace.equals(patient.workplace) && passport.equals(patient.passport) && police.equals(patient.police) && snils.equals(patient.snils) && familyStatus.equals(patient.familyStatus) && telephone.equals(patient.telephone);
+        return sirname.get().contentEquals(patient.sirname.get()) && name.get().contentEquals(patient.name.get()) &&
+                secondName.get().contentEquals(patient.secondName.get()) && sex.get().contentEquals(patient.sex.get()) &&
+                dob.get().compareTo(patient.dob.get()) == 0 && priviledge.get().contentEquals(patient.priviledge.get()) &&
+                employment.get().contentEquals(patient.employment.get()) && workplace.get().contentEquals(patient.workplace.get()) &&
+                passport.get().contentEquals(patient.passport.get()) && police.get().contentEquals(patient.police.get()) &&
+                snils.get().contentEquals(patient.snils.get()) && familyStatus.get().contentEquals(patient.familyStatus.get()) && telephone.get().contentEquals(patient.telephone.get());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(sirname, name, secondName, sex, dob, priviledge, employment, workplace, passport, police, snils, familyStatus, telephone);
+        return Objects.hash(sirname.get(), name.get(), secondName.get(), sex.get(), dob.get(), priviledge.get(), employment.get(), workplace.get(), passport.get(), police, snils, familyStatus, telephone);
     }
 }

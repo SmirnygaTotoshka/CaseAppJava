@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Control;
+import javafx.scene.layout.Region;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Reference;
@@ -22,10 +23,11 @@ public class GlobalResources {
 
     public static Optional<ButtonType> alert(Alert.AlertType type, String message){
         Alert alert  = new Alert(type);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.setTitle("Большой Шлёпа АРМ");
         alert.setContentText(message);
-        alert.setWidth(500);
-        alert.setHeight(500);
+       /* alert.setWidth(500);
+        alert.setHeight(500);*/
         return alert.showAndWait();
     }
 

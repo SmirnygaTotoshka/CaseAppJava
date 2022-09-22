@@ -204,7 +204,10 @@ public class PatientEditFactory extends DatabaseEditFactory{
         addField(family_status, 11, "FamilyStatus");
         addField(telephone, 12, "Telephone");
 
-
+        if (patient != null) {
+            PatientsActions.setPassport(PatientsActions.getPassportByNumber(patient.getPassport()));
+            PatientsActions.setPolice(PatientsActions.getPoliceByNumber(patient.getPolice()));
+        }
         return scrollPane;
     }
 

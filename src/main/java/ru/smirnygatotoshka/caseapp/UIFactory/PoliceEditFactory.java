@@ -13,9 +13,11 @@ import ru.smirnygatotoshka.caseapp.DataRepresentation.Police;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Reference;
 import ru.smirnygatotoshka.caseapp.Database.Database;
 import ru.smirnygatotoshka.caseapp.Database.PatientsActions;
+import ru.smirnygatotoshka.caseapp.Formatters.PassportNumberFormatter;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
 import ru.smirnygatotoshka.caseapp.Registrator.PatientForm;
 
+import java.sql.SQLException;
 import java.util.Optional;
 
 public class PoliceEditFactory extends DatabaseEditFactory{
@@ -40,16 +42,7 @@ public class PoliceEditFactory extends DatabaseEditFactory{
             police = null;
         }
         else {
-            String query = "SELECT Number,spr_SMO.NAME as Organization FROM tbl_Polices " +
-                    "INNER JOIN spr_SMO ON spr_SMO.ID = tbl_Polices.Organization " +
-                    "WHERE Number = " + patient.getPolice() + ";";
-            ObservableList<Police> polices = Database.getPolices(query);
-            if (polices.size() == 1){
-                police = polices.get(0);
-            }
-            else if (polices.size() > 1){
-                GlobalResources.alert(Alert.AlertType.WARNING,"В БД несколько одинаковых полисов! Проверьте БД!");
-            }
+            police = PatientsActions.getPoliceByNumber(patient.getPolice());
         }
         police_button = (Button) ((PatientForm) GlobalResources.openedStages.get("PatientForm")).getPatientEditFactory().get("Police");
     }
@@ -105,11 +98,23 @@ public class PoliceEditFactory extends DatabaseEditFactory{
                 GlobalResources.openedStages.get("PoliceForm").close();
                 GlobalResources.openedStages.remove("PoliceForm",GlobalResources.openedStages.get("PoliceForm"));
                 patientFormController.getAdd_police().setDisable(false);*/
-                police = new Police(number.getText(),smo.getValue().toString());
-                PatientsActions.setPolice(police);
-                police_button.setDisable(false);
-                police_button.setText(police.getNumber());
-                GlobalResources.closeStage("PoliceForm");
+                try {
+                    if (PatientsActions.isAbsencePolice(police)&&
+                            (!police.getNumber().contentEquals(number.getText()) ||
+                             !police.getOrganization().contentEquals(smo.getValue().toString()))) {
+                        GlobalResources.alert(Alert.AlertType.WARNING, "Данный полис уже существует в БД.");
+                    }
+                    else {
+                        police = new Police(number.getText(), smo.getValue().toString());
+                        PatientsActions.setPolice(police);
+                        police_button.setDisable(false);
+                        police_button.setText(police.getNumber());
+                        GlobalResources.closeStage("PoliceForm");
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
                 return;
             case INVALID_NUMBER:
                 number.requestFocus();

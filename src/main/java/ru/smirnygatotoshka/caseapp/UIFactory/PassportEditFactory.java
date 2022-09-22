@@ -17,6 +17,7 @@ import ru.smirnygatotoshka.caseapp.Formatters.PassportNumberFormatter;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
 import ru.smirnygatotoshka.caseapp.Registrator.PatientForm;
 
+import java.sql.SQLException;
 import java.util.Optional;
 
 public class PassportEditFactory extends DatabaseEditFactory {
@@ -42,13 +43,7 @@ public class PassportEditFactory extends DatabaseEditFactory {
             passport = null;
         }
         else {
-            String query = "SELECT Number,Address FROM tbl_Passports WHERE Number = " + patient.getPassport() + ";";
-            ObservableList<Passport> passports = Database.getPassports(query);
-            if (passports.size() == 1) {
-                passport = passports.get(0);
-            } else if (passports.size() > 1) {
-                GlobalResources.alert(Alert.AlertType.WARNING, "В БД несколько одинаковых паспортов! Проверьте БД!");
-            }
+            passport = PatientsActions.getPassportByNumber(patient.getPassport());
         }
 
         pass_button = (Button) ((PatientForm) GlobalResources.openedStages.get("PatientForm")).getPatientEditFactory().get("Passport");
@@ -96,11 +91,23 @@ public class PassportEditFactory extends DatabaseEditFactory {
         Status status = check();
         switch (status){
             case OK:
-                passport = new Passport(PassportNumberFormatter.removeSpecial(number.getText()),address.getText());
-                PatientsActions.setPassport(passport);
-                pass_button.setDisable(false);
-                pass_button.setText(passport.getNumber());
-                GlobalResources.closeStage("PassportForm");
+                try {
+                    if (PatientsActions.isAbsencePassport(passport) &&
+                            (!passport.getNumber().contentEquals(PassportNumberFormatter.removeSpecial(number.getText())) ||
+                            !passport.getAddress().contentEquals(address.getText()))){
+                        GlobalResources.alert(Alert.AlertType.WARNING, "Данный полис уже существует в БД.");
+                    }
+                    else {
+                        passport = new Passport(PassportNumberFormatter.removeSpecial(number.getText()),address.getText());
+                        PatientsActions.setPassport(passport);
+                        pass_button.setDisable(false);
+                        pass_button.setText(passport.getNumber());
+                        GlobalResources.closeStage("PassportForm");
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
                 return;
             case INVALID_NUMBER:
                 number.requestFocus();
