@@ -1,16 +1,19 @@
 package ru.smirnygatotoshka.caseapp.UIFactory;
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Patient;
 import ru.smirnygatotoshka.caseapp.Database.Database;
 import ru.smirnygatotoshka.caseapp.Database.PatientsActions;
@@ -26,6 +29,7 @@ public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
 
     private FilteredList<Patient> patients;
     private TableView<Patient> tablePatients;
+    private TextField seeking_query;
 
     private static final ObservableList<String> LOOKUP_HEADERS = FXCollections.observableArrayList("Фамилия","Имя","Отчество",
             "Пол","Дата рождения","Льгота","Соц.статус","Место работы","Паспорт","СНИЛС","Полис","Семейное положение","Телефон");
@@ -53,7 +57,7 @@ public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
         GridPane parent = (GridPane) super.create();
 
         tablePatients = (TableView<Patient>) get("lookupTable");
-        TextField seeking_query = (TextField) get("lookup");
+        seeking_query = (TextField) get("lookup");
         ChoiceBox<String> select_seek = (ChoiceBox<String>) get("lookupChoices");
 
 
@@ -105,11 +109,14 @@ public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
                 tableView -> {
                     final TableRow<Patient> row = new TableRow<>();
                     final ContextMenu rowMenu = new ContextMenu();
+                    MenuItem refreshItem = new MenuItem("Обновить");
+                    refreshItem.setOnAction(event -> tablePatients.refresh());
                     MenuItem editItem = new MenuItem("Редактировать");
                     editItem.setOnAction(event -> edit.fire());
                     MenuItem removeItem = new MenuItem("Удалить");
                     removeItem.setOnAction(event -> delete.fire());
-                    rowMenu.getItems().addAll(editItem, removeItem);
+
+                    rowMenu.getItems().addAll(refreshItem, editItem, removeItem);
 
                     // only display context menu for non-empty rows:
                     row.contextMenuProperty().bind(
@@ -210,10 +217,17 @@ public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
 
     @Override
     protected void addAction(ActionEvent event) {
-        PatientForm form = new PatientForm(null);
+        PatientForm form = new PatientForm(null,tablePatients);
+        form.setOnHiding(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                refresh();//TODO
+                System.out.println("Add");
+            }
+        });
         GlobalResources.openedStages.put("PatientForm", form);
     }
-
+//TODO
     @Override
     protected void editAction(ActionEvent event) {
         Patient selectedPatient = tablePatients.getSelectionModel().getSelectedItem();
@@ -221,11 +235,25 @@ public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
             GlobalResources.alert(Alert.AlertType.INFORMATION,"Выберите пациента.");
         }
         else {
-            PatientForm form = new PatientForm(selectedPatient);
+            PatientForm form = new PatientForm(selectedPatient,tablePatients);
+            /*form.getScene().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST,new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent windowEvent) {
+                    refresh();//TODO
+                    System.out.println("Edit");
+                }
+            });*/
+            form.setOnHiding(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent windowEvent) {
+                    refresh();//TODO
+                    System.out.println("Edit");
+                }
+            });
             GlobalResources.openedStages.put("PatientForm", form);
         }
     }
-
+//TODO
     @Override
     protected void deleteAction(ActionEvent event) {
         Patient selectedPatient = tablePatients.getSelectionModel().getSelectedItem();
@@ -236,5 +264,25 @@ public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
         else {
             event.consume();
         }
+        refresh();
+        System.out.println("Delete");
+    }
+
+    private void refresh(){
+        String query = "SELECT Sirname, tbl_Patients.Name as Name, SecondName, spr_Sex.NAME as Sex, Birthday, " +
+                "spr_Priviledge.NAME as Priviledge, spr_Employment.NAME as Employment," +
+                " Workplace, tbl_Passports.Number as Passport,Snils, tbl_Polices.Number as Police, " +
+                "spr_FamilyStatus.NAME as FamilyStatus, Telephone FROM tbl_Patients " +
+                "INNER JOIN spr_Sex ON spr_Sex.ID = tbl_Patients.Sex " +
+                "INNER JOIN spr_Priviledge ON spr_Priviledge.ID = tbl_Patients.Priviledge " +
+                "INNER JOIN spr_Employment ON spr_Employment.ID = tbl_Patients.Employment " +
+                "INNER JOIN tbl_Passports ON tbl_Passports.ID = tbl_Patients.Passport " +
+                "INNER JOIN tbl_Polices ON tbl_Polices.ID = tbl_Patients.Police " +
+                "INNER JOIN spr_FamilyStatus ON spr_FamilyStatus.ID = tbl_Patients.FamilyStatus;";
+        // patients = Database.getPatients("SELECT * FROM tbl_Patients");
+        ObservableList<Patient> list_patients = Database.getPatients(query);
+        patients = new FilteredList<>(list_patients);
+        tablePatients.itemsProperty().set(patients);
+        tablePatients.refresh();
     }
 }

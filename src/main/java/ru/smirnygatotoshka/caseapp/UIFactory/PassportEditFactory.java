@@ -91,6 +91,9 @@ public class PassportEditFactory extends DatabaseEditFactory {
         Status status = check();
         switch (status){
             case OK:
+                if (passport == null){
+                    passport = new Passport(PassportNumberFormatter.removeSpecial(number.getText()),address.getText());
+                }
                 try {
                     if (PatientsActions.isAbsencePassport(passport) &&
                             (!passport.getNumber().contentEquals(PassportNumberFormatter.removeSpecial(number.getText())) ||

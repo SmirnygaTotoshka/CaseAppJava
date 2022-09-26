@@ -98,6 +98,9 @@ public class PoliceEditFactory extends DatabaseEditFactory{
                 GlobalResources.openedStages.get("PoliceForm").close();
                 GlobalResources.openedStages.remove("PoliceForm",GlobalResources.openedStages.get("PoliceForm"));
                 patientFormController.getAdd_police().setDisable(false);*/
+                if (police == null){
+                    police = new Police(number.getText(), smo.getValue().toString());
+                }
                 try {
                     if (PatientsActions.isAbsencePolice(police)&&
                             (!police.getNumber().contentEquals(number.getText()) ||

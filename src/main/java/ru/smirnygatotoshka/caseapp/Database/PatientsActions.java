@@ -257,7 +257,105 @@ public class PatientsActions {
     }
 
     public static void delete(Patient whom){
-//TODO quieries
+        Connection con = Database.getConnection();
+        try {
+            setPatient(whom);
+            con.setAutoCommit(false);
+
+            int whom_pass = -1;
+            int whom_pol = -1;
+
+            PreparedStatement whom_pass_query = con.prepareStatement("SELECT ID, Number FROM tbl_Passports WHERE Number = ?;");
+            whom_pass_query.setString(1, whom.getPassport());
+            ResultSet rs2 = whom_pass_query.executeQuery();
+            if (rs2.next()){
+                whom_pass = rs2.getInt(1);
+            }
+            else {
+                throw new SQLException("Couldnt find the passport " + whom.getPassport());
+            }
+
+            PreparedStatement whom_pol_query = con.prepareStatement("SELECT ID, Number FROM tbl_Polices WHERE Number = ?;");
+            whom_pol_query.setString(1, whom.getPolice());
+            ResultSet rs3 = whom_pol_query.executeQuery();
+            if (rs3.next()){
+                whom_pol = rs3.getInt(1);
+            }
+            else {
+                throw new SQLException("Couldnt find the police " + whom.getPolice());
+            }
+
+
+            int sex = Database.getPrimaryKeyByValue("spr_Sex", patient.getSex());
+            int priviledge = Database.getPrimaryKeyByValue("spr_Priviledge", patient.getPriviledge());
+            int employment = Database.getPrimaryKeyByValue("spr_Employment", patient.getEmployment());
+            int family_status = Database.getPrimaryKeyByValue("spr_FamilyStatus", patient.getFamilyStatus());
+
+
+
+            String q_i_pat = "DELETE FROM tbl_Patients WHERE Sirname = ? AND Name = ? AND  SecondName = ? AND Sex = ? AND Birthday = ? AND Priviledge = ? AND Employment = ? AND " +
+                    "Workplace = ? AND Passport = ? AND Snils = ? AND Police = ? AND FamilyStatus = ? AND Telephone = ?;";
+
+
+            PreparedStatement statement2 = con.prepareStatement(q_i_pat);
+            statement2.setString(1, patient.getSirname());
+            statement2.setString(2, patient.getName());
+            statement2.setString(3, patient.getSecondName());
+            statement2.setInt(4, sex);
+            statement2.setDate(5, patient.getDob());
+            statement2.setInt(6, priviledge);
+            statement2.setInt(7, employment);
+            statement2.setString(8, patient.getWorkplace());
+            statement2.setInt(9, whom_pass);
+            statement2.setString(10, patient.getSnils());
+            statement2.setInt(11, whom_pol);
+            statement2.setInt(12, family_status);
+            statement2.setString(13, patient.getTelephone());
+            int rows2 = statement2.executeUpdate();
+
+
+            String q_i_pass = "DELETE FROM tbl_Passports WHERE ID = ?;";
+            String q_i_pol = "DELETE FROM tbl_Polices WHERE ID = ?;";
+
+            PreparedStatement statement = con.prepareStatement(q_i_pass);
+            statement.setInt(1, whom_pass);
+            int rows = statement.executeUpdate();
+
+            PreparedStatement statement1 = con.prepareStatement(q_i_pol);
+            statement1.setInt(1,whom_pol);
+            int rows1 = statement1.executeUpdate();
+
+
+            con.commit();
+            GlobalResources.alert(Alert.AlertType.INFORMATION, "Пациент откреплен.");
+        } catch (SQLException e) {
+            try {
+                e.printStackTrace();
+                GlobalResources.alert(Alert.AlertType.ERROR, "SQL Error " + e.getErrorCode() + ". State = " + e.getSQLState() + ". Message = " + e.getMessage());
+                con.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+
+        }
+        catch (Exception e) {
+            try {
+                e.printStackTrace();
+                GlobalResources.alert(Alert.AlertType.ERROR, "Error " + e.getMessage());
+                con.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+
+        }
+        finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
 

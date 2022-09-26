@@ -228,7 +228,7 @@ public class PatientEditFactory extends DatabaseEditFactory{
                         closeForm();
                     } else {
                         PatientsActions.setPatient(new_data);
-                        PatientsActions.edit(patient);
+                        PatientsActions.edit(patient);//TODO update TableView
                     }
                 }
                 closeForm();
