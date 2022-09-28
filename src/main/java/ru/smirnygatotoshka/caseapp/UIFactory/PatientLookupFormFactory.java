@@ -23,6 +23,7 @@ import ru.smirnygatotoshka.caseapp.Registrator.PatientForm;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 //TODO
 public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
@@ -30,6 +31,7 @@ public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
     private FilteredList<Patient> patients;
     private TableView<Patient> tablePatients;
     private TextField seeking_query;
+    private ChoiceBox<String> select_seek;
 
     private static final ObservableList<String> LOOKUP_HEADERS = FXCollections.observableArrayList("Фамилия","Имя","Отчество",
             "Пол","Дата рождения","Льгота","Соц.статус","Место работы","Паспорт","СНИЛС","Полис","Семейное положение","Телефон");
@@ -48,7 +50,7 @@ public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
                 "INNER JOIN spr_FamilyStatus ON spr_FamilyStatus.ID = tbl_Patients.FamilyStatus;";
         // patients = Database.getPatients("SELECT * FROM tbl_Patients");
         ObservableList<Patient> list_patients = Database.getPatients(query);
-        patients = new FilteredList<>(list_patients);
+        this.patients = new FilteredList<>(list_patients);
 
     }
 
@@ -58,7 +60,7 @@ public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
 
         tablePatients = (TableView<Patient>) get("lookupTable");
         seeking_query = (TextField) get("lookup");
-        ChoiceBox<String> select_seek = (ChoiceBox<String>) get("lookupChoices");
+        select_seek = (ChoiceBox<String>) get("lookupChoices");
 
 
         Button add = (Button) get("Add");
@@ -236,13 +238,6 @@ public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
         }
         else {
             PatientForm form = new PatientForm(selectedPatient,tablePatients);
-            /*form.getScene().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST,new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent windowEvent) {
-                    refresh();//TODO
-                    System.out.println("Edit");
-                }
-            });*/
             form.setOnHiding(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent windowEvent) {
@@ -257,15 +252,21 @@ public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
     @Override
     protected void deleteAction(ActionEvent event) {
         Patient selectedPatient = tablePatients.getSelectionModel().getSelectedItem();
-        Optional<ButtonType> answer = GlobalResources.alert(Alert.AlertType.CONFIRMATION,"Удалить пациента?");
-        if (answer.get() == ButtonType.OK){
-            PatientsActions.delete(selectedPatient);
+        if (selectedPatient == null){
+            GlobalResources.alert(Alert.AlertType.INFORMATION,"Выберите пациента.");
         }
         else {
-            event.consume();
+            Optional<ButtonType> answer = GlobalResources.alert(Alert.AlertType.CONFIRMATION,"Удалить пациента?");
+            if (answer.get() == ButtonType.OK){
+                PatientsActions.delete(selectedPatient);
+                refresh();
+                System.out.println("Delete");
+            }
+            else {
+                event.consume();
+            }
+
         }
-        refresh();
-        System.out.println("Delete");
     }
 
     private void refresh(){

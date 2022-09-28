@@ -151,6 +151,31 @@ public class PatientsActions {
             String q_i_pat = "UPDATE tbl_Patients SET Sirname = ?, Name = ?, SecondName = ?, Sex = ?, Birthday = ?, Priviledge = ?, Employment = ?," +
                         "Workplace = ?, Passport = ?, Snils = ?, Police = ?, FamilyStatus = ?, Telephone = ? WHERE Passport = ? AND Snils = ? AND Police = ?;";
 
+
+
+            int whom_pass = -1;
+            int whom_pol = -1;
+
+            PreparedStatement whom_pass_query = con.prepareStatement("SELECT ID, Number FROM tbl_Passports WHERE Number = ?;");
+            whom_pass_query.setString(1, whom.getPassport());
+            ResultSet rs2 = whom_pass_query.executeQuery();
+            if (rs2.next()){
+                whom_pass = rs2.getInt(1);
+            }
+            else {
+                throw new SQLException("Couldnt find the passport " + whom.getPassport());
+            }
+
+            PreparedStatement whom_pol_query = con.prepareStatement("SELECT ID, Number FROM tbl_Polices WHERE Number = ?;");
+            whom_pol_query.setString(1, whom.getPolice());
+            ResultSet rs3 = whom_pol_query.executeQuery();
+            if (rs3.next()){
+                whom_pol = rs3.getInt(1);
+            }
+            else {
+                throw new SQLException("Couldnt find the police " + whom.getPolice());
+            }
+
             PreparedStatement statement = con.prepareStatement(q_i_pass);
             statement.setString(1, passport.getNumber());
             statement.setString(2, passport.getAddress());
@@ -181,29 +206,6 @@ public class PatientsActions {
             }
             else {
                 throw new SQLException("Couldnt find the police " + police);
-            }
-
-            int whom_pass = -1;
-            int whom_pol = -1;
-
-            PreparedStatement whom_pass_query = con.prepareStatement("SELECT ID, Number FROM tbl_Passports WHERE Number = ?;");
-            whom_pass_query.setString(1, whom.getPassport());
-            ResultSet rs2 = whom_pass_query.executeQuery();
-            if (rs2.next()){
-                whom_pass = rs2.getInt(1);
-            }
-            else {
-                throw new SQLException("Couldnt find the passport " + whom.getPassport());
-            }
-
-            PreparedStatement whom_pol_query = con.prepareStatement("SELECT ID, Number FROM tbl_Polices WHERE Number = ?;");
-            whom_pol_query.setString(1, whom.getPolice());
-            ResultSet rs3 = whom_pol_query.executeQuery();
-            if (rs3.next()){
-                whom_pol = rs3.getInt(1);
-            }
-            else {
-                throw new SQLException("Couldnt find the police " + whom.getPolice());
             }
 
             PreparedStatement statement2 = con.prepareStatement(q_i_pat);
