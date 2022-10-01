@@ -1,6 +1,5 @@
 package ru.smirnygatotoshka.caseapp.UIFactory;
 
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
@@ -23,7 +22,6 @@ import ru.smirnygatotoshka.caseapp.Registrator.PatientForm;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 //TODO
 public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
@@ -112,7 +110,7 @@ public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
                     final TableRow<Patient> row = new TableRow<>();
                     final ContextMenu rowMenu = new ContextMenu();
                     MenuItem refreshItem = new MenuItem("Обновить");
-                    refreshItem.setOnAction(event -> tablePatients.refresh());
+                    refreshItem.setOnAction(event -> refresh());
                     MenuItem editItem = new MenuItem("Редактировать");
                     editItem.setOnAction(event -> edit.fire());
                     MenuItem removeItem = new MenuItem("Удалить");
@@ -213,7 +211,7 @@ public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
             return "telephone";
         }
         else
-            return null;
+            return "";
 
     }
 

@@ -20,7 +20,7 @@ public class GlobalResources {
     public static SimpleMapProperty<String, Stage> openedStages = new SimpleMapProperty<>(FXCollections.observableHashMap());
 
     public static final Font usualFont = new Font("Arial", 18);
-
+    public static final Font headerFont = new Font("Arial", 32);
     public static Optional<ButtonType> alert(Alert.AlertType type, String message){
         Alert alert  = new Alert(type);
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);

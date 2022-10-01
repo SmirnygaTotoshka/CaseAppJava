@@ -14,9 +14,11 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Patient;
+import ru.smirnygatotoshka.caseapp.Database.Database;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
 import ru.smirnygatotoshka.caseapp.Registrator.PatientForm;
 import ru.smirnygatotoshka.caseapp.UIFactory.PatientLookupFormFactory;
+import ru.smirnygatotoshka.caseapp.UIFactory.ScheduleFormFactory;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,10 +27,12 @@ public class RegistratorARMController implements Initializable {
 
 
     @FXML
-    private VBox schedule_container;
+    private GridPane schedule_form_container;
 
     @FXML
     private GridPane patients_lookup_container;
+
+
 
 
     @Override
@@ -36,10 +40,11 @@ public class RegistratorARMController implements Initializable {
 
         PatientLookupFormFactory patientFactory = new PatientLookupFormFactory("mainRegistrator");
         GridPane patientLookupLayout = (GridPane) patientFactory.create();
-
+        ScheduleFormFactory scheduleFormFactory = new ScheduleFormFactory("Schedule", Database.getReference("spr_Departments"));
+        GridPane schedule_form = (GridPane) scheduleFormFactory.create();
         //HBox.setHgrow(patients_lookup_container, Priority.ALWAYS);
         patients_lookup_container.add(patientLookupLayout, 0, 0);
-
+        schedule_form_container.add(schedule_form, 0, 0);
     }
 
    /* @FXML

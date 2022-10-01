@@ -6,14 +6,10 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
-
-import java.util.ArrayList;
 
 public abstract class LookupFactory<I, L> extends UIFactory {
 
