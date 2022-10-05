@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -20,13 +21,14 @@ import ru.smirnygatotoshka.caseapp.GlobalResources;
 import ru.smirnygatotoshka.caseapp.Registrator.PatientForm;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 //TODO
-public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
+public class PatientLookupFormFactory extends LookupWithSearch<String, Patient> implements DataChanger{
 
-    private FilteredList<Patient> patients;
     private TableView<Patient> tablePatients;
     private TextField seeking_query;
     private ChoiceBox<String> select_seek;
@@ -48,17 +50,30 @@ public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
                 "INNER JOIN spr_FamilyStatus ON spr_FamilyStatus.ID = tbl_Patients.FamilyStatus;";
         // patients = Database.getPatients("SELECT * FROM tbl_Patients");
         ObservableList<Patient> list_patients = Database.getPatients(query);
-        this.patients = new FilteredList<>(list_patients);
+        this.filteredList = new FilteredList<>(list_patients);
 
     }
 
     @Override
     public Parent create() {
-        GridPane parent = (GridPane) super.create();
+        GridPane parent = new GridPane();
+        addConstrains(parent, new int[]{15,70,15}, new int[]{100});
+
+        ControlForm controlForm = new ControlForm(id_prefix, true, this);
+
+
+        GridPane params = createParamRow();
+        GridPane lookup = (GridPane) super.create();
+        GridPane controls = (GridPane) controlForm.create();
+
+        parent.add(params, 0, 0);
+        parent.add(lookup, 0, 1);
+        parent.add(controls, 0 ,2);
+        uniteElements(controlForm.elements);
 
         tablePatients = (TableView<Patient>) get("lookupTable");
-        seeking_query = (TextField) get("lookup");
         select_seek = (ChoiceBox<String>) get("lookupChoices");
+        seeking_query = (TextField) get("lookup");
 
 
         Button add = (Button) get("Add");
@@ -126,47 +141,34 @@ public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
                     return row;
                 });
 
-        seeking_query.textProperty().addListener((observable, oldV, newV) -> {
-            patients.setPredicate((data) ->
-            {
-                boolean show = true;
-                if (!seeking_query.getText().isEmpty()){
-                    String column = null;
-                    if (select_seek.getValue().contentEquals("Фамилия")){
-                        column = data.getSirname();
-                    }
-                    if (select_seek.getValue().contentEquals("Имя")){
-                        column = data.getName();
-                    }
-                    if (select_seek.getValue().contentEquals("Отчество")){
-                        column = data.getSecondName();
-                    }
-                    if (select_seek.getValue().contentEquals("Пол")){
-                        column = data.getSex();
-                    }
-                    if (select_seek.getValue().contentEquals("Дата рождения")){
-                        column = data.getDob().toString();
-                    }
-                    if (select_seek.getValue().contentEquals("Паспорт")){
-                        column = data.getPassport();
-                    }
-                    if (select_seek.getValue().contentEquals("СНИЛС")){
-                        column = data.getSnils();
-                    }
-                    if (select_seek.getValue().contentEquals("Полис")){
-                        column = data.getPolice();
-                    }
-                    if (select_seek.getValue().contentEquals("Телефон")){
-                        column = data.getTelephone();
-                    }
-                    show = show && (column.contains(seeking_query.getText()));
-                }
-                return show;
-            });
-        });
-        tablePatients.itemsProperty().set(patients);
+        tablePatients.itemsProperty().set(filteredList);
 
         return parent;
+    }
+
+    private GridPane createParamRow() {
+        GridPane pane = new GridPane();
+        addConstrains(pane, new int[]{100}, new int[]{40,60});
+        pane.setStyle("-fx-background-color: #FFCCCC;");
+
+        Label label = new Label("Поиск по:");
+        label.setFont(GlobalResources.usualFont);
+        pane.add(label,0,0);
+        put(label, "label");
+
+        ChoiceBox<String> lookupChoices = new ChoiceBox<>(LOOKUP_HEADERS);
+        lookupChoices.setValue(LOOKUP_HEADERS.get(0));
+        lookupChoices.setStyle("-fx-font: Serif;" +
+                "-fx-font-size: 18px;" +
+                "-fx-background-color: #CCCCFF;" +
+                "-fx-border-color: #000000;");
+        lookupChoices.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        pane.add(lookupChoices,1,0);
+        put(lookupChoices, "lookupChoices");
+        GridPane.setFillWidth(lookupChoices, true);
+        GridPane.setMargin(lookupChoices,new Insets(10,20,10,10));
+
+        return pane;
     }
 
     @Override
@@ -216,7 +218,7 @@ public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
     }
 
     @Override
-    protected void addAction(ActionEvent event) {
+    public void addAction(ActionEvent event) {
         PatientForm form = new PatientForm(null,tablePatients);
         form.setOnHiding(new EventHandler<WindowEvent>() {
             @Override
@@ -229,7 +231,7 @@ public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
     }
 //TODO
     @Override
-    protected void editAction(ActionEvent event) {
+    public void editAction(ActionEvent event) {
         Patient selectedPatient = tablePatients.getSelectionModel().getSelectedItem();
         if (selectedPatient == null){
             GlobalResources.alert(Alert.AlertType.INFORMATION,"Выберите пациента.");
@@ -248,7 +250,7 @@ public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
     }
 //TODO
     @Override
-    protected void deleteAction(ActionEvent event) {
+    public void deleteAction(ActionEvent event) {
         Patient selectedPatient = tablePatients.getSelectionModel().getSelectedItem();
         if (selectedPatient == null){
             GlobalResources.alert(Alert.AlertType.INFORMATION,"Выберите пациента.");
@@ -280,8 +282,47 @@ public class PatientLookupFormFactory extends LookupFactory<String, Patient> {
                 "INNER JOIN spr_FamilyStatus ON spr_FamilyStatus.ID = tbl_Patients.FamilyStatus;";
         // patients = Database.getPatients("SELECT * FROM tbl_Patients");
         ObservableList<Patient> list_patients = Database.getPatients(query);
-        patients = new FilteredList<>(list_patients);
-        tablePatients.itemsProperty().set(patients);
+        filteredList = new FilteredList<>(list_patients);
+        tablePatients.itemsProperty().set(filteredList);
         tablePatients.refresh();
+    }
+
+    @Override
+    public Predicate<Patient> search() {
+        return patient -> {
+            boolean show = true;
+            if (!seeking_query.getText().isEmpty()){
+                String column = null;
+                if (select_seek.getValue().contentEquals("Фамилия")){
+                    column = patient.getSirname();
+                }
+                if (select_seek.getValue().contentEquals("Имя")){
+                    column = patient.getName();
+                }
+                if (select_seek.getValue().contentEquals("Отчество")){
+                    column = patient.getSecondName();
+                }
+                if (select_seek.getValue().contentEquals("Пол")){
+                    column = patient.getSex();
+                }
+                if (select_seek.getValue().contentEquals("Дата рождения")){
+                    column = patient.getDob().toString();
+                }
+                if (select_seek.getValue().contentEquals("Паспорт")){
+                    column = patient.getPassport();
+                }
+                if (select_seek.getValue().contentEquals("СНИЛС")){
+                    column = patient.getSnils();
+                }
+                if (select_seek.getValue().contentEquals("Полис")){
+                    column = patient.getPolice();
+                }
+                if (select_seek.getValue().contentEquals("Телефон")){
+                    column = patient.getTelephone();
+                }
+                show = show && (column.contains(seeking_query.getText()));
+            }
+            return show;
+        };
     }
 }

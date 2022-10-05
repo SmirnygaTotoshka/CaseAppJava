@@ -1,6 +1,6 @@
 package ru.smirnygatotoshka.caseapp.UIFactory;
 
-import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.*;
@@ -15,8 +15,11 @@ import ru.smirnygatotoshka.caseapp.DataRepresentation.Reference;
 import ru.smirnygatotoshka.caseapp.Database.Database;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
 
-public class ScheduleFormFactory extends LookupFactory<Reference, Doctor>{
+import java.util.function.Predicate;
 
+public class ScheduleFormFactory extends LookupWithSearch<Reference, Doctor> implements DataChanger {
+
+    private static ObservableList<String> LOOKUP_ITEMS = FXCollections.observableArrayList("");
 
     public ScheduleFormFactory(String id_prefix, ObservableList<Reference> lookup_items) {
         super(id_prefix, lookup_items);
@@ -31,6 +34,11 @@ public class ScheduleFormFactory extends LookupFactory<Reference, Doctor>{
             return "Speciality";
         }
         else return "";
+    }
+
+    @Override
+    protected Predicate<Doctor> search() {
+        return null;
     }
 
     @Override
@@ -246,17 +254,17 @@ public class ScheduleFormFactory extends LookupFactory<Reference, Doctor>{
     }
 
     @Override
-    protected void addAction(ActionEvent event) {
+    public void addAction(ActionEvent event) {
 
     }
 
     @Override
-    protected void editAction(ActionEvent event) {
+    public void editAction(ActionEvent event) {
 
     }
 
     @Override
-    protected void deleteAction(ActionEvent event) {
+    public void deleteAction(ActionEvent event) {
 
     }
 
@@ -272,10 +280,10 @@ public class ScheduleFormFactory extends LookupFactory<Reference, Doctor>{
         pane.getRowConstraints().add(row2);
 
 
-
-        ChoiceBox<Reference> department = new ChoiceBox<>(lookup_items);
+        ObservableList<Reference> items = Database.getReference("spr_Departments");
+        ChoiceBox<Reference> department = new ChoiceBox<>(items);
         TableView<Doctor> doctors = new TableView<>();
-        department.setValue(lookup_items.get(0));
+        department.setValue(items.get(0));
         GridPane.setValignment(department,VPos.BOTTOM);
         department.setStyle("-fx-font: Serif;" +
                 "-fx-font-size: 18px;" +

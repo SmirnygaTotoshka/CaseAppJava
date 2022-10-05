@@ -1,6 +1,12 @@
 package ru.smirnygatotoshka.caseapp.UIFactory;
 
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 import javafx.scene.Parent;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 
 import java.util.HashMap;
 
@@ -30,6 +36,38 @@ public abstract class UIFactory {
 
     protected Parent get(String name){
         return elements.get(id_prefix + "_" + name);
+    }
+
+    protected void addConstrains(GridPane pane, int[] rows_percentage, int[] cols_percentage){
+        for (int i = 0; i < rows_percentage.length; i++)
+            pane.getRowConstraints().add(createRowConstraints(rows_percentage[i]));
+
+        for (int i = 0; i < cols_percentage.length; i++)
+            pane.getColumnConstraints().add(createColumnConstraints(cols_percentage[i]));
+
+    }
+
+    protected RowConstraints createRowConstraints(int percentage){
+        RowConstraints row = new RowConstraints();
+        row.setVgrow(Priority.ALWAYS);
+        row.setValignment(VPos.CENTER);
+        row.setPercentHeight(percentage);
+        return row;
+    }
+
+    protected ColumnConstraints createColumnConstraints(int percentage){
+        ColumnConstraints column = new ColumnConstraints();
+        column.setHgrow(Priority.ALWAYS);
+        column.setHalignment(HPos.CENTER);
+        column.setPercentWidth(percentage);
+        return column;
+    }
+
+    protected void uniteElements(HashMap<String, Parent> other) {
+        for (String k : other.keySet()){
+            String name = k.split("_")[1];
+            put(other.get(k), name);
+        }
     }
 
 }
