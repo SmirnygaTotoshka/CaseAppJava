@@ -45,17 +45,21 @@ public abstract class LookupWithSearch<I, L> extends UIFactory {
 
         addConstrains(parent, row_percentage, cols_percentage);
 
-        TextField searchingRow = createLookup();
+        Parent searchingRow = createLookup();
 
         TableView<L> lookupTable = createLookupTable();
 
+        GridPane.setMargin(searchingRow, new Insets(10));
+        GridPane.setMargin(lookupTable, new Insets(10));
         parent.add(searchingRow,0,0);
         parent.add(lookupTable,0,1);
 
         return parent;
     }
 
-    private TextField createLookup() {
+    protected abstract Parent createLookup();
+
+    /*private TextField createLookup() {
 
         TextField lookup = new TextField();
         lookup.setFont(GlobalResources.usualFont);
@@ -68,7 +72,7 @@ public abstract class LookupWithSearch<I, L> extends UIFactory {
         GridPane.setFillWidth(lookup, true);
         GridPane.setMargin(lookup,new Insets(10,10,10,20));
         return lookup;
-    }
+    }*/
 
     /*protected TextField createSearchingRow(){
 
@@ -140,7 +144,7 @@ public abstract class LookupWithSearch<I, L> extends UIFactory {
 
         for (I i : columns){
             TableColumn<L, String> column = new TableColumn<>(i.toString());
-            column.setMinWidth(300);
+            column.setMinWidth(200);
             column.setMinWidth(Control.USE_COMPUTED_SIZE);
             lookupTable.getColumns().add(column);
         }

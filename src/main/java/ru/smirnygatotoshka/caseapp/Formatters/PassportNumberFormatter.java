@@ -41,7 +41,7 @@ public class PassportNumberFormatter  implements UnaryOperator<TextFormatter.Cha
         if (numbers.length() == 0) {
             return "";
         }
-        return numbers.replaceFirst("(\\d{4})(\\d{1,6})", "$1 $2");//TODO start with 7
+        return numbers.replaceFirst("(\\d{4})(\\d{1,6})", "$1 $2");
     }
 
     public static String removeSpecial(String input){

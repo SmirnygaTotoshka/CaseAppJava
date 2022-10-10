@@ -74,24 +74,14 @@ public class ControlForm extends UIFactory{
         GridPane controlRow = new GridPane();
         controlRow.setAlignment(Pos.CENTER);
         controlRow.setStyle("-fx-background-color: #FFCCCC;");
-        ColumnConstraints column = new ColumnConstraints();
-        column.setHgrow(Priority.ALWAYS);
-        column.setPercentWidth(30);
-        column.setMaxWidth(Double.MAX_VALUE);
-        controlRow.getColumnConstraints().add(column);
+        int[] row_size = replicate(controls.length);
+        addConstrains(controlRow, row_size, new int[]{100});
 
         for (int i = 0; i < controls.length; i++) {
-            RowConstraints row = new RowConstraints();
-            row.setPercentHeight(33);
-            row.setVgrow(Priority.ALWAYS);
-            row.setValignment(VPos.CENTER);
-            row.setMaxHeight(Double.MAX_VALUE);
-            controlRow.getRowConstraints().add(row);
-
             GridPane.setFillWidth(controls[i],true);
             GridPane.setFillHeight(controls[i],true);
-            GridPane.setMargin(controls[i],new Insets(10,0,10,0));
-            controlRow.add(controls[i], i, 0);
+            GridPane.setMargin(controls[i],new Insets(10,10,10,10));
+            controlRow.add(controls[i], 0, i);
         }
 
         return controlRow;
@@ -102,26 +92,27 @@ public class ControlForm extends UIFactory{
         GridPane controlRow = new GridPane();
         controlRow.setAlignment(Pos.CENTER);
         controlRow.setStyle("-fx-background-color: #FFCCCC;");
-        RowConstraints row = new RowConstraints();
-        row.setVgrow(Priority.ALWAYS);
-        row.setPercentHeight(30);
-        row.setMaxHeight(Double.MAX_VALUE);
-        controlRow.getRowConstraints().add(row);
+        int[] col_size = replicate(controls.length);
+        addConstrains(controlRow, new int[]{100}, col_size);
+
 
         for (int i = 0; i < controls.length; i++) {
-            ColumnConstraints column = new ColumnConstraints();
-            column.setPercentWidth(33);
-            column.setHgrow(Priority.ALWAYS);
-            column.setHalignment(HPos.CENTER);
-            column.setMaxWidth(Double.MAX_VALUE);
-            controlRow.getColumnConstraints().add(column);
-
             GridPane.setFillWidth(controls[i],true);
             GridPane.setFillHeight(controls[i],true);
-            GridPane.setMargin(controls[i],new Insets(0,10,0,10));
+            GridPane.setMargin(controls[i],new Insets(10,10,10,10));
             controlRow.add(controls[i], i, 0);
         }
 
         return controlRow;
     }
+
+    private int[] replicate(int len){
+        int[] size = new int[len];
+        int value = 100 / len;
+        for (int i = 0; i < len; i++) {
+            size[i] = value;
+        }
+        return size;
+    }
+
 }

@@ -2,6 +2,7 @@ package ru.smirnygatotoshka.caseapp.UIFactory;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.geometry.*;
 import javafx.scene.Parent;
@@ -11,33 +12,42 @@ import javafx.scene.layout.*;
 import javafx.util.Callback;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Change;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Doctor;
+import ru.smirnygatotoshka.caseapp.DataRepresentation.Patient;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Reference;
 import ru.smirnygatotoshka.caseapp.Database.Database;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
 
+import java.time.LocalDate;
 import java.util.function.Predicate;
 
-public class ScheduleFormFactory extends LookupWithSearch<Reference, Doctor> implements DataChanger {
+public class ScheduleFormFactory extends LookupWithSearch<String, Change> implements DataChanger {
 
-    private static ObservableList<String> LOOKUP_ITEMS = FXCollections.observableArrayList("");
+    private static ObservableList<String> LOOKUP_ITEMS = FXCollections.observableArrayList("Дата","Начало смены", "Конец смены");
 
-    public ScheduleFormFactory(String id_prefix, ObservableList<Reference> lookup_items) {
-        super(id_prefix, lookup_items);
+    public ScheduleFormFactory(String id_prefix) {
+        super(id_prefix, LOOKUP_ITEMS);
+        /*String query = "SELECT Sirname, tbl_Patients.Name as Name, SecondName, spr_Sex.NAME as Sex, Birthday, " +
+                "spr_Priviledge.NAME as Priviledge, spr_Employment.NAME as Employment," +
+                " Workplace, tbl_Passports.Number as Passport,Snils, tbl_Polices.Number as Police, " +
+                "spr_FamilyStatus.NAME as FamilyStatus, Telephone FROM tbl_Patients " +
+                "INNER JOIN spr_Sex ON spr_Sex.ID = tbl_Patients.Sex " +
+                "INNER JOIN spr_Priviledge ON spr_Priviledge.ID = tbl_Patients.Priviledge " +
+                "INNER JOIN spr_Employment ON spr_Employment.ID = tbl_Patients.Employment " +
+                "INNER JOIN tbl_Passports ON tbl_Passports.ID = tbl_Patients.Passport " +
+                "INNER JOIN tbl_Polices ON tbl_Polices.ID = tbl_Patients.Police " +
+                "INNER JOIN spr_FamilyStatus ON spr_FamilyStatus.ID = tbl_Patients.FamilyStatus;";
+        // patients = Database.getPatients("SELECT * FROM tbl_Patients");
+        ObservableList<Change> changes = Database.getChanges(query);
+        this.filteredList = new FilteredList<>(changes);*/
     }
 
     @Override
     protected String getColumnNameFromDB(String item) {
-        if (item.contentEquals("Должность")){
-            return "Position";
-        }
-        else if (item.contentEquals("Специальность")){
-            return "Speciality";
-        }
-        else return "";
+        return "";
     }
 
     @Override
-    protected Predicate<Doctor> search() {
+    protected Predicate<Change> search() {
         return null;
     }
 
@@ -45,28 +55,27 @@ public class ScheduleFormFactory extends LookupWithSearch<Reference, Doctor> imp
     public Parent create() {
         GridPane parent = new GridPane();
         parent.setStyle("-fx-background-color: #FFCCCC;");
+        addConstrains(parent, new int[]{100}, new int[]{35,5,40,5,30});
 
-        ColumnConstraints[] columns = new ColumnConstraints[4];
-        int[] percentage = new int[]{35,5,30,30};
-        for (int i = 0; i < columns.length; i++) {
-            columns[i] = createColumn(percentage[i]);
-        }
-        
-        GridPane doctors = createDoctorLookup();
-        GridPane changes = createChangesLookup();
-        GridPane controls = createControls();
+        ChooseDoctorForm doctorForm = new ChooseDoctorForm(id_prefix);
+        ControlForm controlForm = new ControlForm(id_prefix, false, this);
 
-        
-        parent.getRowConstraints().addAll(createRow(100));
-        parent.getColumnConstraints().addAll(columns);
-
-        parent.add(doctors,0,0);
-
+        GridPane choose_doctor = (GridPane) doctorForm.create();
         Separator separator = new Separator(Orientation.VERTICAL);
-        parent.add(separator,1,0);
+        Separator separator1 = new Separator(Orientation.VERTICAL);
+        GridPane choose_change = (GridPane) super.create();
+        GridPane controllers = (GridPane) controlForm.create();
 
-        parent.add(changes,2,0);
-        parent.add(controls,3,0);
+        uniteElements(doctorForm.elements);
+        uniteElements(controlForm.elements);
+
+        addConstrains(controllers, new int[0], new int[]{20,20});
+
+        parent.add(choose_doctor,0,0);
+        parent.add(separator,1,0);
+        parent.add(choose_change,2,0);
+        parent.add(separator1,3,0);
+        parent.add(controllers,4,0);
         //parent.setHgap(15);
         //parent.setVgap(5);
         parent.setAlignment(Pos.CENTER);
@@ -74,7 +83,36 @@ public class ScheduleFormFactory extends LookupWithSearch<Reference, Doctor> imp
         return parent;
     }
 
-    private GridPane createControls() {
+    @Override
+    protected Parent createLookup() {
+        DatePicker datePicker = new DatePicker(LocalDate.now());
+        datePicker.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        datePicker.setDayCellFactory(new Callback<>() {
+            @Override
+            public DateCell call(DatePicker datePicker) {
+                return new DateCell(){
+                    LocalDate minDate = LocalDate.now().minusYears(1), maxDate = LocalDate.now().plusYears(1);
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty){
+                        super.updateItem(item,empty);
+                        if (item.isBefore(minDate)){
+                            setDisable(true);
+                            setStyle("-fx-background-color: #ffc0cb");
+                        }
+                        else if (item.isAfter(maxDate)){
+                            setDisable(true);
+                            setStyle("-fx-background-color: #ffc0cb");
+                        }
+                    }
+                };
+            }
+        });
+
+        put(datePicker,"chooseDate");
+        return datePicker;
+    }
+
+/*    private GridPane createControls() {
         GridPane pane = new GridPane();
 
         pane.getColumnConstraints().add(createColumn(100));
@@ -191,12 +229,12 @@ public class ScheduleFormFactory extends LookupWithSearch<Reference, Doctor> imp
                     }
                 };
             }
-        });*/
+        });*//*
         date_column.setMinWidth(150);
         doctors_changes.getColumns().add(date_column);
 
         TableColumn<Change, String> start_column = new TableColumn<>("Начало смены");
-        /*column2.setCellValueFactory(new PropertyValueFactory<>(getColumnNameFromDB(column2.getText())));
+        *//*column2.setCellValueFactory(new PropertyValueFactory<>(getColumnNameFromDB(column2.getText())));
 
         column2.setCellFactory(new Callback<>() {
 
@@ -215,14 +253,14 @@ public class ScheduleFormFactory extends LookupWithSearch<Reference, Doctor> imp
                     }
                 };
             }
-        });*/
+        });*//*
         start_column.setMinWidth(150);
         doctors_changes.getColumns().add(start_column);
 
         TableColumn<Change, String> finish_column = new TableColumn<>("Конец смены");
         finish_column.setCellValueFactory(new PropertyValueFactory<>(getColumnNameFromDB(finish_column.getText())));
         finish_column.setMinWidth(150);
-       /* column3.setCellFactory(new Callback<>() {
+       *//* column3.setCellFactory(new Callback<>() {
 
             @Override
             public TableCell call(TableColumn param) {
@@ -239,7 +277,7 @@ public class ScheduleFormFactory extends LookupWithSearch<Reference, Doctor> imp
                     }
                 };
             }
-        });*/
+        });*//*
         doctors_changes.getColumns().add(finish_column);
 
 
@@ -251,7 +289,7 @@ public class ScheduleFormFactory extends LookupWithSearch<Reference, Doctor> imp
         put(doctors_changes, "doctors_changes");
         pane.add(doctors_changes,0,2);
         return pane;
-    }
+    }*/
 
     @Override
     public void addAction(ActionEvent event) {
@@ -268,7 +306,7 @@ public class ScheduleFormFactory extends LookupWithSearch<Reference, Doctor> imp
 
     }
 
-    private GridPane createDoctorLookup() {
+  /*  private GridPane createDoctorLookup() {
         GridPane pane = new GridPane();
 
         ColumnConstraints col = createColumn(100);
@@ -407,6 +445,6 @@ public class ScheduleFormFactory extends LookupWithSearch<Reference, Doctor> imp
         column.setHalignment(HPos.CENTER);
         column.setPercentWidth(percentage);
         return column;
-    }
+    }*/
 
 }

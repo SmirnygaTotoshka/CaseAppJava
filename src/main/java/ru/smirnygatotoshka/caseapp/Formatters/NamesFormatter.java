@@ -6,7 +6,6 @@ import java.util.Locale;
 import java.util.function.UnaryOperator;
 
 public class NamesFormatter implements UnaryOperator<TextFormatter.Change>{
-//TODO formatter adequate
         @Override
         public TextFormatter.Change apply(TextFormatter.Change change) {
         if (change.isContentChange()) {

@@ -26,7 +26,6 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-//TODO
 public class PatientLookupFormFactory extends LookupWithSearch<String, Patient> implements DataChanger{
 
     private TableView<Patient> tablePatients;
@@ -146,6 +145,21 @@ public class PatientLookupFormFactory extends LookupWithSearch<String, Patient> 
         return parent;
     }
 
+    @Override
+    protected Parent createLookup() {
+        TextField lookup = new TextField();
+        lookup.setFont(GlobalResources.usualFont);
+        lookup.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        //addHBoxSettings(lookup);
+        //searchingRow.add(lookup,0,0);
+        lookup.textProperty().addListener(
+                (observableValue, s, t1) -> filteredList.setPredicate(search()));
+        put(lookup, "lookup");
+        GridPane.setFillWidth(lookup, true);
+        GridPane.setMargin(lookup,new Insets(10,10,10,20));
+        return lookup;
+    }
+
     private GridPane createParamRow() {
         GridPane pane = new GridPane();
         addConstrains(pane, new int[]{100}, new int[]{40,60});
@@ -223,13 +237,12 @@ public class PatientLookupFormFactory extends LookupWithSearch<String, Patient> 
         form.setOnHiding(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent windowEvent) {
-                refresh();//TODO
+                refresh();
                 System.out.println("Add");
             }
         });
         GlobalResources.openedStages.put("PatientForm", form);
     }
-//TODO
     @Override
     public void editAction(ActionEvent event) {
         Patient selectedPatient = tablePatients.getSelectionModel().getSelectedItem();
@@ -241,14 +254,13 @@ public class PatientLookupFormFactory extends LookupWithSearch<String, Patient> 
             form.setOnHiding(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent windowEvent) {
-                    refresh();//TODO
+                    refresh();
                     System.out.println("Edit");
                 }
             });
             GlobalResources.openedStages.put("PatientForm", form);
         }
     }
-//TODO
     @Override
     public void deleteAction(ActionEvent event) {
         Patient selectedPatient = tablePatients.getSelectionModel().getSelectedItem();

@@ -172,7 +172,6 @@ public class PatientEditFactory extends DatabaseEditFactory{
             @Override
             public DateCell call(DatePicker datePicker) {
                 return new DateCell(){
-                    //TODO min/max
                     LocalDate minDate = LocalDate.now().minusYears(150), maxDate = LocalDate.now().minusYears(18); // min - today -150 max today - 18
                     @Override
                     public void updateItem(LocalDate item, boolean empty){
@@ -228,7 +227,7 @@ public class PatientEditFactory extends DatabaseEditFactory{
                         closeForm();
                     } else {
                         PatientsActions.setPatient(new_data);
-                        PatientsActions.edit(patient);//TODO update TableView
+                        PatientsActions.edit(patient);
                     }
                 }
                 closeForm();

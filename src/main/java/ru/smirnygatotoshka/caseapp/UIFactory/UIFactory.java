@@ -52,6 +52,7 @@ public abstract class UIFactory {
         row.setVgrow(Priority.ALWAYS);
         row.setValignment(VPos.CENTER);
         row.setPercentHeight(percentage);
+        row.setMaxHeight(Double.MAX_VALUE);
         return row;
     }
 
@@ -60,6 +61,7 @@ public abstract class UIFactory {
         column.setHgrow(Priority.ALWAYS);
         column.setHalignment(HPos.CENTER);
         column.setPercentWidth(percentage);
+        column.setMaxWidth(Double.MAX_VALUE);
         return column;
     }
 

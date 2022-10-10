@@ -262,6 +262,56 @@ public class Database {
         }
     }
 
+    /*public static ObservableList<Change> getChanges(Reference department){
+        int code_dep = getPrimaryKeyByValue("spr_Departments", department.getNAME());
+        String query = "SELECT Sirname,tbl_Doctors.Name as Name,SecondName,spr_Sex.NAME as Sex,Birthday," +
+                "                spr_Positions.NAME as Position,spr_Speciality.NAME as Speciality," +
+                "                spr_Departments.NAME as Department,Telephone FROM tbl_Doctors " +
+                "INNER JOIN spr_Sex ON spr_Sex.ID = tbl_Doctors.Sex " +
+                "INNER JOIN spr_Positions ON spr_Positions.ID = tbl_Doctors.Position  "+
+                "INNER JOIN spr_Speciality ON spr_Speciality.ID = tbl_Doctors.Speciality " +
+                "INNER JOIN spr_Departments ON spr_Departments.ID = tbl_Doctors.Department " +
+                "WHERE Department = ?;";
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        ObservableList<Doctor> changes = FXCollections.observableArrayList();
+        try {
+            statement = con.prepareStatement(query);
+            statement.setInt(1, code_dep);
+            rs = statement.executeQuery();
+            while (rs.next()){
+                String sirname = rs.getString("Sirname");
+                String name = rs.getString("Name");
+                String secondName = rs.getString("SecondName");
+                String sex = rs.getString("Sex");
+                Date dob = rs.getDate("Birthday");
+                String pos = rs.getString("Position");
+                String spec = rs.getString("Speciality");
+                String dep = rs.getString("Department");
+                String tel = rs.getString("Telephone");
+                Doctor doc = new Doctor(sirname,name,secondName,sex,dob,pos,spec,dep,tel);
+                changes.add(doc);
+            }
+        }
+        catch (SQLException se){
+            GlobalResources.alert(Alert.AlertType.ERROR,"Не могу получить данные о пациентах из БД, потому что " + se.getMessage() );
+        }
+        finally {
+            try{
+                if (statement != null){
+                    statement.close();
+                }
+                if (rs != null){
+                    rs.close();
+                }
+            }
+            catch(SQLException e){
+                GlobalResources.alert(Alert.AlertType.ERROR,"Cannot close patients stmt, because " + e.getMessage());
+            }
+            return changes;
+        }
+    }*/
+
   /*  public static void addPatient(Patient patient,Passport passport, Police police){
         try {//TODO
             con.setAutoCommit(false);

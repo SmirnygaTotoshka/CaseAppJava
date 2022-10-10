@@ -53,6 +53,6 @@ public class PhoneNumberFilter implements UnaryOperator<TextFormatter.Change> {
         if (numbers.length() < 7) {
             return numbers.replaceFirst("(\\d{3})(\\d+)", "7($1)$2");
         }
-        return numbers.replaceFirst("(\\d{3})(\\d{3})(\\d+)","7($1)$2-$3");//TODO start with 7
+        return numbers.replaceFirst("(\\d{3})(\\d{3})(\\d+)","7($1)$2-$3");
     }
 }

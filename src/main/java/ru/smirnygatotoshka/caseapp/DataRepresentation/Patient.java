@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Patient {
     private SimpleStringProperty sirname,name,secondName;
     private SimpleStringProperty sex;
-    private SimpleObjectProperty<Date> dob;//TODO - properties
+    private SimpleObjectProperty<Date> dob;
     private SimpleStringProperty priviledge;
     private SimpleStringProperty employment;
     private SimpleStringProperty workplace;

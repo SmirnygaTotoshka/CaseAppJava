@@ -9,7 +9,7 @@ import java.util.Objects;
 public class Doctor{
         private SimpleStringProperty sirname,name,secondName;
         private SimpleStringProperty sex;
-        private SimpleObjectProperty<Date> dob;//TODO - properties
+        private SimpleObjectProperty<Date> dob;
         private SimpleStringProperty position;
         private SimpleStringProperty speciality;
         private SimpleStringProperty department;
