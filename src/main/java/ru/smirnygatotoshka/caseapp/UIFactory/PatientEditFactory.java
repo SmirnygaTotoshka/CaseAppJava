@@ -258,17 +258,8 @@ public class PatientEditFactory extends DatabaseEditFactory{
 
     }
 
-    public void onClose(WindowEvent event){
-        Optional<ButtonType> answer = GlobalResources.alert(Alert.AlertType.CONFIRMATION,"Продолжить без сохранения?");
-        if (answer.get() == ButtonType.OK){
-            closeForm();
-        }
-        else {
-            event.consume();
-        }
-    }
-
-    private void closeForm(){
+    @Override
+    protected void closeForm(){
         Stage pol = GlobalResources.openedStages.get("PoliceForm");
         Stage pass = GlobalResources.openedStages.get("PassportForm");
         if (pass != null && pass.isShowing()) {

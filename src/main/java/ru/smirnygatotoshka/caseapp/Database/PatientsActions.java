@@ -13,7 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class PatientsActions {
+public class PatientsActions{
 
     private static Patient patient;
     private static Passport passport;

@@ -32,11 +32,11 @@ public class Database {
         }
     }
 
-    public static ResultSet execute(String query)throws SQLException{
+    /*public static ResultSet execute(String query)throws SQLException{
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery(query);
         return rs;
-    }
+    }*/
 /**
  * TODO not prepared statement. Not use for user searching query!
  * */
@@ -83,6 +83,45 @@ public class Database {
                 System.out.println("Cannot close patients stmt, because " + e.getMessage());
             }
             return patients;
+        }
+    }
+
+    /**
+     * TODO not prepared statement. Not use for user searching query!
+     * */
+    public static ObservableList<Change> getChanges(String query){
+        ObservableList<Change> changes = FXCollections.observableArrayList();
+        Statement stmt = null;
+        ResultSet rs = null;
+        try{
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(query);
+
+            while (rs.next()){
+                int doctor = rs.getInt("Doctor");
+                Date date = rs.getDate("Date");
+                Time start = rs.getTime("Start_Time");
+                Time finish = rs.getTime("Finish_Time");
+                Change patient = new Change(doctor, date, start, finish);
+                changes.add(patient);
+            }
+        }
+        catch (SQLException se){
+            GlobalResources.alert(Alert.AlertType.ERROR,"Не могу получить данные о сменах из БД, потому что " + se.getMessage() );
+        }
+        finally {
+            try{
+                if (stmt != null){
+                    stmt.close();
+                }
+                if (rs != null){
+                    rs.close();
+                }
+            }
+            catch(SQLException e){
+                System.out.println("Cannot close patients stmt, because " + e.getMessage());
+            }
+            return changes;
         }
     }
 
@@ -259,6 +298,55 @@ public class Database {
                 GlobalResources.alert(Alert.AlertType.ERROR,"Cannot close patients stmt, because " + e.getMessage());
             }
             return doctors;
+        }
+    }
+
+    public static int getDoctorId(Doctor doctor) {
+        int code_spec = getPrimaryKeyByValue("spr_Speciality", doctor.getSpeciality());
+        int code_pos = getPrimaryKeyByValue("spr_Positions", doctor.getPosition());
+        int code_dep = getPrimaryKeyByValue("spr_Departments", doctor.getDepartment());
+        int code_sex = getPrimaryKeyByValue("spr_Sex", doctor.getSex());
+        int id = -100;
+
+        String query = "SELECT ID FROM tbl_Doctors WHERE Sirname = ? AND Name = ? AND SecondName = ? " +
+                "AND Sex = ? AND Birthday = ? AND Position = ? AND Speciality = ? AND Department = ? AND Telephone = ?;";
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            statement = con.prepareStatement(query);
+            statement.setString(1, doctor.getSirname());
+            statement.setString(2, doctor.getName());
+            statement.setString(3, doctor.getSecondName());
+            statement.setInt(4, code_sex);
+            statement.setDate(5, doctor.getDob());
+
+            statement.setInt(6, code_pos);
+            statement.setInt(7, code_spec);
+            statement.setInt(8, code_dep);
+            statement.setString(9, doctor.getTelephone());
+
+            rs = statement.executeQuery();
+            if (rs.next())
+                id = rs.getInt(1);
+        }
+        catch (SQLException se){
+            GlobalResources.alert(Alert.AlertType.ERROR,"Не могу получить данные о врачах из БД, потому что " + se.getMessage() );
+            return -1;
+        }
+        finally {
+            try{
+                if (statement != null){
+                    statement.close();
+                }
+                if (rs != null){
+                    rs.close();
+                }
+                return id;
+            }
+            catch(SQLException e){
+                GlobalResources.alert(Alert.AlertType.ERROR,"Cannot close patients stmt, because " + e.getMessage());
+                return -2;
+            }
         }
     }
 

@@ -6,14 +6,15 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import javafx.stage.WindowEvent;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
+
+import java.util.Optional;
 
 public abstract class DatabaseEditFactory extends UIFactory{
 
@@ -96,6 +97,18 @@ public abstract class DatabaseEditFactory extends UIFactory{
     }
 
     protected abstract void saveRecord(ActionEvent event);
+
+    protected abstract void closeForm();
+
+    public void onClose(WindowEvent event){
+        Optional<ButtonType> answer = GlobalResources.alert(Alert.AlertType.CONFIRMATION,"Продолжить без сохранения?");
+        if (answer.get() == ButtonType.OK){
+            closeForm();
+        }
+        else {
+            event.consume();
+        }
+    }
 
     protected void addField(Parent parent, int row, String name){
         ((GridPane) get("main")).add(parent,1, row);

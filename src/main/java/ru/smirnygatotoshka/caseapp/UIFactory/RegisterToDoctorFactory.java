@@ -95,6 +95,11 @@ public class RegisterToDoctorFactory extends LookupWithSearch<String,ScheduleIte
     }
 
     @Override
+    protected void refresh() {
+
+    }
+
+    @Override
     public void addAction(ActionEvent event) {
 
     }

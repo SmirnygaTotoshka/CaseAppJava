@@ -129,6 +129,12 @@ public class PoliceEditFactory extends DatabaseEditFactory{
         GlobalResources.alert(Alert.AlertType.WARNING,status.message);
     }
 
+    @Override
+    protected void closeForm() {
+        GlobalResources.closeStage("PoliceForm");
+        police_button.setDisable(false);
+    }
+
     private Status check() {
         if (number.getText().length() != 16)
             return Status.INVALID_NUMBER;
@@ -136,17 +142,6 @@ public class PoliceEditFactory extends DatabaseEditFactory{
             return Status.NO_COMPANY;
 
         return Status.OK;
-    }
-
-    public void onClose(WindowEvent event){
-        Optional<ButtonType> answer = GlobalResources.alert(Alert.AlertType.CONFIRMATION,"Продолжить без сохранения?");
-        if (answer.get() == ButtonType.OK){
-            GlobalResources.closeStage("PoliceForm");
-            police_button.setDisable(false);
-        }
-        else {
-            event.consume();
-        }
     }
 
 

@@ -123,6 +123,12 @@ public class PassportEditFactory extends DatabaseEditFactory {
 
     }
 
+    @Override
+    protected void closeForm() {
+        GlobalResources.closeStage("PassportForm");
+        pass_button.setDisable(false);
+    }
+
 
     private Status check() {
         if (number.getText().length() != 11)
@@ -133,14 +139,4 @@ public class PassportEditFactory extends DatabaseEditFactory {
         return Status.OK;
     }
 
-    public void onClose(WindowEvent event){
-        Optional<ButtonType> answer = GlobalResources.alert(Alert.AlertType.CONFIRMATION,"Продолжить без сохранения?");
-        if (answer.get() == ButtonType.OK){
-            GlobalResources.closeStage("PassportForm");
-            pass_button.setDisable(false);
-        }
-        else {
-            event.consume();
-        }
-    }
 }

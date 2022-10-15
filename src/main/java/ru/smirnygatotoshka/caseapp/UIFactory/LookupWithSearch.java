@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Patient;
+import ru.smirnygatotoshka.caseapp.Database.Database;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
 
 import java.sql.Array;
@@ -138,6 +139,9 @@ public abstract class LookupWithSearch<I, L> extends UIFactory {
         GridPane.setMargin(lookupChoices,new Insets(0,20,0,10));*/
        /* return lookup;
     }*/
+
+    protected abstract void refresh();
+
 
     protected TableView<L> createLookupTable(){
         TableView<L> lookupTable = new TableView<>();

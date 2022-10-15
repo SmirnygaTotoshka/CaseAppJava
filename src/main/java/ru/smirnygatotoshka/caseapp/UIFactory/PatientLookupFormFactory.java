@@ -281,7 +281,8 @@ public class PatientLookupFormFactory extends LookupWithSearch<String, Patient> 
         }
     }
 
-    private void refresh(){
+    @Override
+    protected void refresh(){
         String query = "SELECT Sirname, tbl_Patients.Name as Name, SecondName, spr_Sex.NAME as Sex, Birthday, " +
                 "spr_Priviledge.NAME as Priviledge, spr_Employment.NAME as Employment," +
                 " Workplace, tbl_Passports.Number as Passport,Snils, tbl_Polices.Number as Police, " +
