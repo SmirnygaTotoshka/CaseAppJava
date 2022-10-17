@@ -128,6 +128,45 @@ public class Database {
     /**
      * TODO not prepared statement. Not use for user searching query!
      * */
+    public static ObservableList<ScheduleItem> getSchedule(String query){
+        ObservableList<ScheduleItem> items = FXCollections.observableArrayList();
+        Statement stmt = null;
+        ResultSet rs = null;
+        try{
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(query);
+
+            while (rs.next()){
+                int patient = rs.getInt("Patient");
+                int doctor = rs.getInt("Doctor");
+                int change = rs.getInt("Change");
+                Time time = rs.getTime("Time");
+                ScheduleItem item = new ScheduleItem(patient, doctor, change, time);
+                items.add(item);
+            }
+        }
+        catch (SQLException se){
+            GlobalResources.alert(Alert.AlertType.ERROR,"Не могу получить данные о сменах из БД, потому что " + se.getMessage() );
+        }
+        finally {
+            try{
+                if (stmt != null){
+                    stmt.close();
+                }
+                if (rs != null){
+                    rs.close();
+                }
+            }
+            catch(SQLException e){
+                System.out.println("Cannot close patients stmt, because " + e.getMessage());
+            }
+            return items;
+        }
+    }
+
+    /**
+     * TODO not prepared statement. Not use for user searching query!
+     * */
     public static ObservableList<Passport> getPassports(String query){
         ObservableList<Passport> passports = FXCollections.observableArrayList();
         Statement stmt = null;

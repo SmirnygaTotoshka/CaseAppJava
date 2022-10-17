@@ -8,10 +8,7 @@ import ru.smirnygatotoshka.caseapp.DataRepresentation.Patient;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Police;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class PatientsActions{
 
@@ -133,6 +130,11 @@ public class PatientsActions{
     }
 
     public static void edit(Patient whom){
+        /**
+         * TODO
+         * Проверка на то, что мы не вносим существующего пациента
+         *
+         * */
         Connection con = Database.getConnection();
         try {
             con.setAutoCommit(false);
@@ -359,6 +361,53 @@ public class PatientsActions{
         }
 
     }
+
+    public static Patient get(int id){
+        Patient patient = new Patient();
+        String query = "SELECT Sirname, tbl_Patients.Name as Name, SecondName, spr_Sex.NAME as Sex, Birthday, " +
+                    "spr_Priviledge.NAME as Priviledge, spr_Employment.NAME as Employment," +
+                    " Workplace, tbl_Passports.Number as Passport,Snils, tbl_Polices.Number as Police, " +
+                    "spr_FamilyStatus.NAME as FamilyStatus, Telephone FROM tbl_Patients " +
+                    "INNER JOIN spr_Sex ON spr_Sex.ID = tbl_Patients.Sex " +
+                    "INNER JOIN spr_Priviledge ON spr_Priviledge.ID = tbl_Patients.Priviledge " +
+                    "INNER JOIN spr_Employment ON spr_Employment.ID = tbl_Patients.Employment " +
+                    "INNER JOIN tbl_Passports ON tbl_Passports.ID = tbl_Patients.Passport " +
+                    "INNER JOIN tbl_Polices ON tbl_Polices.ID = tbl_Patients.Police " +
+                    "INNER JOIN spr_FamilyStatus ON spr_FamilyStatus.ID = tbl_Patients.FamilyStatus " +
+                    "WHERE tbl_Patients.ID = ?;";
+
+            PreparedStatement statement = null;
+            try {
+                statement = Database.getConnection().prepareStatement(query);
+                statement.setInt(1,id);
+                ResultSet rs = statement.executeQuery();
+
+                if (rs.next()) {
+
+                    String sirname = rs.getString("Sirname");
+                    String name = rs.getString("Name");
+                    String secondName = rs.getString("SecondName");
+                    String sex = rs.getString("Sex");
+                    Date dob = rs.getDate("Birthday");
+                    String priviledge = rs.getString("Priviledge");
+                    String employment = rs.getString("Employment");
+                    String workplace = rs.getString("Workplace");
+                    String passport = rs.getString("Passport");
+                    String police = rs.getString("Police");
+                    String snils = rs.getString("Snils");
+                    String familyStatus = rs.getString("FamilyStatus");
+                    String telephone = rs.getString("Telephone");
+                    patient = new Patient(sirname, name, secondName, sex, dob, priviledge, employment, workplace, passport,
+                            police, snils, familyStatus, telephone);
+                }
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+            finally {
+                return patient;
+            }
+        }
 
 
     static boolean isAbsencePatient(Patient patient,Passport passport, Police police) throws SQLException {

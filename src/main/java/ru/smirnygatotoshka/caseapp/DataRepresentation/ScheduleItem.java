@@ -8,39 +8,39 @@ import java.sql.Time;
 
 public class ScheduleItem {
 
-    private SimpleStringProperty patient;
-    private SimpleStringProperty doctor;
+    private SimpleIntegerProperty patient;
+    private SimpleIntegerProperty doctor;
     private SimpleIntegerProperty change;
     private SimpleObjectProperty<Time> time;
 
-    public ScheduleItem(String patient, String doctor, int change, Time time) {
-        this.patient = new SimpleStringProperty(patient);
-        this.doctor = new SimpleStringProperty(doctor);
+    public ScheduleItem(int patient, int doctor, int change, Time time) {
+        this.patient = new SimpleIntegerProperty(patient);
+        this.doctor = new SimpleIntegerProperty(doctor);
         this.change = new SimpleIntegerProperty(change);
         this.time = new SimpleObjectProperty<>(time);
     }
 
-    public String getPatient() {
+    public int getPatient() {
         return patient.get();
     }
 
-    public SimpleStringProperty patientProperty() {
+    public SimpleIntegerProperty patientProperty() {
         return patient;
     }
 
-    public void setPatient(String patient) {
+    public void setPatient(int patient) {
         this.patient.set(patient);
     }
 
-    public String getDoctor() {
+    public int getDoctor() {
         return doctor.get();
     }
 
-    public SimpleStringProperty doctorProperty() {
+    public SimpleIntegerProperty doctorProperty() {
         return doctor;
     }
 
-    public void setDoctor(String doctor) {
+    public void setDoctor(int doctor) {
         this.doctor.set(doctor);
     }
 

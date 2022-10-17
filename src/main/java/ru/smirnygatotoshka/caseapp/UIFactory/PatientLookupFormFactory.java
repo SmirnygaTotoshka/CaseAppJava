@@ -46,7 +46,7 @@ public class PatientLookupFormFactory extends LookupWithSearch<String, Patient> 
                 "INNER JOIN spr_Employment ON spr_Employment.ID = tbl_Patients.Employment " +
                 "INNER JOIN tbl_Passports ON tbl_Passports.ID = tbl_Patients.Passport " +
                 "INNER JOIN tbl_Polices ON tbl_Polices.ID = tbl_Patients.Police " +
-                "INNER JOIN spr_FamilyStatus ON spr_FamilyStatus.ID = tbl_Patients.FamilyStatus;";
+                "INNER JOIN spr_FamilyStatus ON spr_FamilyStatus.ID = tbl_Patients.FamilyStatus WHERE tbl_Patients.ID != -100;";
         // patients = Database.getPatients("SELECT * FROM tbl_Patients");
         ObservableList<Patient> list_patients = Database.getPatients(query);
         this.filteredList = new FilteredList<>(list_patients);
