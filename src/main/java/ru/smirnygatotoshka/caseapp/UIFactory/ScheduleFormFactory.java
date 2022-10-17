@@ -1,5 +1,8 @@
 package ru.smirnygatotoshka.caseapp.UIFactory;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.beans.value.ObservableValueBase;
 import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
@@ -25,6 +28,8 @@ import ru.smirnygatotoshka.caseapp.GlobalResources;
 import ru.smirnygatotoshka.caseapp.Registrator.ChangeForm;
 import ru.smirnygatotoshka.caseapp.Registrator.PatientForm;
 
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -41,9 +46,10 @@ public class ScheduleFormFactory extends LookupWithSearch<String, Change> implem
 
     public ScheduleFormFactory(String id_prefix) {
         super(id_prefix, LOOKUP_ITEMS);
-        String query = "SELECT Doctor, Date, Start_Time, Finish_Time FROM tbl_DoctorChanges;";
+        String query = "SELECT Doctor, Date, StartTime, FinishTime FROM tbl_DoctorChanges;";
         ObservableList<Change> changes = Database.getChanges(query);
         filteredList = new FilteredList<>(changes);
+
     }
 
     @Override
@@ -51,9 +57,9 @@ public class ScheduleFormFactory extends LookupWithSearch<String, Change> implem
         if (item.contentEquals("Дата"))
             return "Date";
         else if (item.contentEquals("Начало смены"))
-            return "Start_Time";
+            return "StartTime";
         else if (item.contentEquals("Конец смены"))
-            return "Finish_Time";
+            return "FinishTime";
         else
             return "";
     }
@@ -62,10 +68,16 @@ public class ScheduleFormFactory extends LookupWithSearch<String, Change> implem
     protected Predicate<Change> search() {
         return change -> {
             boolean show = true;
-            int id = Database.getDoctorId(doctorTableView.getSelectionModel().getSelectedItem());
+            int id;
+            try {
+                id = Database.getDoctorId(doctorTableView.getSelectionModel().getSelectedItem());
+            }
+            catch (NullPointerException e){
+                return false;
+            }
             Date from_date =  Date.from(from.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
             Date to_date =  Date.from(to.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
-            show = show && (change.getDoctor() == id); //&& change.getDate().after(from_date) && change.getDate().before(to_date));
+            show = show && (change.getDoctor() == id && change.getDate().after(from_date) && change.getDate().before(to_date));
             return show;
         };
     }
@@ -100,12 +112,83 @@ public class ScheduleFormFactory extends LookupWithSearch<String, Change> implem
         //parent.setVgap(5);
         parent.setAlignment(Pos.CENTER);
 
+        doctorTableView = (TableView<Doctor>) get("doctors");
+        doctorTableView.getSelectionModel().selectedItemProperty().addListener((observableValue, localDate, t1) -> {
+            filteredList.setPredicate(search());
+        });
+        doctorTableView.getSelectionModel().select(0);
+
         changeTableView = (TableView<Change>) get("lookupTable");
         changeTableView.setPlaceholder(new Label("Нет зарегистрированных смен."));
         changeTableView.itemsProperty().set(filteredList);
+
         changeTableView.refresh();
 
-        doctorTableView = (TableView<Doctor>) get("doctors");
+        TableColumn<Change, Date> col1 = (TableColumn<Change, Date>) changeTableView.getColumns().get(0);
+        col1.setCellFactory(column -> {
+            TableCell<Change, Date> cell = new TableCell<>() {
+                private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+
+                @Override
+                protected void updateItem(Date item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if(empty) {
+                        setText(null);
+                    }
+                    else {
+                        setText(format.format(item));
+                    }
+                }
+            };
+
+            return cell;
+        });
+        col1.setCellValueFactory(new PropertyValueFactory<Change, Date>(getColumnNameFromDB(col1.getText())));
+
+
+       TableColumn<Change, Date> col2 = (TableColumn<Change, Date>) changeTableView.getColumns().get(1);
+        col2.setCellFactory(column -> {
+            TableCell<Change, Date> cell = new TableCell<>() {
+                private SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+
+                @Override
+                protected void updateItem(Date item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if(empty) {
+                        setText(null);
+                    }
+                    else {
+                        setText(format.format(item));
+                    }
+                }
+            };
+
+            return cell;
+        });
+        col2.setCellValueFactory(new PropertyValueFactory<Change, Date>(getColumnNameFromDB(col2.getText())));
+
+        TableColumn<Change, Date> col3 = (TableColumn<Change, Date>) changeTableView.getColumns().get(2);
+        col3.setCellFactory(column -> {
+            TableCell<Change, Date> cell = new TableCell<>() {
+                private SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+
+                @Override
+                protected void updateItem(Date item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if(empty) {
+                        setText(null);
+                    }
+                    else {
+                        setText(format.format(item));
+                    }
+                }
+            };
+
+            return cell;
+        });
+        col3.setCellValueFactory(new PropertyValueFactory<Change, Date>(getColumnNameFromDB(col3.getText())));
+
+
 
         Button add = (Button) get("Add");
         Button edit = (Button) get("Edit");
@@ -144,6 +227,9 @@ public class ScheduleFormFactory extends LookupWithSearch<String, Change> implem
 
         from = new DatePicker(LocalDate.now().minusDays(7));
         from.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        from.valueProperty().addListener((observableValue, localDate, t1) -> {
+            filteredList.setPredicate(search());
+        });
         from.setDayCellFactory(new Callback<>() {
             @Override
             public DateCell call(DatePicker datePicker) {
@@ -169,6 +255,9 @@ public class ScheduleFormFactory extends LookupWithSearch<String, Change> implem
 
         to = new DatePicker(LocalDate.now().plusDays(7));
         to.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        to.valueProperty().addListener((observableValue, localDate, t1) -> {
+            filteredList.setPredicate(search());
+        });
         to.setDayCellFactory(new Callback<>() {
             @Override
             public DateCell call(DatePicker datePicker) {
@@ -202,9 +291,10 @@ public class ScheduleFormFactory extends LookupWithSearch<String, Change> implem
 
     @Override
     protected void refresh() {
-        String query = "SELECT Doctor, Date, Start_Time, Finish_Time FROM tbl_DoctorChanges;";
+        String query = "SELECT Doctor, Date, StartTime, FinishTime FROM tbl_DoctorChanges;";
         ObservableList<Change> changes = Database.getChanges(query);
         filteredList = new FilteredList<>(changes);
+        filteredList.setPredicate(search());
         changeTableView.itemsProperty().set(filteredList);
         changeTableView.refresh();
     }

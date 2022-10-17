@@ -100,8 +100,8 @@ public class Database {
             while (rs.next()){
                 int doctor = rs.getInt("Doctor");
                 Date date = rs.getDate("Date");
-                Time start = rs.getTime("Start_Time");
-                Time finish = rs.getTime("Finish_Time");
+                Time start = rs.getTime("StartTime");
+                Time finish = rs.getTime("FinishTime");
                 Change patient = new Change(doctor, date, start, finish);
                 changes.add(patient);
             }

@@ -52,12 +52,12 @@ public class ChooseDoctorForm extends UIFactory{
         department.setOnAction(actionEvent -> {
             ObservableList<Doctor> list_doctors = Database.getDoctors(department.getValue());
             doctors.itemsProperty().set(list_doctors);
+            doctors.getSelectionModel().select(0);
         });
         GridPane.setFillHeight(department, false);
         GridPane.setMargin(department, new Insets(10,10,20,10));
         put(department, "department");
         pane.add(department, 0, 1);
-
 
 
         doctors.setPrefSize(200,800);

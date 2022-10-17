@@ -86,12 +86,12 @@ public class EditChangeFactory extends DatabaseEditFactory{
         addConstrains(pane, new int[]{100}, new int[]{50,50});
         morning = new RadioButton("Утренняя (08:00-14:00)");
         morning.setFont(GlobalResources.usualFont);
-        morning.setSelected(change == null ? true : change.getStart_time().before(change_border));
+        morning.setSelected(change == null ? true : change.getStartTime().before(change_border));
         morning.selectedProperty().addListener((observableValue, oldValue, newValue) -> evening.setSelected(!newValue));
 
         evening = new RadioButton("Вечерняя (14:30-20:30)");
         evening.setFont(GlobalResources.usualFont);
-        evening.setSelected(change == null ? false : change.getStart_time().after(change_border));
+        evening.setSelected(change == null ? false : change.getStartTime().after(change_border));
         evening.selectedProperty().addListener((observableValue, oldValue, newValue) -> morning.setSelected(!newValue));
 
         pane.add(morning,0,0);
@@ -116,7 +116,7 @@ public class EditChangeFactory extends DatabaseEditFactory{
             if (change.equals(new_data)) {
                 closeForm();
             } else {
-                ChangeActions.edit(new_data);
+                ChangeActions.edit(change, new_data);
             }
         }
         closeForm();

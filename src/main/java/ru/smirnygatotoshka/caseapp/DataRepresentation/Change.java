@@ -9,14 +9,14 @@ import java.sql.Time;
 public class Change {
     private SimpleIntegerProperty doctor;
     private SimpleObjectProperty<Date> date;
-    private SimpleObjectProperty<Time> start_time;
-    private SimpleObjectProperty<Time> finish_time;
+    private SimpleObjectProperty<Time> startTime;
+    private SimpleObjectProperty<Time> finishTime;
 
     public Change(int doctor, Date date, Time start_time, Time finish_time) {
         this.doctor = new SimpleIntegerProperty(doctor);
         this.date = new SimpleObjectProperty<>(date);
-        this.start_time = new SimpleObjectProperty<>(start_time);
-        this.finish_time = new SimpleObjectProperty<>(finish_time);
+        this.startTime = new SimpleObjectProperty<>(start_time);
+        this.finishTime = new SimpleObjectProperty<>(finish_time);
     }
 
     public Change(){
@@ -47,27 +47,27 @@ public class Change {
         this.date.set(date);
     }
 
-    public Time getStart_time() {
-        return start_time.get();
+    public Time getStartTime() {
+        return startTime.get();
     }
 
-    public SimpleObjectProperty<Time> start_timeProperty() {
-        return start_time;
+    public SimpleObjectProperty<Time> startTimeProperty() {
+        return startTime;
     }
 
-    public void setStart_time(Time start_time) {
-        this.start_time.set(start_time);
+    public void setStartTime(Time startTime) {
+        this.startTime.set(startTime);
     }
 
-    public Time getFinish_time() {
-        return finish_time.get();
+    public Time getFinishTime() {
+        return finishTime.get();
     }
 
-    public SimpleObjectProperty<Time> finish_timeProperty() {
-        return finish_time;
+    public SimpleObjectProperty<Time> finishTimeProperty() {
+        return finishTime;
     }
 
-    public void setFinish_time(Time finish_time) {
-        this.finish_time.set(finish_time);
+    public void setFinishTime(Time finishTime) {
+        this.finishTime.set(finishTime);
     }
 }
