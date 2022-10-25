@@ -35,12 +35,18 @@ public class PassportNumberFormatter  implements UnaryOperator<TextFormatter.Cha
         }
     }
 
-    private String formatNumber(String numbers) {
+    public static String formatNumber(String numbers) {
         numbers = numbers.replaceAll("[^\\d]", "");
         numbers = numbers.substring(0, Math.min(10, numbers.length()));
         if (numbers.length() == 0) {
             return "";
         }
-        return numbers.replaceFirst("(\\d{4})(\\d{6})", "$1 $2");//TODO start with 7
+        return numbers.replaceFirst("(\\d{4})(\\d{1,6})", "$1 $2");
+    }
+
+    public static String removeSpecial(String input){
+        StringBuilder builder = new StringBuilder(input);
+        builder.deleteCharAt(4);
+        return builder.toString();
     }
 }

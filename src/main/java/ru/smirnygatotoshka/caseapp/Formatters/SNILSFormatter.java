@@ -46,4 +46,12 @@ public class SNILSFormatter  implements UnaryOperator<TextFormatter.Change> {
 
         return builder.toString();
     }
+
+    public static String removeSpecial(String input){
+        StringBuilder builder = new StringBuilder(input);
+        for (int i = 3; i < builder.length(); i+=3){
+            builder.deleteCharAt(i);
+        }
+        return builder.toString();
+    }
 }

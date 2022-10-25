@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="851.0" prefWidth="1314.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+  <tabs>
+    <Tab text="Рецепты">
+      <content>
+        <BorderPane minHeight="0.0" minWidth="0.0" prefHeight="605.0" prefWidth="881.0">
+               <bottom>
+                  <GridPane prefHeight="73.0" prefWidth="1014.0" BorderPane.alignment="CENTER">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="805.0" minWidth="10.0" prefWidth="716.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="504.0" minWidth="10.0" prefWidth="304.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="302.0" minWidth="10.0" prefWidth="294.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <CheckBox mnemonicParsing="false" prefHeight="32.0" prefWidth="372.0" text="Показать только активные" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </CheckBox>
+                        <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="174.0" text="Выдать" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                        <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="164.0" text="Подписать" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                     </children>
+                  </GridPane>
+               </bottom>
+               <top>
+                  <GridPane prefHeight="62.0" prefWidth="813.0" BorderPane.alignment="CENTER">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="516.0" minWidth="10.0" prefWidth="516.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="518.0" minWidth="10.0" prefWidth="231.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="808.0" minWidth="10.0" prefWidth="396.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <ChoiceBox prefHeight="35.0" prefWidth="415.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <GridPane.margin>
+                              <Insets right="10.0" />
+                           </GridPane.margin></ChoiceBox>
+                        <Label text="Поиск по" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <TextField prefHeight="36.0" prefWidth="461.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </TextField>
+                     </children>
+                  </GridPane>
+               </top>
+               <right>
+                  <VBox prefHeight="573.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <ScrollPane prefHeight="334.0" prefWidth="524.0" VBox.vgrow="ALWAYS">
+                           <content>
+                              <VBox prefHeight="566.0" prefWidth="624.0">
+                                 <children>
+                                    <Label text="Номер">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" left="10.0" top="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                     <Label text="Пациент">
+                                         <font>
+                                             <Font size="24.0" />
+                                         </font>
+                                         <VBox.margin>
+                                             <Insets bottom="20.0" left="10.0" top="10.0" />
+                                         </VBox.margin>
+                                     </Label>
+                                     <Label text="Врач">
+                                         <font>
+                                             <Font size="24.0" />
+                                         </font>
+                                         <VBox.margin>
+                                             <Insets bottom="20.0" left="10.0" top="10.0" />
+                                         </VBox.margin>
+                                     </Label>
+                                     <Label text="Место выдачи">
+                                         <font>
+                                             <Font size="24.0" />
+                                         </font>
+                                         <VBox.margin>
+                                             <Insets bottom="20.0" left="10.0" top="10.0" />
+                                         </VBox.margin>
+                                     </Label>
+                                     <Label text="Номер">
+                                         <font>
+                                             <Font size="24.0" />
+                                         </font>
+                                         <VBox.margin>
+                                             <Insets bottom="20.0" left="10.0" top="10.0" />
+                                         </VBox.margin>
+                                     </Label>
+                                     <Label text="Номер">
+                                         <font>
+                                             <Font size="24.0" />
+                                         </font>
+                                         <VBox.margin>
+                                             <Insets bottom="20.0" left="10.0" top="10.0" />
+                                         </VBox.margin>
+                                     </Label>
+                                     <Label text="Номер">
+                                         <font>
+                                             <Font size="24.0" />
+                                         </font>
+                                         <VBox.margin>
+                                             <Insets bottom="20.0" left="10.0" top="10.0" />
+                                         </VBox.margin>
+                                     </Label>
+                                     <Label text="Номер">
+                                         <font>
+                                             <Font size="24.0" />
+                                         </font>
+                                         <VBox.margin>
+                                             <Insets bottom="20.0" left="10.0" top="10.0" />
+                                         </VBox.margin>
+                                     </Label>
+                                     <Label text="Номер">
+                                         <font>
+                                             <Font size="24.0" />
+                                         </font>
+                                         <VBox.margin>
+                                             <Insets bottom="20.0" left="10.0" top="10.0" />
+                                         </VBox.margin>
+                                     </Label>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                        <TableView minHeight="-Infinity" minWidth="-Infinity" prefHeight="246.0" prefWidth="524.0" VBox.vgrow="ALWAYS">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="МНН" />
+                            <TableColumn prefWidth="161.0" text="Дозировка" />
+                              <TableColumn prefWidth="161.0" text="Сигнатура" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </VBox>
+               </right>
+               <center>
+                  <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="573.0" prefWidth="704.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <TableView prefHeight="573.0" prefWidth="561.0" HBox.hgrow="ALWAYS">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="Номер" />
+                            <TableColumn prefWidth="161.0" text="ФИО пациента" />
+                              <TableColumn prefWidth="161.0" text="Статус" />
+                          </columns>
+                        </TableView>
+                        <Separator orientation="VERTICAL" prefHeight="573.0" prefWidth="32.0" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+               </center></BorderPane>
+      </content>
+    </Tab>
+  </tabs>
+</TabPane>

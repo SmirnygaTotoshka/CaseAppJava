@@ -1,16 +1,13 @@
 package ru.smirnygatotoshka.caseapp.Controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.User;
-import ru.smirnygatotoshka.caseapp.Database.Database;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
-import ru.smirnygatotoshka.caseapp.RegistratorARM;
+import ru.smirnygatotoshka.caseapp.Pharmacy.PharmacyARM;
+import ru.smirnygatotoshka.caseapp.Registrator.RegistratorARM;
 
 import java.io.IOException;
-import java.net.Authenticator;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AutorisationController {
@@ -23,12 +20,23 @@ public class AutorisationController {
     @FXML
     protected void startLoginClick(){
         try {
-            boolean success = User.authorisation(login.getText().strip(), password.getText());
+            //boolean success = User.authorisation(login.getText().strip(), password.getText());
+            boolean success = User.authorisation("van.halen", "pretty.woman");
             if (success){
                 if (User.getUser().getRole() == 3){
                     try {
                         RegistratorARM registratorARM = new RegistratorARM();
                         GlobalResources.openedStages.put("Registrator_main", registratorARM);
+                        GlobalResources.openedStages.get("Auth").hide();
+                    }
+                    catch (IOException e){
+                        GlobalResources.alert(Alert.AlertType.ERROR,"Не могу открыть АРМ - " + e.getLocalizedMessage());
+                    }
+                }
+                else if (User.getUser().getRole() == 4){
+                    try {
+                        PharmacyARM pharmacyForm = new PharmacyARM();
+                        GlobalResources.openedStages.put("PharmacyMain", pharmacyForm);
                         GlobalResources.openedStages.get("Auth").hide();
                     }
                     catch (IOException e){
@@ -50,8 +58,4 @@ public class AutorisationController {
         }
     }
 
-    @FXML
-    protected void setShowingPassword(){
-
-    }
 }

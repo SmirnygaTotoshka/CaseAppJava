@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" prefHeight="603.0" prefWidth="562.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.smirnygatotoshka.caseapp.Controllers.Registrator.RegistratorARMController">
+    <children>
+        <Label fx:id="title" alignment="CENTER" text="Пациент">
+            <font>
+                <Font size="24.0" />
+            </font>
+            <opaqueInsets>
+                <Insets bottom="10.0" top="10.0" />
+            </opaqueInsets>
+        </Label>
+        <GridPane alignment="CENTER" prefHeight="121.0" prefWidth="530.0" VBox.vgrow="ALWAYS">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="259.0" minWidth="10.0" prefWidth="197.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="167.0" minWidth="10.0" prefWidth="107.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="212.0" minWidth="10.0" prefWidth="179.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <TextField prefHeight="26.0" prefWidth="191.0">
+                    <opaqueInsets>
+                        <Insets right="15.0" />
+                    </opaqueInsets>
+                </TextField>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="173.0" text="Поиск по" textAlignment="JUSTIFY" GridPane.columnIndex="1">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+                <ComboBox prefHeight="26.0" prefWidth="189.0" GridPane.columnIndex="2">
+                    <opaqueInsets>
+                        <Insets left="30.0" />
+                    </opaqueInsets>
+                </ComboBox>
+            </children>
+        </GridPane>
+        <TableView prefHeight="526.0" prefWidth="587.0">
+            <columns>
+                <TableColumn prefWidth="75.0" text="C1" />
+                <TableColumn prefWidth="75.0" text="C2" />
+            </columns>
+            <opaqueInsets>
+                <Insets right="10.0" />
+            </opaqueInsets>
+            <VBox.margin>
+                <Insets bottom="10.0" />
+            </VBox.margin>
+        </TableView>
+
+    </children>
+    <opaqueInsets>
+        <Insets right="10.0" />
+    </opaqueInsets>
+</VBox>

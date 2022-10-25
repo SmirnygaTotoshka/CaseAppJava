@@ -3,11 +3,12 @@ package ru.smirnygatotoshka.caseapp.DataRepresentation;
 import javafx.beans.property.*;
 
 import java.sql.Date;
+import java.util.Objects;
 
 public class Patient {
     private SimpleStringProperty sirname,name,secondName;
     private SimpleStringProperty sex;
-    private SimpleObjectProperty<Date> dob;//TODO - properties
+    private SimpleObjectProperty<Date> dob;
     private SimpleStringProperty priviledge;
     private SimpleStringProperty employment;
     private SimpleStringProperty workplace;
@@ -193,5 +194,23 @@ public class Patient {
 
     public SimpleObjectProperty<Date> dobProperty(){
         return dob;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Patient patient = (Patient) o;
+        return sirname.get().contentEquals(patient.sirname.get()) && name.get().contentEquals(patient.name.get()) &&
+                secondName.get().contentEquals(patient.secondName.get()) && sex.get().contentEquals(patient.sex.get()) &&
+                dob.get().compareTo(patient.dob.get()) == 0 && priviledge.get().contentEquals(patient.priviledge.get()) &&
+                employment.get().contentEquals(patient.employment.get()) && workplace.get().contentEquals(patient.workplace.get()) &&
+                passport.get().contentEquals(patient.passport.get()) && police.get().contentEquals(patient.police.get()) &&
+                snils.get().contentEquals(patient.snils.get()) && familyStatus.get().contentEquals(patient.familyStatus.get()) && telephone.get().contentEquals(patient.telephone.get());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(sirname.get(), name.get(), secondName.get(), sex.get(), dob.get(), priviledge.get(), employment.get(), workplace.get(), passport.get(), police, snils, familyStatus, telephone);
     }
 }
