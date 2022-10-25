@@ -33,7 +33,6 @@ public class PatientsActions{
         try {
             con.setAutoCommit(false);
             if (isAbsencePatient(patient,passport,police)){
-                //TODO quieries
                 int organization = Database.getPrimaryKeyByValue("spr_SMO", police.getOrganization());
                 int sex = Database.getPrimaryKeyByValue("spr_Sex", patient.getSex());
                 int priviledge = Database.getPrimaryKeyByValue("spr_Priviledge", patient.getPriviledge());
@@ -138,6 +137,7 @@ public class PatientsActions{
         Connection con = Database.getConnection();
         try {
             con.setAutoCommit(false);
+            //if (!isAbsencePatient(patient,passport,police)) throw new SQLException("Пациент с такими данными уже существует.");
             int organization = Database.getPrimaryKeyByValue("spr_SMO", police.getOrganization());
             int sex = Database.getPrimaryKeyByValue("spr_Sex", patient.getSex());
             int priviledge = Database.getPrimaryKeyByValue("spr_Priviledge", patient.getPriviledge());
@@ -410,22 +410,66 @@ public class PatientsActions{
         }
 
 
-    static boolean isAbsencePatient(Patient patient,Passport passport, Police police) throws SQLException {
-        String query = "SELECT Count(Sirname) FROM tbl_Patients WHERE (Sirname = ? AND Name= ? AND SecondName = ?) AND Snils = ?;";
-        PreparedStatement statement = Database.getConnection().prepareStatement(query);
-        statement.setString(1, patient.getSirname());
-        statement.setString(2, patient.getName());
-        statement.setString(3, patient.getSecondName());
-        statement.setString(4, patient.getSnils());
-        ResultSet rs = statement.executeQuery();
-        int count = 0;
-        if (rs.next()){
-            count = rs.getInt(1);
-        }
-        if (count == 0 && (!isAbsencePolice(police) || !isAbsencePassport(passport)))
-            throw new SQLException("Паспорт " + passport.getNumber() + " или полис " + police.getNumber() + " закреплены за другим пациентом.");
-        return count == 0 && isAbsencePolice(police) && isAbsencePassport(passport);
 
+    static boolean isAbsencePatient(Patient patient,Passport passport, Police police) throws SQLException{
+        Connection con = Database.getConnection();
+        boolean flag = true;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            con.setAutoCommit(false);
+
+            int sex = Database.getPrimaryKeyByValue("spr_Sex", patient.getSex());
+            int priviledge = Database.getPrimaryKeyByValue("spr_Priviledge", patient.getPriviledge());
+            int employment = Database.getPrimaryKeyByValue("spr_Employment", patient.getEmployment());
+            int family_status = Database.getPrimaryKeyByValue("spr_FamilyStatus", patient.getFamilyStatus());
+            int passportId = Database.getPassportId(passport);
+            int policeId = Database.getPoliceId(police);
+
+            String query = "SELECT Count(*) FROM tbl_Patients WHERE Sirname = ? AND Name = ? AND SecondName = ? AND Sex = ? AND Birthday = ? " +
+                    "AND Priviledge = ? AND Employment = ? AND Workplace = ? AND Passport = ? AND Snils = ? AND Police = ? AND FamilyStatus = ? AND Telephone = ?;";
+
+            statement = con.prepareStatement(query);
+            statement.setString(1,patient.getSirname());
+            statement.setString(2, patient.getName());
+            statement.setString(3, patient.getSecondName());
+            statement.setInt(4,sex);
+            statement.setDate(5,patient.getDob());
+            statement.setInt(6,priviledge);
+            statement.setInt(7,employment);
+            statement.setString(8,patient.getWorkplace());
+            statement.setInt(9,passportId);
+            statement.setString(10, patient.getSnils());
+            statement.setInt(11,policeId);
+            statement.setInt(12,family_status);
+            statement.setString(13, patient.getTelephone());
+
+            rs = statement.executeQuery();
+            if (rs.next()){
+                int count = rs.getInt(1);
+                flag = count == 0;
+            }
+
+        }
+        catch (SQLException se){
+            GlobalResources.alert(Alert.AlertType.ERROR,"Не могу получить данные о врачах из БД, потому что " + se.getMessage() );
+            return false;
+        }
+        finally {
+            try{
+                if (statement != null){
+                    statement.close();
+                }
+                if (rs != null){
+                    rs.close();
+                }
+                return flag;
+            }
+            catch(SQLException e){
+                GlobalResources.alert(Alert.AlertType.ERROR,"Cannot close patients stmt, because " + e.getMessage());
+                return true;
+            }
+        }
     }
 
     public static boolean isAbsencePassport(Passport passport) throws SQLException {

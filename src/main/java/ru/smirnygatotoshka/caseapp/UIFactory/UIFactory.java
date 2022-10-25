@@ -3,12 +3,17 @@ package ru.smirnygatotoshka.caseapp.UIFactory;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import javafx.stage.WindowEvent;
+import ru.smirnygatotoshka.caseapp.GlobalResources;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 public abstract class UIFactory {
 
@@ -22,7 +27,17 @@ public abstract class UIFactory {
 
     public abstract Parent create();
 
+    protected abstract void closeForm();
 
+    public void onClose(WindowEvent event){
+        Optional<ButtonType> answer = GlobalResources.alert(Alert.AlertType.CONFIRMATION,"Продолжить без сохранения?");
+        if (answer.get() == ButtonType.OK){
+            closeForm();
+        }
+        else {
+            event.consume();
+        }
+    }
 
     public Parent getElement(String id){
         return elements.get(id);

@@ -147,4 +147,9 @@ public class ChooseDoctorForm extends UIFactory{
         return pane;
     }
 
+    @Override
+    protected void closeForm() {
+
+    }
+
 }

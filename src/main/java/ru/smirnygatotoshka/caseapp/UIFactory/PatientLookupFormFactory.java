@@ -28,11 +28,11 @@ import java.util.function.Predicate;
 
 public class PatientLookupFormFactory extends LookupWithSearch<String, Patient> implements DataChanger{
 
-    private TableView<Patient> tablePatients;
-    private TextField seeking_query;
-    private ChoiceBox<String> select_seek;
+    protected TableView<Patient> tablePatients;
+    protected TextField seeking_query;
+    protected ChoiceBox<String> select_seek;
 
-    private static final ObservableList<String> LOOKUP_HEADERS = FXCollections.observableArrayList("Фамилия","Имя","Отчество",
+    protected static final ObservableList<String> LOOKUP_HEADERS = FXCollections.observableArrayList("Фамилия","Имя","Отчество",
             "Пол","Дата рождения","Льгота","Соц.статус","Место работы","Паспорт","СНИЛС","Полис","Семейное положение","Телефон");
 
     public PatientLookupFormFactory(String id_prefix) {
@@ -143,6 +143,11 @@ public class PatientLookupFormFactory extends LookupWithSearch<String, Patient> 
         tablePatients.itemsProperty().set(filteredList);
 
         return parent;
+    }
+
+    @Override
+    protected void closeForm() {
+
     }
 
     @Override
@@ -292,7 +297,7 @@ public class PatientLookupFormFactory extends LookupWithSearch<String, Patient> 
                 "INNER JOIN spr_Employment ON spr_Employment.ID = tbl_Patients.Employment " +
                 "INNER JOIN tbl_Passports ON tbl_Passports.ID = tbl_Patients.Passport " +
                 "INNER JOIN tbl_Polices ON tbl_Polices.ID = tbl_Patients.Police " +
-                "INNER JOIN spr_FamilyStatus ON spr_FamilyStatus.ID = tbl_Patients.FamilyStatus;";
+                "INNER JOIN spr_FamilyStatus ON spr_FamilyStatus.ID = tbl_Patients.FamilyStatus WHERE tbl_Patients.ID != -100;";
         // patients = Database.getPatients("SELECT * FROM tbl_Patients");
         ObservableList<Patient> list_patients = Database.getPatients(query);
         filteredList = new FilteredList<>(list_patients);

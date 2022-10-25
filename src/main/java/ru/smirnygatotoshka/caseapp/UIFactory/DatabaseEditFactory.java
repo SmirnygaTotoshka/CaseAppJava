@@ -98,17 +98,6 @@ public abstract class DatabaseEditFactory extends UIFactory{
 
     protected abstract void saveRecord(ActionEvent event);
 
-    protected abstract void closeForm();
-
-    public void onClose(WindowEvent event){
-        Optional<ButtonType> answer = GlobalResources.alert(Alert.AlertType.CONFIRMATION,"Продолжить без сохранения?");
-        if (answer.get() == ButtonType.OK){
-            closeForm();
-        }
-        else {
-            event.consume();
-        }
-    }
 
     protected void addField(Parent parent, int row, String name){
         ((GridPane) get("main")).add(parent,1, row);

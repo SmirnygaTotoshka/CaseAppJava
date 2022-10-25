@@ -29,6 +29,11 @@ public class ControlForm extends UIFactory{
         return isHorizontal ? createHorizontalControls(controls) : createVerticalControls(controls);
     }
 
+    @Override
+    protected void closeForm() {
+
+    }
+
     protected Button[] getControls() {
         Button[] controls = new Button[3];
 

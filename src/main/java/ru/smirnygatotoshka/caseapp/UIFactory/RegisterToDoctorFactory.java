@@ -1,10 +1,13 @@
 package ru.smirnygatotoshka.caseapp.UIFactory;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -12,19 +15,25 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
+import ru.smirnygatotoshka.caseapp.DataRepresentation.Change;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Doctor;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Patient;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.ScheduleItem;
 import ru.smirnygatotoshka.caseapp.Database.ChangeActions;
 import ru.smirnygatotoshka.caseapp.Database.Database;
 import ru.smirnygatotoshka.caseapp.Database.PatientsActions;
+import ru.smirnygatotoshka.caseapp.Database.ScheduleActions;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
+import ru.smirnygatotoshka.caseapp.Registrator.ChangeForm;
+import ru.smirnygatotoshka.caseapp.Registrator.RegisterPatientForm;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 public class RegisterToDoctorFactory extends LookupWithSearch<String,ScheduleItem> implements DataChanger {
@@ -78,7 +87,7 @@ public class RegisterToDoctorFactory extends LookupWithSearch<String,ScheduleIte
         });
         doctorTableView.getSelectionModel().select(0);
 
-        scheduleItemTableView = (TableView<ScheduleItem>) get("lookupTable");
+        scheduleItemTableView = (TableView<ScheduleItem>) get("lookupTable");//TODO - refresh after add/edit/delete change
         scheduleItemTableView.setPlaceholder(new Label("Нерабочий день"));
         scheduleItemTableView.itemsProperty().set(filteredList);
 
@@ -128,7 +137,33 @@ public class RegisterToDoctorFactory extends LookupWithSearch<String,ScheduleIte
             }
         });
 
+        scheduleItemTableView.setRowFactory(
+                tableView -> {
+                    final TableRow<ScheduleItem> row = new TableRow<>();
+                    final ContextMenu rowMenu = new ContextMenu();
+                    MenuItem refreshItem = new MenuItem("Обновить");
+                    refreshItem.setOnAction(event -> refresh());
+                    MenuItem editItem = new MenuItem("Редактировать");
+                    editItem.setOnAction(event -> edit.fire());
+                    MenuItem removeItem = new MenuItem("Удалить");
+                    removeItem.setOnAction(event -> delete.fire());
+
+                    rowMenu.getItems().addAll(refreshItem, editItem, removeItem);
+
+                    // only display context menu for non-empty rows:
+                    row.contextMenuProperty().bind(
+                            Bindings.when(row.emptyProperty())
+                                    .then(rowMenu)
+                                    .otherwise(rowMenu));
+                    return row;
+                });
+
         return parent;
+    }
+
+    @Override
+    protected void closeForm() {
+
     }
 
     @Override
@@ -156,6 +191,8 @@ public class RegisterToDoctorFactory extends LookupWithSearch<String,ScheduleIte
 
     @Override
     protected Parent createLookup() {
+        GridPane pane = new GridPane();
+        addConstrains(pane, new int[]{50,50}, new int[]{100});
         datePicker = new DatePicker(LocalDate.now());
         datePicker.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         datePicker.valueProperty().addListener((observableValue, localDate, t1) -> {
@@ -165,7 +202,7 @@ public class RegisterToDoctorFactory extends LookupWithSearch<String,ScheduleIte
             @Override
             public DateCell call(DatePicker datePicker) {
                 return new DateCell(){
-                    LocalDate minDate = LocalDate.now().minusYears(1), maxDate = LocalDate.now().plusYears(1);
+                    LocalDate minDate = LocalDate.now(), maxDate = LocalDate.now().plusYears(1);
                     @Override
                     public void updateItem(LocalDate item, boolean empty){
                         super.updateItem(item,empty);
@@ -182,26 +219,88 @@ public class RegisterToDoctorFactory extends LookupWithSearch<String,ScheduleIte
             }
         });
         put(datePicker,"chooseDate");
-        return datePicker;
+        pane.add(datePicker, 0, 0);
+
+        Button refresh = new Button("Обновить");
+        refresh.setStyle("-fx-font: Serif;" +
+                "-fx-font-size: 18px;" +
+                "-fx-background-color: #CCCCFF;" +
+                "-fx-border-color: #000000;");
+        refresh.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        refresh.setOnAction(event -> {
+            refresh();
+        });
+        put(refresh, "Refresh");
+        pane.add(refresh, 0, 1);
+
+        GridPane.setMargin(datePicker, new Insets(10));
+        GridPane.setMargin(refresh, new Insets(10));
+
+        return pane;
     }
 
     @Override
     protected void refresh() {
-
+        String query = "SELECT * FROM tbl_Schedule;";
+        ObservableList<ScheduleItem> items = Database.getSchedule(query);
+        filteredList = new FilteredList<>(items);
+        filteredList.setPredicate(search());
+        scheduleItemTableView.itemsProperty().set(filteredList);
+        scheduleItemTableView.refresh();
     }
 
     @Override
     public void addAction(ActionEvent event) {
-
+       Doctor selectedDoctor = doctorTableView.getSelectionModel().getSelectedItem();
+       ScheduleItem scheduleItem = scheduleItemTableView.getSelectionModel().getSelectedItem();
+        if (selectedDoctor == null){
+            GlobalResources.alert(Alert.AlertType.INFORMATION,"Выберите врача.");
+        }
+        else if (scheduleItem == null){
+            GlobalResources.alert(Alert.AlertType.INFORMATION,"Выберите время.");
+        }
+        else {
+            RegisterPatientForm form = new RegisterPatientForm(scheduleItem, selectedDoctor);
+            form.setOnHiding(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent windowEvent) {
+                    refresh();
+                    System.out.println("Add");
+                }
+            });
+            GlobalResources.openedStages.put("ChoosePatientForm", form);
+        }
     }
 
     @Override
     public void editAction(ActionEvent event) {
-
+       addAction(event);
     }
 
     @Override
     public void deleteAction(ActionEvent event) {
+        Doctor selectedDoctor = doctorTableView.getSelectionModel().getSelectedItem();
+        ScheduleItem scheduleItem = scheduleItemTableView.getSelectionModel().getSelectedItem();
+        if (selectedDoctor == null){
+            GlobalResources.alert(Alert.AlertType.INFORMATION,"Выберите врача.");
+        }
+        else if (scheduleItem == null){
+            GlobalResources.alert(Alert.AlertType.INFORMATION,"Выберите время.");
+        }
+        else if (scheduleItem.getPatient() == -100){
+            GlobalResources.alert(Alert.AlertType.INFORMATION, "Уже отсутствует запись на данное время.");
+        }
+        else {
+            Optional<ButtonType> answer = GlobalResources.alert(Alert.AlertType.CONFIRMATION,"Отменить приём?");
+            if (answer.get() == ButtonType.OK){
+                ScheduleActions.delete(scheduleItem);
+                refresh();
+                System.out.println("Delete");
+            }
+            else {
+                event.consume();
+            }
 
+        }
     }
 }

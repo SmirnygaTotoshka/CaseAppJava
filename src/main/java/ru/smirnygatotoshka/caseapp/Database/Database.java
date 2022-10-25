@@ -389,6 +389,132 @@ public class Database {
         }
     }
 
+    public static int getPatientId(Patient patient) {
+        int id = -100;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            int sex = Database.getPrimaryKeyByValue("spr_Sex", patient.getSex());
+            int priviledge = Database.getPrimaryKeyByValue("spr_Priviledge", patient.getPriviledge());
+            int employment = Database.getPrimaryKeyByValue("spr_Employment", patient.getEmployment());
+            int family_status = Database.getPrimaryKeyByValue("spr_FamilyStatus", patient.getFamilyStatus());
+            int passportId = Database.getPassportId(new Passport(patient.getPassport(),""));
+            int policeId = Database.getPoliceId(new Police(patient.getPolice(),""));
+
+            String query = "SELECT ID FROM tbl_Patients WHERE Sirname = ? AND Name = ? AND SecondName = ? AND Sex = ? AND Birthday = ? " +
+                    "AND Priviledge = ? AND Employment = ? AND Workplace = ? AND Passport = ? AND Snils = ? AND Police = ? AND FamilyStatus = ? AND Telephone = ?;";
+
+            statement = con.prepareStatement(query);
+            statement.setString(1,patient.getSirname());
+            statement.setString(2, patient.getName());
+            statement.setString(3, patient.getSecondName());
+            statement.setInt(4,sex);
+            statement.setDate(5,patient.getDob());
+            statement.setInt(6,priviledge);
+            statement.setInt(7,employment);
+            statement.setString(8,patient.getWorkplace());
+            statement.setInt(9,passportId);
+            statement.setString(10, patient.getSnils());
+            statement.setInt(11,policeId);
+            statement.setInt(12,family_status);
+            statement.setString(13, patient.getTelephone());
+
+            rs = statement.executeQuery();
+            if (rs.next())
+                id = rs.getInt(1);
+        }
+        catch (SQLException se){
+            GlobalResources.alert(Alert.AlertType.ERROR,"Не могу получить данные о врачах из БД, потому что " + se.getMessage() );
+            return -1;
+        }
+        finally {
+            try{
+                if (statement != null){
+                    statement.close();
+                }
+                if (rs != null){
+                    rs.close();
+                }
+                return id;
+            }
+            catch(SQLException e){
+                GlobalResources.alert(Alert.AlertType.ERROR,"Cannot close patients stmt, because " + e.getMessage());
+                return -2;
+            }
+        }
+    }
+
+    public static int getPassportId(Passport passport) {
+        int id = -100;
+
+        String query = "SELECT ID FROM tbl_Passports WHERE Number = ?;";
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            statement = con.prepareStatement(query);
+            statement.setString(1, passport.getNumber());
+
+            rs = statement.executeQuery();
+            if (rs.next())
+                id = rs.getInt(1);
+        }
+        catch (SQLException se){
+            GlobalResources.alert(Alert.AlertType.ERROR,"Не могу получить данные о врачах из БД, потому что " + se.getMessage() );
+            return -1;
+        }
+        finally {
+            try{
+                if (statement != null){
+                    statement.close();
+                }
+                if (rs != null){
+                    rs.close();
+                }
+                return id;
+            }
+            catch(SQLException e){
+                GlobalResources.alert(Alert.AlertType.ERROR,"Cannot close patients stmt, because " + e.getMessage());
+                return -2;
+            }
+        }
+    }
+
+    public static int getPoliceId(Police police) {
+        int code_SMO = getPrimaryKeyByValue("spr_SMO", police.getOrganization());
+        int id = -100;
+
+        String query = "SELECT ID FROM tbl_Polices WHERE Number = ?;";
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            statement = con.prepareStatement(query);
+            statement.setString(1, police.getNumber());
+
+            rs = statement.executeQuery();
+            if (rs.next())
+                id = rs.getInt(1);
+        }
+        catch (SQLException se){
+            GlobalResources.alert(Alert.AlertType.ERROR,"Не могу получить данные о врачах из БД, потому что " + se.getMessage() );
+            return -1;
+        }
+        finally {
+            try{
+                if (statement != null){
+                    statement.close();
+                }
+                if (rs != null){
+                    rs.close();
+                }
+                return id;
+            }
+            catch(SQLException e){
+                GlobalResources.alert(Alert.AlertType.ERROR,"Cannot close patients stmt, because " + e.getMessage());
+                return -2;
+            }
+        }
+    }
+
     /*public static ObservableList<Change> getChanges(Reference department){
         int code_dep = getPrimaryKeyByValue("spr_Departments", department.getNAME());
         String query = "SELECT Sirname,tbl_Doctors.Name as Name,SecondName,spr_Sex.NAME as Sex,Birthday," +

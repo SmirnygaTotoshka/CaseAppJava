@@ -1,34 +1,30 @@
 package ru.smirnygatotoshka.caseapp.UIFactory;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.beans.value.ObservableValueBase;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.*;
+import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Change;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Doctor;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Patient;
-import ru.smirnygatotoshka.caseapp.DataRepresentation.Reference;
 import ru.smirnygatotoshka.caseapp.Database.ChangeActions;
 import ru.smirnygatotoshka.caseapp.Database.Database;
-import ru.smirnygatotoshka.caseapp.Database.PatientsActions;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
 import ru.smirnygatotoshka.caseapp.Registrator.ChangeForm;
-import ru.smirnygatotoshka.caseapp.Registrator.PatientForm;
 
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -204,7 +200,34 @@ public class ScheduleFormFactory extends LookupWithSearch<String, Change> implem
             }
         });
 
+
+        changeTableView.setRowFactory(
+                tableView -> {
+                    final TableRow<Change> row = new TableRow<>();
+                    final ContextMenu rowMenu = new ContextMenu();
+                    MenuItem refreshItem = new MenuItem("Обновить");
+                    refreshItem.setOnAction(event -> refresh());
+                    MenuItem editItem = new MenuItem("Редактировать");
+                    editItem.setOnAction(event -> edit.fire());
+                    MenuItem removeItem = new MenuItem("Удалить");
+                    removeItem.setOnAction(event -> delete.fire());
+
+                    rowMenu.getItems().addAll(refreshItem, editItem, removeItem);
+
+                    // only display context menu for non-empty rows:
+                    row.contextMenuProperty().bind(
+                            Bindings.when(row.emptyProperty())
+                                    .then(rowMenu)
+                                    .otherwise(rowMenu));
+                    return row;
+                });
+
         return parent;
+    }
+
+    @Override
+    protected void closeForm() {
+
     }
 
     @Override
@@ -225,7 +248,7 @@ public class ScheduleFormFactory extends LookupWithSearch<String, Change> implem
         pane.add(lab_to, 2, 0);
         put(lab_to, "to_label");
 
-        from = new DatePicker(LocalDate.now().minusDays(7));
+        from = new DatePicker(LocalDate.now());
         from.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         from.valueProperty().addListener((observableValue, localDate, t1) -> {
             filteredList.setPredicate(search());
@@ -253,7 +276,7 @@ public class ScheduleFormFactory extends LookupWithSearch<String, Change> implem
         pane.add(from, 1, 0);
         put(from,"fromPicker");
 
-        to = new DatePicker(LocalDate.now().plusDays(7));
+        to = new DatePicker(LocalDate.now().plusDays(14));
         to.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         to.valueProperty().addListener((observableValue, localDate, t1) -> {
             filteredList.setPredicate(search());

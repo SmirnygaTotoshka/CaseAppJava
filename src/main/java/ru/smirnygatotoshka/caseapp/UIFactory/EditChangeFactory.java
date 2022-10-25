@@ -50,13 +50,13 @@ public class EditChangeFactory extends DatabaseEditFactory{
         ScrollPane scrollPane = (ScrollPane) super.create();
         scrollPane.setPrefSize(800,350);
 
-        date = new DatePicker(change == null ? LocalDate.now() : change.getDate().toLocalDate());
+        date = new DatePicker(change == null ? LocalDate.now().plusDays(1) : change.getDate().toLocalDate());
         date.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         date.setDayCellFactory(new Callback<>() {
             @Override
             public DateCell call(DatePicker datePicker) {
                 return new DateCell(){
-                    LocalDate minDate = LocalDate.now().minusYears(1), maxDate = LocalDate.now().plusYears(1);
+                    LocalDate minDate = LocalDate.now().plusDays(1), maxDate = LocalDate.now().plusYears(1);
                     @Override
                     public void updateItem(LocalDate item, boolean empty){
                         super.updateItem(item,empty);

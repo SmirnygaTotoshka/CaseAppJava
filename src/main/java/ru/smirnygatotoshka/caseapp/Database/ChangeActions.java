@@ -7,6 +7,8 @@ import ru.smirnygatotoshka.caseapp.GlobalResources;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class ChangeActions {
@@ -155,26 +157,53 @@ public class ChangeActions {
         try {
             con.setAutoCommit(false);
 
-            String query = "UPDATE tbl_DoctorChanges SET Doctor = ?, `Date` = ?, StartTime = ?, FinishTime = ? " +
-                    "WHERE Doctor = ? AND `Date` = ? AND StartTime = ? AND FinishTime = ?;";
 
-            PreparedStatement statement = con.prepareStatement(query);
-            statement.setInt(1, newChange.getDoctor());
-            statement.setDate(2, newChange.getDate());
-            statement.setTime(3, newChange.getStartTime());
-            statement.setTime(4, newChange.getFinishTime());
+            String query1 = "SELECT ID FROM tbl_DoctorChanges WHERE Doctor = ? AND Date = ? AND StartTime  = ? AND FinishTime = ?;";
 
-            statement.setInt(5, oldChange.getDoctor());
-            statement.setDate(6, oldChange.getDate());
-            statement.setTime(7, oldChange.getStartTime());
-            statement.setTime(8, oldChange.getFinishTime());
-            /**
-             * TODO
-             * Проверка на то, что мы не вносим существующую смену
-             * Редактирование времени смены
-             *
-             * */
-            int rows = statement.executeUpdate();
+            PreparedStatement statement1 = con.prepareStatement(query1);
+            statement1.setInt(1, oldChange.getDoctor());
+            statement1.setDate(2, oldChange.getDate());
+            statement1.setTime(3, oldChange.getStartTime());
+            statement1.setTime(4, oldChange.getFinishTime());
+            ResultSet set1 = statement1.executeQuery();
+
+            int id = -1;
+            if (set1.next())
+                id = set1.getInt(1);
+
+            if (id == -1) throw new SQLException("Смена не обнаружена, не могу добавить расписание.");
+
+            if (isAbsenceChange(newChange)) {
+
+
+                String query = "UPDATE tbl_DoctorChanges SET Doctor = ?, `Date` = ?, StartTime = ?, FinishTime = ? " +
+                        "WHERE ID = ?;";
+
+                PreparedStatement statement = con.prepareStatement(query);
+                statement.setInt(1, newChange.getDoctor());
+                statement.setDate(2, newChange.getDate());
+                statement.setTime(3, newChange.getStartTime());
+                statement.setTime(4, newChange.getFinishTime());
+
+                statement.setInt(5, id);
+
+                String query2 = "UPDATE tbl_Schedule SET Doctor = ?, `Time` = ? WHERE `Change` = ? AND `Time` = ?;";
+                Time[] time_old = oldChange.getStartTime().before(change_border) ? morningTimes : eveningTimes;
+                Time[] time_new = newChange.getStartTime().before(change_border) ? morningTimes : eveningTimes;
+
+                for (int i = 0, j = 0;i < time_old.length && j < time_new.length;i++,j++) {
+
+                    PreparedStatement statement2 = con.prepareStatement(query2);
+                    statement2.setInt(1, newChange.getDoctor());
+                    statement2.setTime(2, time_new[j]);
+                    statement2.setInt(3, id);
+                    statement2.setTime(4, time_old[i]);
+                    int rows2 = statement2.executeUpdate();
+                }
+
+                int rows = statement.executeUpdate();
+            }
+            else throw new SQLException("Данная смена уже существует.");
 
             con.commit();
             GlobalResources.alert(Alert.AlertType.INFORMATION, "Смена успешно изменена.");
@@ -212,19 +241,35 @@ public class ChangeActions {
         try {
             con.setAutoCommit(false);
 
+            String query1 = "SELECT ID FROM tbl_DoctorChanges WHERE Doctor = ? AND Date = ? AND StartTime  = ? AND FinishTime = ?;";
+
+            PreparedStatement statement1 = con.prepareStatement(query1);
+            statement1.setInt(1, selectedChange.getDoctor());
+            statement1.setDate(2, selectedChange.getDate());
+            statement1.setTime(3, selectedChange.getStartTime());
+            statement1.setTime(4, selectedChange.getFinishTime());
+            ResultSet set1 = statement1.executeQuery();
+
+            int id = -1;
+            if (set1.next())
+                id = set1.getInt(1);
+
+            if (id == -1) throw new SQLException("Смена не обнаружена, не могу добавить расписание.");
+
+            String query2 = "DELETE FROM tbl_Schedule " +
+                    "WHERE `Change` = ?;";
+
+            PreparedStatement statement2 = con.prepareStatement(query2);
+            statement2.setInt(1, id);
+            int rows2 = statement2.executeUpdate();
+
             String query = "DELETE FROM tbl_DoctorChanges " +
-                    "WHERE Doctor = ? AND `Date` = ? AND StartTime = ? AND FinishTime = ?;";
+                    "WHERE ID = ?;";
 
             PreparedStatement statement = con.prepareStatement(query);
-            statement.setInt(1, selectedChange.getDoctor());
-            statement.setDate(2, selectedChange.getDate());
-            statement.setTime(3, selectedChange.getStartTime());
-            statement.setTime(4, selectedChange.getFinishTime());
-            /**
-             * TODO
-             * Удаление времени ассоциированного со сменой
-             * */
+            statement.setInt(1, id);
             int rows = statement.executeUpdate();
+
 
             con.commit();
             GlobalResources.alert(Alert.AlertType.INFORMATION, "Смена успешно удалена.");

@@ -1,5 +1,6 @@
 package ru.smirnygatotoshka.caseapp.UIFactory;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
