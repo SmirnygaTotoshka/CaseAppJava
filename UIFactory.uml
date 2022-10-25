@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>ru.smirnygatotoshka.caseapp.UIFactory</OriginalElement>
+  <nodes>
+    <node x="1877.0220588235295" y="157.5">ru.smirnygatotoshka.caseapp.UIFactory.DataChanger</node>
+    <node x="807.0000000000001" y="384.0">ru.smirnygatotoshka.caseapp.UIFactory.PoliceEditFactory</node>
+    <node x="489.0000000000001" y="264.0">ru.smirnygatotoshka.caseapp.UIFactory.PatientEditFactory</node>
+    <node x="1111.6470588235295" y="132.0">ru.smirnygatotoshka.caseapp.UIFactory.LookupWithSearch</node>
+    <node x="1522.8198529411766" y="157.5">ru.smirnygatotoshka.caseapp.UIFactory.ChooseDoctorForm</node>
+    <node x="675.0000000000001" y="132.0">ru.smirnygatotoshka.caseapp.UIFactory.ControlForm</node>
+    <node x="244.0000000000001" y="384.0">ru.smirnygatotoshka.caseapp.UIFactory.PassportEditFactory</node>
+    <node x="372.2500000000001" y="132.0">ru.smirnygatotoshka.caseapp.UIFactory.DatabaseEditFactory</node>
+    <node x="1066.5" y="684.0">ru.smirnygatotoshka.caseapp.UIFactory.RegisterPatientToDoctorFactory</node>
+    <node x="0.0" y="312.0">ru.smirnygatotoshka.caseapp.UIFactory.EditChangeFactory</node>
+    <node x="1757.0" y="384.0">ru.smirnygatotoshka.caseapp.UIFactory.RegisterToDoctorFactory</node>
+    <node x="751.5000000000001" y="0.0">ru.smirnygatotoshka.caseapp.UIFactory.UIFactory</node>
+    <node x="1421.0" y="372.0">ru.smirnygatotoshka.caseapp.UIFactory.ScheduleFormFactory</node>
+    <node x="1063.0" y="384.0">ru.smirnygatotoshka.caseapp.UIFactory.PatientLookupFormFactory</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ru.smirnygatotoshka.caseapp.UIFactory.RegisterToDoctorFactory" target="ru.smirnygatotoshka.caseapp.UIFactory.DataChanger" relationship="REALIZATION">
+      <point x="97.25" y="-65.0" />
+      <point x="2048.75" y="234.0" />
+      <point x="1958.5220588235295" y="234.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="ru.smirnygatotoshka.caseapp.UIFactory.ScheduleFormFactory" target="ru.smirnygatotoshka.caseapp.UIFactory.DataChanger" relationship="REALIZATION">
+      <point x="79.0" y="-77.0" />
+      <point x="1658.0" y="234.0" />
+      <point x="1958.5220588235295" y="234.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="ru.smirnygatotoshka.caseapp.UIFactory.ControlForm" target="ru.smirnygatotoshka.caseapp.UIFactory.UIFactory" relationship="GENERALIZATION">
+      <point x="0.0" y="-41.0" />
+      <point x="771.0000000000001" y="107.0" />
+      <point x="894.0000000000001" y="107.0" />
+      <point x="0.0" y="41.0" />
+    </edge>
+    <edge source="ru.smirnygatotoshka.caseapp.UIFactory.EditChangeFactory" target="ru.smirnygatotoshka.caseapp.UIFactory.DatabaseEditFactory" relationship="GENERALIZATION">
+      <point x="0.0" y="-137.0" />
+      <point x="112.0" y="244.0" />
+      <point x="497.2500000000001" y="244.0" />
+      <point x="0.0" y="41.0" />
+    </edge>
+    <edge source="ru.smirnygatotoshka.caseapp.UIFactory.ChooseDoctorForm" target="ru.smirnygatotoshka.caseapp.UIFactory.UIFactory" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1630.8198529411766" y="107.0" />
+      <point x="894.0000000000001" y="107.0" />
+      <point x="0.0" y="41.0" />
+    </edge>
+    <edge source="ru.smirnygatotoshka.caseapp.UIFactory.PatientEditFactory" target="ru.smirnygatotoshka.caseapp.UIFactory.DatabaseEditFactory" relationship="GENERALIZATION">
+      <point x="0.0" y="-185.0" />
+      <point x="638.0000000000001" y="244.0" />
+      <point x="497.2500000000001" y="244.0" />
+      <point x="0.0" y="41.0" />
+    </edge>
+    <edge source="ru.smirnygatotoshka.caseapp.UIFactory.DatabaseEditFactory" target="ru.smirnygatotoshka.caseapp.UIFactory.UIFactory" relationship="GENERALIZATION">
+      <point x="0.0" y="-41.0" />
+      <point x="497.2500000000001" y="107.0" />
+      <point x="894.0000000000001" y="107.0" />
+      <point x="0.0" y="41.0" />
+    </edge>
+    <edge source="ru.smirnygatotoshka.caseapp.UIFactory.PatientLookupFormFactory" target="ru.smirnygatotoshka.caseapp.UIFactory.DataChanger" relationship="REALIZATION">
+      <point x="84.5" y="-65.0" />
+      <point x="1316.5" y="234.0" />
+      <point x="1958.5220588235295" y="234.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="ru.smirnygatotoshka.caseapp.UIFactory.PoliceEditFactory" target="ru.smirnygatotoshka.caseapp.UIFactory.DatabaseEditFactory" relationship="GENERALIZATION">
+      <point x="0.0" y="-65.0" />
+      <point x="925.0000000000001" y="244.0" />
+      <point x="497.2500000000001" y="244.0" />
+      <point x="0.0" y="41.0" />
+    </edge>
+    <edge source="ru.smirnygatotoshka.caseapp.UIFactory.RegisterPatientToDoctorFactory" target="ru.smirnygatotoshka.caseapp.UIFactory.PatientLookupFormFactory" relationship="GENERALIZATION">
+      <point x="0.0" y="-41.0" />
+      <point x="0.0" y="65.0" />
+    </edge>
+    <edge source="ru.smirnygatotoshka.caseapp.UIFactory.PassportEditFactory" target="ru.smirnygatotoshka.caseapp.UIFactory.DatabaseEditFactory" relationship="GENERALIZATION">
+      <point x="0.0" y="-65.0" />
+      <point x="356.5000000000001" y="244.0" />
+      <point x="497.2500000000001" y="244.0" />
+      <point x="0.0" y="41.0" />
+    </edge>
+    <edge source="ru.smirnygatotoshka.caseapp.UIFactory.ScheduleFormFactory" target="ru.smirnygatotoshka.caseapp.UIFactory.LookupWithSearch" relationship="GENERALIZATION">
+      <point x="-79.0" y="-77.0" />
+      <point x="1500.0" y="244.0" />
+      <point x="1241.6470588235295" y="244.0" />
+      <point x="0.0" y="41.0" />
+    </edge>
+    <edge source="ru.smirnygatotoshka.caseapp.UIFactory.LookupWithSearch" target="ru.smirnygatotoshka.caseapp.UIFactory.UIFactory" relationship="GENERALIZATION">
+      <point x="0.0" y="-41.0" />
+      <point x="1241.6470588235295" y="107.0" />
+      <point x="894.0000000000001" y="107.0" />
+      <point x="0.0" y="41.0" />
+    </edge>
+    <edge source="ru.smirnygatotoshka.caseapp.UIFactory.PatientLookupFormFactory" target="ru.smirnygatotoshka.caseapp.UIFactory.LookupWithSearch" relationship="GENERALIZATION">
+      <point x="-84.5" y="-65.0" />
+      <point x="1147.5" y="244.0" />
+      <point x="1241.6470588235295" y="244.0" />
+      <point x="0.0" y="41.0" />
+    </edge>
+    <edge source="ru.smirnygatotoshka.caseapp.UIFactory.RegisterToDoctorFactory" target="ru.smirnygatotoshka.caseapp.UIFactory.LookupWithSearch" relationship="GENERALIZATION">
+      <point x="-97.25" y="-65.0" />
+      <point x="1854.25" y="244.0" />
+      <point x="1241.6470588235295" y="244.0" />
+      <point x="0.0" y="41.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.6528162511542013" showDependencies="false" x="1073.0" y="383.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

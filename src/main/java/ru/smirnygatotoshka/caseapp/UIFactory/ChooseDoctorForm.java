@@ -1,16 +1,12 @@
 package ru.smirnygatotoshka.caseapp.UIFactory;
 
 import javafx.collections.ObservableList;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.RowConstraints;
 import javafx.util.Callback;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Doctor;
 import ru.smirnygatotoshka.caseapp.DataRepresentation.Reference;

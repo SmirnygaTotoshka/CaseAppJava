@@ -15,6 +15,7 @@ import ru.smirnygatotoshka.caseapp.Database.ChangeActions;
 import ru.smirnygatotoshka.caseapp.Database.ScheduleActions;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
 
+
 public class RegisterPatientToDoctorFactory extends PatientLookupFormFactory{
 
     private ScheduleItem item;

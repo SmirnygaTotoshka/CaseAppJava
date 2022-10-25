@@ -15,10 +15,19 @@ import ru.smirnygatotoshka.caseapp.GlobalResources;
 import java.util.HashMap;
 import java.util.Optional;
 
+/**
+ * Базовый класс, описывающий функционал для отрисования базовых форм
+ * */
 public abstract class UIFactory {
 
+    /**
+     * Идентификатор базовой формы
+     * */
     protected String id_prefix;
 
+    /**
+     * Элементы, содержащиеся в этой форме
+     * */
     protected HashMap<String, Parent> elements = new HashMap<>();
 
     public UIFactory(String id_prefix) {
@@ -39,9 +48,6 @@ public abstract class UIFactory {
         }
     }
 
-    public Parent getElement(String id){
-        return elements.get(id);
-    }
 
     protected void put(Parent element, String name){
         String id = id_prefix + "_" + name;

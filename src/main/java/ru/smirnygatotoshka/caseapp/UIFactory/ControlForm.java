@@ -12,6 +12,9 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import ru.smirnygatotoshka.caseapp.GlobalResources;
 
+/**
+ * Действия с БД, Добавить, редактировать, удалить
+ * */
 public class ControlForm extends UIFactory{
 
     private boolean isHorizontal;

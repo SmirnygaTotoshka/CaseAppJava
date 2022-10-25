@@ -16,6 +16,9 @@ import ru.smirnygatotoshka.caseapp.GlobalResources;
 
 import java.util.Optional;
 
+/**
+ * Базовый класс для форм редактирования базы данных
+ * */
 public abstract class DatabaseEditFactory extends UIFactory{
 
     protected ObservableList<String> labels;

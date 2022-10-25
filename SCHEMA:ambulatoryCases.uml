@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.SCHEMA:ambulatoryCases</OriginalElement>
+  <nodes>
+    <node x="0.0" y="1589.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Users</node>
+    <node x="0.0" y="446.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_Speciality</node>
+    <node x="942.8595545977014" y="807.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Cases</node>
+    <node x="1767.8595545977014" y="843.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_DiseaseType</node>
+    <node x="308.9999999999998" y="1389.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Schedule</node>
+    <node x="299.4999999999998" y="145.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_Sex</node>
+    <node x="689.8595545977014" y="843.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_VisitCircumstances</node>
+    <node x="1284.8595545977014" y="831.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_NosologicalUnits</node>
+    <node x="183.99999999999977" y="446.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_Departments</node>
+    <node x="232.38864942528812" y="747.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Doctors</node>
+    <node x="2041.583333333333" y="1401.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Services</node>
+    <node x="2337.0402298850586" y="446.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_PatologicalReactions</node>
+    <node x="467.5818965517253" y="446.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_Positions</node>
+    <node x="1046.4999999999998" y="145.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_FamilyStatus</node>
+    <node x="848.4999999999998" y="133.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Passports</node>
+    <node x="2487.6249999999995" y="1158.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_ManifestTypes</node>
+    <node x="179.38864942528812" y="1134.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_DoctorChanges</node>
+    <node x="1100.8595545977014" y="843.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_VisitPlace</node>
+    <node x="997.8595545977014" y="446.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_Result</node>
+    <node x="475.4999999999998" y="133.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Polices</node>
+    <node x="1625.8749999999998" y="1086.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Diagnoses</node>
+    <node x="477.9999999999998" y="0.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_SMO</node>
+    <node x="2700.6249999999995" y="1170.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_CodeServices</node>
+    <node x="716.9414511494269" y="302.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Patients</node>
+    <node x="664.4999999999998" y="133.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_Priviledge</node>
+    <node x="1247.4999999999998" y="145.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_Employment</node>
+    <node x="2037.083333333333" y="1170.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_PaymentType</node>
+    <node x="2620.8595545977014" y="843.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_ClinLooks</node>
+    <node x="1357.8595545977014" y="446.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_AidType</node>
+    <node x="2418.8595545977014" y="807.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Intolerances</node>
+    <node x="2185.8595545977014" y="831.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_MKB</node>
+    <node x="1181.8595545977014" y="446.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_Purpose</node>
+    <node x="2608.0402298850586" y="422.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_ActiveSubstances</node>
+    <node x="1520.8595545977014" y="843.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_DiseaseCharacters</node>
+    <node x="788.3749999999998" y="1122.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Visit</node>
+    <node x="1963.8595545977014" y="843.0">8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_DiagnosisStage</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Diagnoses" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_MKB" relationship="REFERENCES">
+      <point x="80.83333333333334" y="-125.5" />
+      <point x="1803.708333333333" y="1064.0" />
+      <point x="2292.3595545977014" y="1064.0" />
+      <point x="0.0" y="53.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Cases" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Patients" relationship="REFERENCES">
+      <point x="-51.75" y="-77.5" />
+      <point x="960.1095545977014" y="725.0" />
+      <point x="819.9414511494269" y="725.0" />
+      <point x="0.0" y="185.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Services" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Visit" relationship="REFERENCES">
+      <point x="-59.33333333333334" y="-65.5" />
+      <point x="2071.2499999999995" y="1363.0" />
+      <point x="876.8749999999998" y="1363.0" />
+      <point x="0.0" y="89.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Doctors" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_Sex" relationship="REFERENCES">
+      <point x="25.75" y="-137.5" />
+      <point x="361.1386494252881" y="725.0" />
+      <point x="377.4999999999998" y="725.0" />
+      <point x="0.0" y="41.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Cases" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_Result" relationship="REFERENCES">
+      <point x="-17.25" y="-77.5" />
+      <point x="994.6095545977014" y="695.0" />
+      <point x="1079.8595545977014" y="695.0" />
+      <point x="0.0" y="41.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Visit" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Doctors" relationship="REFERENCES">
+      <point x="-66.375" y="-89.5" />
+      <point x="810.4999999999998" y="1064.0" />
+      <point x="390.8886494252881" y="1064.0" />
+      <point x="390.8886494252881" y="1054.0" />
+      <point x="386.8886494252881" y="1054.0" />
+      <point x="51.5" y="137.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Patients" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_FamilyStatus" relationship="REFERENCES">
+      <point x="51.5" y="-185.5" />
+      <point x="871.4414511494269" y="271.0" />
+      <point x="1136.9999999999998" y="271.0" />
+      <point x="0.0" y="41.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Services" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_PaymentType" relationship="REFERENCES">
+      <point x="0.0" y="-65.5" />
+      <point x="0.0" y="41.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Patients" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Passports" relationship="REFERENCES">
+      <point x="17.16666666666667" y="-185.5" />
+      <point x="837.1081178160937" y="261.0" />
+      <point x="937.4999999999998" y="261.0" />
+      <point x="0.0" y="53.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Visit" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Cases" relationship="REFERENCES">
+      <point x="22.125" y="-89.5" />
+      <point x="898.9999999999998" y="1064.0" />
+      <point x="1011.8595545977014" y="1064.0" />
+      <point x="0.0" y="77.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Diagnoses" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_NosologicalUnits" relationship="REFERENCES">
+      <point x="-48.5" y="-125.5" />
+      <point x="1674.3749999999998" y="1054.0" />
+      <point x="1392.8595545977014" y="1054.0" />
+      <point x="0.0" y="53.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_DoctorChanges" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Doctors" relationship="REFERENCES">
+      <point x="0.0" y="-77.5" />
+      <point x="279.8886494252881" y="1064.0" />
+      <point x="283.8886494252881" y="1064.0" />
+      <point x="-51.5" y="137.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Schedule" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Patients" relationship="REFERENCES">
+      <point x="48.66666666666666" y="-77.5" />
+      <point x="430.6666666666664" y="1363.0" />
+      <point x="679.3595545977014" y="1363.0" />
+      <point x="679.3595545977014" y="725.0" />
+      <point x="819.9414511494269" y="725.0" />
+      <point x="0.0" y="185.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Doctors" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_Speciality" relationship="REFERENCES">
+      <point x="-77.25" y="-137.5" />
+      <point x="258.1386494252881" y="725.0" />
+      <point x="82.0" y="725.0" />
+      <point x="0.0" y="41.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Intolerances" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_PatologicalReactions" relationship="REFERENCES">
+      <point x="0.0" y="-77.5" />
+      <point x="2509.8595545977014" y="725.0" />
+      <point x="2462.5402298850586" y="725.0" />
+      <point x="0.0" y="41.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Schedule" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_DoctorChanges" relationship="REFERENCES">
+      <point x="-48.66666666666666" y="-77.5" />
+      <point x="333.33333333333314" y="1363.0" />
+      <point x="279.8886494252881" y="1363.0" />
+      <point x="0.0" y="77.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_ManifestTypes" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Intolerances" relationship="REFERENCES">
+      <point x="-48.25" y="-53.5" />
+      <point x="2535.8749999999995" y="1064.0" />
+      <point x="2509.8595545977014" y="1064.0" />
+      <point x="0.0" y="77.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Diagnoses" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Cases" relationship="REFERENCES">
+      <point x="-80.83333333333334" y="-125.5" />
+      <point x="1642.0416666666665" y="1064.0" />
+      <point x="1011.8595545977014" y="1064.0" />
+      <point x="0.0" y="77.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Doctors" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_Departments" relationship="REFERENCES">
+      <point x="-25.75" y="-137.5" />
+      <point x="309.6386494252881" y="725.0" />
+      <point x="275.4999999999998" y="725.0" />
+      <point x="0.0" y="41.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Schedule" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Doctors" relationship="REFERENCES">
+      <point x="0.0" y="-77.5" />
+      <point x="381.9999999999998" y="1363.0" />
+      <point x="390.8886494252881" y="1363.0" />
+      <point x="390.8886494252881" y="1054.0" />
+      <point x="386.8886494252881" y="1054.0" />
+      <point x="51.5" y="137.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Cases" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_Purpose" relationship="REFERENCES">
+      <point x="17.25" y="-77.5" />
+      <point x="1029.1095545977014" y="705.0" />
+      <point x="1259.8595545977014" y="705.0" />
+      <point x="0.0" y="41.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Cases" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_AidType" relationship="REFERENCES">
+      <point x="51.75" y="-77.5" />
+      <point x="1063.6095545977014" y="715.0" />
+      <point x="1439.8595545977014" y="715.0" />
+      <point x="0.0" y="41.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Doctors" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_Positions" relationship="REFERENCES">
+      <point x="77.25" y="-137.5" />
+      <point x="412.6386494252881" y="725.0" />
+      <point x="549.5818965517253" y="725.0" />
+      <point x="0.0" y="41.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Visit" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_VisitCircumstances" relationship="REFERENCES">
+      <point x="-22.125" y="-89.5" />
+      <point x="854.7499999999998" y="1054.0" />
+      <point x="806.3595545977014" y="1054.0" />
+      <point x="0.0" y="41.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_ManifestTypes" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_ClinLooks" relationship="REFERENCES">
+      <point x="48.25" y="-53.5" />
+      <point x="2632.3749999999995" y="1064.0" />
+      <point x="2702.8595545977014" y="1064.0" />
+      <point x="0.0" y="41.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Services" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_CodeServices" relationship="REFERENCES">
+      <point x="59.33333333333334" y="-65.5" />
+      <point x="2189.9166666666665" y="1363.0" />
+      <point x="2792.1249999999995" y="1363.0" />
+      <point x="0.0" y="41.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Intolerances" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Patients" relationship="REFERENCES">
+      <point x="-60.66666666666666" y="-77.5" />
+      <point x="2449.1928879310344" y="725.0" />
+      <point x="819.9414511494269" y="725.0" />
+      <point x="0.0" y="185.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Diagnoses" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_DiseaseCharacters" relationship="REFERENCES">
+      <point x="-16.166666666666657" y="-125.5" />
+      <point x="1706.708333333333" y="1044.0" />
+      <point x="1634.3595545977014" y="1044.0" />
+      <point x="0.0" y="41.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Patients" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_Employment" relationship="REFERENCES">
+      <point x="85.83333333333334" y="-185.5" />
+      <point x="905.7747844827603" y="281.0" />
+      <point x="1336.9999999999998" y="281.0" />
+      <point x="0.0" y="41.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Polices" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_SMO" relationship="REFERENCES">
+      <point x="0.0" y="-53.5" />
+      <point x="0.0" y="41.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Patients" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_Sex" relationship="REFERENCES">
+      <point x="-85.83333333333334" y="-185.5" />
+      <point x="734.1081178160936" y="281.0" />
+      <point x="377.4999999999998" y="281.0" />
+      <point x="0.0" y="41.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Diagnoses" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_DiagnosisStage" relationship="REFERENCES">
+      <point x="48.5" y="-125.5" />
+      <point x="1771.3749999999998" y="1054.0" />
+      <point x="2064.8595545977014" y="1054.0" />
+      <point x="0.0" y="41.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Visit" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_VisitPlace" relationship="REFERENCES">
+      <point x="66.375" y="-89.5" />
+      <point x="943.2499999999998" y="1054.0" />
+      <point x="1182.8595545977014" y="1054.0" />
+      <point x="0.0" y="41.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Intolerances" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_ActiveSubstances" relationship="REFERENCES">
+      <point x="60.66666666666666" y="-77.5" />
+      <point x="2570.5262212643684" y="725.0" />
+      <point x="2754.5402298850586" y="725.0" />
+      <point x="0.0" y="65.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Patients" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_Priviledge" relationship="REFERENCES">
+      <point x="-17.166666666666657" y="-185.5" />
+      <point x="802.7747844827603" y="261.0" />
+      <point x="746.4999999999998" y="261.0" />
+      <point x="0.0" y="53.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Diagnoses" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.spr_DiseaseType" relationship="REFERENCES">
+      <point x="16.16666666666667" y="-125.5" />
+      <point x="1739.0416666666665" y="1044.0" />
+      <point x="1855.8595545977014" y="1044.0" />
+      <point x="0.0" y="41.5" />
+    </edge>
+    <edge source="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Patients" target="8f6bd2a8-9950-4bfd-af32-3bce17cc7ddc.TABLE:ambulatoryCases.tbl_Polices" relationship="REFERENCES">
+      <point x="-51.5" y="-185.5" />
+      <point x="768.4414511494269" y="271.0" />
+      <point x="559.9999999999998" y="271.0" />
+      <point x="0.0" y="53.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.33059548254620125" showDependencies="false" x="1451.0" y="860.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+

@@ -35,7 +35,9 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Optional;
 import java.util.function.Predicate;
-
+/**
+ * Запись на прием
+ * */
 public class RegisterToDoctorFactory extends LookupWithSearch<String,ScheduleItem> implements DataChanger {
 
     private static ObservableList<String> LOOKUP_ITEMS = FXCollections.observableArrayList("Время","ФИО пациента");

@@ -42,12 +42,6 @@ public class GlobalResources {
         return null;
     }
 
-    public static void toggleElements(Control[] controls, boolean enable){
-        for (Control ctrl: controls) {
-            ctrl.disableProperty().set(enable);
-        }
-    }
-
     public static void closeStage(String name){
         openedStages.get(name).close();
         openedStages.remove(name,openedStages.get(name));

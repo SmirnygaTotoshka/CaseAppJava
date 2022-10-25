@@ -1,25 +1,20 @@
 package ru.smirnygatotoshka.caseapp.UIFactory;
 
-import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Parent;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import ru.smirnygatotoshka.caseapp.DataRepresentation.Patient;
-import ru.smirnygatotoshka.caseapp.Database.Database;
-import ru.smirnygatotoshka.caseapp.GlobalResources;
+import javafx.scene.control.Control;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.layout.GridPane;
 
-import java.sql.Array;
-import java.util.ArrayList;
 import java.util.function.Predicate;
 
+/**
+ * Базовый класс для
+ * */
 public abstract class LookupWithSearch<I, L> extends UIFactory {
 
 

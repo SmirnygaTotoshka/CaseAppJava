@@ -31,7 +31,9 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Optional;
 import java.util.function.Predicate;
-
+/**
+ * Формирование расписания
+ * */
 public class ScheduleFormFactory extends LookupWithSearch<String, Change> implements DataChanger {
 
     private static ObservableList<String> LOOKUP_ITEMS = FXCollections.observableArrayList("Дата","Начало смены", "Конец смены");
