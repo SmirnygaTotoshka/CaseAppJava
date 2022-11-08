@@ -65,7 +65,7 @@ public class ScheduleActions {
         Connection con = Database.getConnection();
         boolean flag = false;
         try {//TODO
-            con.setAutoCommit(false);
+            //con.setAutoCommit(false);
             String query1 = "SELECT Date FROM tbl_DoctorChanges WHERE ID = ?;";
             String query2 = "SELECT Count(ID) FROM tbl_Schedule WHERE Patient = ? AND " +
                     "`Change` IN (SELECT ID FROM tbl_DoctorChanges WHERE Date = ?);";
@@ -110,11 +110,11 @@ public class ScheduleActions {
 
         }
         finally {
-            try {
+            /*try {
                 con.setAutoCommit(true);
             } catch (SQLException e) {
                 e.printStackTrace();
-            }
+            }*/
             return flag;
         }
     }

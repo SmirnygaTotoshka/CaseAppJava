@@ -417,7 +417,7 @@ public class PatientsActions{
         PreparedStatement statement = null;
         ResultSet rs = null;
         try {
-            con.setAutoCommit(false);
+           // con.setAutoCommit(false);
 
             int sex = Database.getPrimaryKeyByValue("spr_Sex", patient.getSex());
             int priviledge = Database.getPrimaryKeyByValue("spr_Priviledge", patient.getPriviledge());
